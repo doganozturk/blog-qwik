@@ -1,0 +1,23 @@
+{
+  "$schema": "https://json.schemastore.org/web-manifest-combined.json",
+  "start_url": "/",
+  "name": "Doğan Öztürk | Blog",
+  "short_name": "Doğan Öztürk | Blog",
+  "description": "Doğan Öztürk | Blog",
+  "icons": [
+    {
+      "src": "/public/favicon/android-chrome-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/public/favicon/android-chrome-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ],
+  "theme_color": "#bdc3c7",
+  "background_color": "#2c3e50",
+  "display": "standalone"
+}
+

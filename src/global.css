@@ -1,0 +1,157 @@
+/* http://meyerweb.com/eric/tools/css/reset/
+   v2.0 | 20110126
+   License: none (public domain)
+*/
+
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed,
+figure, figcaption, footer, header, hgroup,
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    font-size: 100%;
+    font: inherit;
+    vertical-align: baseline;
+}
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure,
+footer, header, hgroup, menu, nav, section {
+    display: block;
+}
+body {
+    line-height: 1;
+}
+ol, ul {
+    list-style: none;
+}
+blockquote, q {
+    quotes: none;
+}
+blockquote:before, blockquote:after,
+q:before, q:after {
+    content: '';
+    content: none;
+}
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+
+/*
+    UTILITIES
+*/
+.hidden {
+    display: none;
+}
+.lazy {
+    visibility: hidden;
+}
+.lazy[data-loaded="true"] {
+    visibility: unset;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+/*
+    BASE
+*/
+html,
+body {
+    height: 100%;
+}
+
+a {
+    color: inherit;
+    text-decoration: inherit;
+}
+a:hover {
+    opacity: 0.8;
+}
+
+body {
+    /* CODE BLOCK COLORS */
+    --block-bg: #bdc3c7;
+    --block-text: #1a2334;
+
+    /* THEME */
+    /* LIGHT */
+    --bg-color-light: #ecf0f1;
+    --text-color-light: #34495e;
+    --title-color-light: #1a2334;
+    --misc-color-light: #d35400;
+    /* DARK */
+    --bg-color-dark: #1a2334;
+    --text-color-dark: #ecf0f1;
+    --title-color-dark: #bdc3c7;
+    --misc-color-dark: #f39c12;
+
+    /* FONTS */
+    --font-family: 'Helvetica', sans-serif;
+    --font-family-code: 'Menlo', monospace;
+    --font-weight-light: 300;
+    --font-weight-normal: 400;
+
+    /* SIZES */
+    --max-width: 720px;
+
+    display: flex;
+    justify-content: center;
+    color: var(--text-color);
+    background-color: var(--bg-color);
+    font-family: var(--font-family);
+    font-weight: var(--font-weight-light);
+}
+body.light {
+    --bg-color: var(--bg-color-light);
+    --text-color: var(--text-color-light);
+    --title-color: var(--title-color-light);
+    --misc-color: var(--misc-color-light);
+}
+body.dark {
+    --bg-color: var(--bg-color-dark);
+    --text-color: var(--text-color-dark);
+    --title-color: var(--title-color-dark);
+    --misc-color: var(--misc-color-dark);
+}
+@media (prefers-color-scheme: light) {
+    body {
+        --bg-color: var(--bg-color-light);
+        --text-color: var(--text-color-light);
+        --title-color: var(--title-color-light);
+        --misc-color: var(--misc-color-light);
+    }
+}
+@media (prefers-color-scheme: dark) {
+    body {
+        --bg-color: var(--bg-color-dark);
+        --text-color: var(--text-color-dark);
+        --title-color: var(--title-color-dark);
+        --misc-color: var(--misc-color-dark);
+    }
+}
+
+
+.container {
+    width: 100%;
+    max-width: var(--max-width);
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    padding: 0 10px;
+}
+
+.main {
+    margin-top: 60px;
+}

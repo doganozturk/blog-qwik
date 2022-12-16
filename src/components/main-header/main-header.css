@@ -1,0 +1,48 @@
+.header {
+    --avatar-size: 100px;
+    --title-mt: 15px;
+    --header-main-display: block;
+
+    display: grid;
+    grid-auto-flow: column;
+    justify-content: space-between;
+    padding: 20px 0 10px 0;
+}
+.header > .header-main {
+    display: var(--header-main-display);
+}
+.header > .header-main > .title {
+    align-self: flex-start;
+    margin-top: var(--title-mt);
+    color: var(--title-color);
+}
+.header > .header-main > .title > .name {
+    margin-left: -2px;
+    font-size: 32px;
+    font-weight: var(--font-weight-normal);
+}
+.header > .header-main > .title > .info {
+    margin-top: 10px;
+    font-weight: var(--font-weight-light);
+}
+.header > .header-main > .back {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.header > .header-main > .back svg path {
+    stroke: var(--text-color);
+}
+.header > .header-main > .avatar {
+    width: var(--avatar-size);
+    height: var(--avatar-size);
+    margin-right: 20px;
+    border-radius: 50%;
+}
+
+@media (min-width: 768px) {
+    .header {
+        --title-mt: 5px;
+        --header-main-display: flex;
+    }
+}
