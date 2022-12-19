@@ -7,7 +7,7 @@ export const PostSummaryList = component$(() => {
   useStylesScoped$(styles);
 
   return (
-    <section className="post-summary-list">
+    <section class="post-summary-list">
       <PostSummaryListItem />
       <PostSummaryListItem />
       <PostSummaryListItem />

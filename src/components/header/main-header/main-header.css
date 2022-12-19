@@ -1,0 +1,23 @@
+.title {
+    align-self: flex-start;
+    margin-top: var(--title-mt);
+    color: var(--title-color);
+}
+
+.name {
+    margin-left: -2px;
+    font-size: 32px;
+    font-weight: var(--font-weight-normal);
+}
+
+.info {
+    margin-top: 10px;
+    font-weight: var(--font-weight-light);
+}
+
+.avatar {
+    width: var(--avatar-size);
+    height: var(--avatar-size);
+    margin-right: 20px;
+    border-radius: 50%;
+}

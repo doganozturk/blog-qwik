@@ -1,0 +1,8 @@
+.back {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.back svg path {
+    stroke: var(--text-color);
+}

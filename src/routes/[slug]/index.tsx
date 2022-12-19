@@ -1,32 +1,31 @@
 import { component$ } from "@builder.io/qwik";
-import type { DocumentHead } from "@builder.io/qwik-city";
-import { MainHeader } from "~/components/header/main-header/main-header";
-import { PostSummaryList } from "~/components/post-summary-list/post-summary-list";
+import { DocumentHead, useLocation } from "@builder.io/qwik-city";
+import { PostHeader } from "~/components/header/post-header/post-header";
 
-const title = "Doğan Öztürk | Blog";
-const description =
-  "Ben Doğan, yazılım mühendisiyim. Genel olarak yazılım, detayda ise web geliştirme, önyüz geliştirme, Node.js, Python vb. konularda düşüncelerimi paylaşmaya çalışıyorum.";
+const title = "Post Title";
+const description = "Post Summary";
+const permalink = "";
 
 export default component$(() => {
+  const {params} = useLocation();
+
   return (
     <>
-      <MainHeader q:slot="header" />
-      <main class="main">
-        <PostSummaryList />
-      </main>
+      <PostHeader q:slot="header" />
+      <article class="post">POST DETAIL === {params.slug}</article>
     </>
   );
 });
 
 export const head: DocumentHead = {
-  title,
+  title: "Doğan Öztürk | Blog",
   meta: [
     {
       name: "description",
       content: description,
     },
     { name: "twitter:card", content: "summary" },
-    { name: "twitter:site", content: title },
+    { name: "twitter:site", content: "Doğan Öztürk | Blog" },
     { name: "twitter:creator", content: "Doğan Öztürk" },
     { name: "twitter:title", content: title },
     { name: "twitter:description", content: description },
@@ -36,7 +35,7 @@ export const head: DocumentHead = {
     },
     { property: "og:title", content: title },
     { property: "og:type", content: "article" },
-    { property: "og:url", content: "https://doganozturk.dev/" },
+    { property: "og:url", content: "https://doganozturk.dev" + permalink },
     {
       property: "og:image",
       content: "https://doganozturk.dev/images/avatar.jpg",
