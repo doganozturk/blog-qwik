@@ -8,32 +8,38 @@
     justify-content: space-between;
     padding: 20px 0 10px 0;
 }
-.header > .header-main {
+
+.header-main {
     display: var(--header-main-display);
 }
-.header > .header-main > .title {
+
+.title {
     align-self: flex-start;
     margin-top: var(--title-mt);
     color: var(--title-color);
 }
-.header > .header-main > .title > .name {
+
+.name {
     margin-left: -2px;
     font-size: 32px;
     font-weight: var(--font-weight-normal);
 }
-.header > .header-main > .title > .info {
+
+.info {
     margin-top: 10px;
     font-weight: var(--font-weight-light);
 }
-.header > .header-main > .back {
+
+.back {
     display: flex;
     align-items: center;
     justify-content: center;
 }
-.header > .header-main > .back svg path {
+.back svg path {
     stroke: var(--text-color);
 }
-.header > .header-main > .avatar {
+
+.avatar {
     width: var(--avatar-size);
     height: var(--avatar-size);
     margin-right: 20px;

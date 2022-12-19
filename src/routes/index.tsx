@@ -1,6 +1,7 @@
 import { component$ } from "@builder.io/qwik";
 import type { DocumentHead } from "@builder.io/qwik-city";
 import { MainHeader } from "~/components/main-header/main-header";
+import { PostSummaryList } from "~/components/post-summary-list/post-summary-list";
 
 const title = "Doğan Öztürk | Blog";
 const description =
@@ -10,7 +11,9 @@ export default component$(() => {
   return (
     <>
       <MainHeader q:slot="header" />
-      <main class="main">POSTS</main>
+      <main class="main">
+        <PostSummaryList />
+      </main>
     </>
   );
 });

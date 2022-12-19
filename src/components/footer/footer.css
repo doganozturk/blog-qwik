@@ -5,11 +5,13 @@
     margin-bottom: 10px;
     padding-top: 70px;
 }
-.footer > .links {
+
+.links {
     display: flex;
     align-items: center;
 }
-.footer > .links > .link {
+
+.link {
     margin-right: 5px;
     color: var(--misc-color);
     font-size: 15px;
