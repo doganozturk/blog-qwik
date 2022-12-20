@@ -4,7 +4,7 @@ import {
   useContext,
   useStylesScoped$,
 } from "@builder.io/qwik";
-import { ThemeContext } from "~/root";
+import { ThemeContext } from "~/routes/layout";
 import { setCookie } from "~/util/cookie";
 
 import styles from "./theme-switcher.css?inline";
@@ -24,13 +24,13 @@ export const ThemeSwitcher = component$(() => {
 
   return (
     <div
-      className="theme-switcher"
+      class="theme-switcher"
       onClick$={() => {
         state.theme = state.theme === "light" ? "dark" : "light";
       }}
     >
-      <span className="switch switch-light">🌞</span>
-      <span className="switch switch-dark hidden">🌚</span>
+      <span class="switch switch-light">🌞</span>
+      <span class="switch switch-dark hidden">🌚</span>
     </div>
   );
 });

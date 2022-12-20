@@ -1,9 +1,5 @@
 import {
   component$,
-  createContext,
-  useClientEffect$,
-  useContextProvider,
-  useStore,
   useStyles$,
 } from "@builder.io/qwik";
 import {
@@ -12,15 +8,8 @@ import {
   ServiceWorkerRegister,
 } from "@builder.io/qwik-city";
 import { RouterHead } from "./components/router-head/router-head";
-import { getCookie } from "~/util/cookie";
 
 import globalStyles from "./global.css?inline";
-
-export interface SharedState {
-  theme: string;
-}
-
-export const ThemeContext = createContext<SharedState>("theme-context");
 
 export default component$(() => {
   /**
@@ -30,21 +19,6 @@ export default component$(() => {
    * Dont remove the `<head>` and `<body>` elements.
    */
   useStyles$(globalStyles);
-
-  const state = useStore<SharedState>({
-    theme: "",
-  });
-  useContextProvider(ThemeContext, state);
-
-  useClientEffect$(({ track }) => {
-    track(() => document.cookie);
-
-    const theme = getCookie("theme");
-
-    if (theme) {
-      state.theme = theme;
-    }
-  });
 
   return (
     <QwikCityProvider>
@@ -75,7 +49,7 @@ export default component$(() => {
 
         <RouterHead />
       </head>
-      <body class={state.theme} lang="tr">
+      <body lang="tr">
         <RouterOutlet />
         <ServiceWorkerRegister />
       </body>

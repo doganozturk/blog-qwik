@@ -65,22 +65,9 @@ table {
 }
 
 /*
-    BASE
-*/
-html,
-body {
-    height: 100%;
-}
-
-a {
-    color: inherit;
-    text-decoration: inherit;
-}
-a:hover {
-    opacity: 0.8;
-}
-
-body {
+    VARIABLES
+ */
+:root {
     /* CODE BLOCK COLORS */
     --block-bg: #bdc3c7;
     --block-text: #1a2334;
@@ -105,7 +92,26 @@ body {
 
     /* SIZES */
     --max-width: 720px;
+}
 
+/*
+    BASE
+*/
+html,
+body,
+.theme-container {
+    height: 100%;
+}
+
+a {
+    color: inherit;
+    text-decoration: inherit;
+}
+a:hover {
+    opacity: 0.8;
+}
+
+.theme-container {
     display: flex;
     justify-content: center;
     color: var(--text-color);
@@ -113,20 +119,20 @@ body {
     font-family: var(--font-family);
     font-weight: var(--font-weight-light);
 }
-body.light {
+.theme-container.light {
     --bg-color: var(--bg-color-light);
     --text-color: var(--text-color-light);
     --title-color: var(--title-color-light);
     --misc-color: var(--misc-color-light);
 }
-body.dark {
+.theme-container.dark {
     --bg-color: var(--bg-color-dark);
     --text-color: var(--text-color-dark);
     --title-color: var(--title-color-dark);
     --misc-color: var(--misc-color-dark);
 }
 @media (prefers-color-scheme: light) {
-    body {
+    .theme-container {
         --bg-color: var(--bg-color-light);
         --text-color: var(--text-color-light);
         --title-color: var(--title-color-light);
@@ -134,7 +140,7 @@ body.dark {
     }
 }
 @media (prefers-color-scheme: dark) {
-    body {
+    .theme-container {
         --bg-color: var(--bg-color-dark);
         --text-color: var(--text-color-dark);
         --title-color: var(--title-color-dark);
