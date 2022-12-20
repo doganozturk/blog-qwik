@@ -1,17 +1,34 @@
 import { component$, useStylesScoped$ } from "@builder.io/qwik";
+import { formatDistance } from 'date-fns';
+// @ts-ignore
+import { tr } from 'date-fns/locale/index.js';
 
 import styles from "./post-summary-list-item.css?inline";
 
-export const PostSummaryListItem = component$(() => {
-  useStylesScoped$(styles);
+export interface PostSummary {
+  title: string;
+  description: string;
+  permalink: string;
+  date: string;
+}
 
-  return (
-    <a href="/hede" class="post-summary-list-item">
-      <h2 class="title">JavaScript Temelleri: Hoisting</h2>
-      <p class="date">2 yıldan fazla önce</p>
-      <p class="summary">
-        Zingat'ta yazılımcılarla gerçekleştirdiğimiz iş görüşmelerinde sıklıkla karşılaştığımız problemlerden biri adayların kullandıkları dilin temel unsurlarıyla ilişkilerinin bir miktar kopuk olması. Çoğu genç arkadaş güncel web framework'leriyle (React, Vue vs.) yahut JS temelli cross-platform geliştirme ortamlarıyla (React-Native, Ionic vs.) ilgilenmiş oluyor; ancak JavaScript'in hikayesinden ya da dil ve dilin çalıştığı ortamların gerçeklerinden uzak durumdalar.
-      </p>
-    </a>
-  )
-});
+export const PostSummaryListItem = component$(
+  ({ title, description, permalink, date }: PostSummary) => {
+    useStylesScoped$(styles);
+
+    return (
+      <a href={permalink} class="post-summary-list-item">
+        <h2 class="title">{title}</h2>
+        <p class="date">{formatDistance(
+          new Date(date),
+          new Date(),
+          {
+            locale: tr,
+            addSuffix: false
+          }
+        )}</p>
+        <p class="summary">{description}</p>
+      </a>
+    );
+  }
+);

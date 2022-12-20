@@ -1,23 +1,53 @@
-import { component$ } from "@builder.io/qwik";
-import { DocumentHead, useLocation } from "@builder.io/qwik-city";
+import { component$, useStylesScoped$ } from "@builder.io/qwik";
+import {
+  StaticGenerateHandler,
+  useLocation
+} from "@builder.io/qwik-city";
 import { PostHeader } from "~/components/header/post-header/post-header";
+import * as fs from "fs";
+import WebComponents from "~/posts/web-components.mdx";
+import JSNation from "~/posts/amsterdam-jsnation-2019.mdx";
+import CrossPlatform from "~/posts/cross-platform-development-react-native-web.mdx";
+import Hoisting from "~/posts/javascript-temelleri-hoisting.mdx";
+import Decorators from "~/posts/decoratorleri-expressjs-temel-konseptleri-uzerinden-anlamak.mdx";
 
-const title = "Post Title";
-const description = "Post Summary";
-const permalink = "";
+import styles from "./index.css?inline";
+
+export const onStaticGenerate: StaticGenerateHandler = async () => {
+  const fileNamesWithExtensions = await fs.promises.readdir("src/posts");
+  const fileNames = fileNamesWithExtensions.map((fileName) => fileName.replace(/\.md$/, ""));
+
+  return {
+    params: fileNames.map((slug) => {
+      return { slug };
+    }),
+  };
+};
 
 export default component$(() => {
-  const {params} = useLocation();
+  useStylesScoped$(styles);
+
+  const { params } = useLocation();
+
+  const map = {
+    "web-components": WebComponents,
+    "amsterdam-jsnation-2019": JSNation,
+    "cross-platform-development-react-native-web": CrossPlatform,
+    "javascript-temelleri-hoisting": Hoisting,
+    "decoratorleri-expressjs-temel-konseptleri-uzerinden-anlamak": Decorators,
+  }
 
   return (
     <>
       <PostHeader q:slot="header" />
-      <article class="post">POST DETAIL === {params.slug}</article>
+      <article class="post">
+        {map[params.slug]()}
+      </article>
     </>
   );
 });
 
-export const head: DocumentHead = {
+/*export const head: DocumentHead = {
   title: "Doğan Öztürk | Blog",
   meta: [
     {
@@ -43,4 +73,4 @@ export const head: DocumentHead = {
     { property: "og:description", content: description },
     { property: "og:site_name", content: "doganozturk.dev" },
   ],
-};
+};*/
