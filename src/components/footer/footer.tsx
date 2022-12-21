@@ -1,6 +1,6 @@
 import { component$, useStylesScoped$ } from "@builder.io/qwik";
 
-import styles from './footer.css?inline';
+import styles from "./footer.css?inline";
 
 export const Footer = component$(() => {
   useStylesScoped$(styles);
@@ -22,7 +22,7 @@ export const Footer = component$(() => {
     },
     {
       linkProps: {
-        href: 'https://github.com/doganozturk',
+        href: "https://github.com/doganozturk",
         target: "_blank",
         rel: "noopener",
       },

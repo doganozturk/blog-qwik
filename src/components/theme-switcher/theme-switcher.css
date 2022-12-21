@@ -1,7 +1,7 @@
 .theme-switcher {
-    display: flex;
-    align-items: center;
-    align-self: flex-start;
-    font-size: 24px;
-    cursor: pointer;
+  display: flex;
+  align-items: center;
+  align-self: flex-start;
+  font-size: 24px;
+  cursor: pointer;
 }

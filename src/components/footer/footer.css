@@ -1,18 +1,18 @@
 .footer {
-    display: flex;
-    justify-content: space-between;
-    margin-top: auto;
-    margin-bottom: 10px;
-    padding-top: 70px;
+  display: flex;
+  justify-content: space-between;
+  margin-top: auto;
+  margin-bottom: 10px;
+  padding-top: 70px;
 }
 
 .links {
-    display: flex;
-    align-items: center;
+  display: flex;
+  align-items: center;
 }
 
 .link {
-    margin-right: 5px;
-    color: var(--misc-color);
-    font-size: 15px;
+  margin-right: 5px;
+  color: var(--misc-color);
+  font-size: 15px;
 }

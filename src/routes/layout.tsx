@@ -5,7 +5,7 @@ import {
   useClientEffect$,
   useContextProvider,
   useStore,
-  useTask$,
+  useTask$
 } from "@builder.io/qwik";
 import { RequestHandler, useEndpoint } from "@builder.io/qwik-city";
 import { Footer } from "~/components/footer/footer";
@@ -33,7 +33,7 @@ export default component$(() => {
   });
   useContextProvider(ThemeContext, state);
 
-  useTask$(async ({ track }) => {
+  useTask$(async ({ track,  }) => {
     track(() => pageData);
 
     const { theme } = await pageData.value;
@@ -50,8 +50,8 @@ export default component$(() => {
   });
 
   return (
-    <div class={`theme-container ${state.theme}`}>
-      <div class="container">
+    <div className={`theme-container ${state.theme}`}>
+      <div className="container">
         <Slot name="header" />
         <Slot />
         <Footer />

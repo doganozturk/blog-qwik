@@ -1,23 +1,23 @@
 .post-summary-list-item {
-    display: block;
+  display: block;
 }
 .post-summary-list-item:not(:first-of-type) {
-    margin-top: 50px;
+  margin-top: 50px;
 }
 
 .title {
-    font-size: 18px;
-    line-height: 1.2;
-    color: var(--title-color);
+  font-size: 18px;
+  line-height: 1.2;
+  color: var(--title-color);
 }
 
 .date {
-    margin-top: 8px;
-    font-size: 14px;
-    color: var(--misc-color);
+  margin-top: 8px;
+  font-size: 14px;
+  color: var(--misc-color);
 }
 
 .summary {
-    margin-top: 20px;
-    line-height: 1.4;
+  margin-top: 20px;
+  line-height: 1.4;
 }

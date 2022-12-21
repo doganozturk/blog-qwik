@@ -1,11 +1,12 @@
 ---
-title: 'Web Components'
+title: "Web Components"
 permalink: "/web-components/"
 description: Geliştirdiğimiz web ön-yüz projelerinde, özellikle de firma bazlı tüm departmanların gelişimine katkıda bulunduğu ve bakımını sağladığı styleguide’larınız yoksa; her yeni ürün ekleme süreci sonunda yeni button’lar, label’lar, form element’leri, modal’lar vb. geliştirmek durumunda kalındığı bir gerçek. Bu durum da bir süre sonra ön-yüz projelerinde karmaşıklığın yükselmesine ve geliştirme ve bakım maliyetlerinin artmasına sebep oluyor.
 date: 2019-06-17
 ---
 
 # Web Components
+
 3 yıl önce
 
 Web Components beni son zamanlarda en fazla heyecanlandıran ön-yüz geliştirme konseptlerinden biri. Bu yazımda, _HTML_, _CSS_ ve _JavaScript_ ile tekrar tekrar kullanılabilir ve kapsüllenmiş web bileşenleri geliştirmemizi sağlayan bu teknolojiler bütününden bahsedeceğim.
@@ -34,17 +35,16 @@ HTML Template’leri `<template></template>` tag'larini kullanarak bir web dök�
 
 Web Components’e dair temel teoriden basitçe bahsettik, daha detaylı bilgi için [MDN’in Web Components dökümanından](https://developer.mozilla.org/en-US/docs/Web/Web_Components) yararlanabilirsiniz.
 
-* * *
+---
 
 Şimdi, biraz da bu yazının kaleme alınmasına sebep, 30 Mart 2019 tarihinde Zingat Yazılım Ekibi olarak Nurol Tower’da düzenlediğimiz [Zeetup](https://www.meetup.com/zingat/)’ta gerçekleştirdiğim mini atölye çalışmasındaki örneklerin üzerinden gidip, kod tarafında nasıl oluyor bu iş, ona bakalım istiyorum:
 
 Bir Web Component oluşturmak için yapacağımız temel aksiyon son derece basit aslında, ES6 ile hayatımıza giren class syntax’ını kullanarak bir obje yaratıyoruz ve daha sonra platformun bize sağladığı ve `CustomElementRegistry` objesine bir referans döndüren `window.customElements`'in `define()` metodu ile bileşenimizi register etmiş oluyoruz.
 
 ```javascript
-class  ToolTip  extends  HTMLElement {
-}
+class ToolTip extends HTMLElement {}
 
-customElements.define('zingat-tooltip', ToolTip);
+customElements.define("zingat-tooltip", ToolTip);
 ```
 
 Böylece markup’ımızda kullanabileceğimiz `<zingat-tooltip>` şeklinde bir Web Component'imiz var artık. Bu tooltip'in HTML tarafında herhangi bir yazıyı içine aldığı durumda o yazının sonuna bir yıldız koymasını ve faremin imleci ile bu yıldız üzerinde hover ettiğimde yine benim belirlediğim bir metnin görünür olmasını istiyorum.
@@ -171,13 +171,21 @@ class ToolTip extends HTMLElement {
 
 Yukarıdaki kod bloğunda bu bileşene özgü ( _scoped_) bir CSS yazımı örneği de var. shadowRoot içerisinde açtığımız `<style>` tag'lerinde yazdığımız tüm CSS deklarasyonları light DOM'da yer alan diğerlerinden bağımsız ve etkilenmez haldeler.
 
-* * *
+---
 
 <div class="video-wrapper">
-    <iframe class="lazy" width="560" height="315" title="Web Components" data-src="https://www.youtube.com/embed/IGDJyP_-p6A" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
-    </iframe>
+  <iframe
+    loading="lazy"
+    width="560"
+    height="315"
+    title="Web Components"
+    src="https://www.youtube.com/embed/IGDJyP_-p6A"
+    frameborder="0"
+    allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+    allowfullscreen
+  ></iframe>
 </div>
 
 Bu projenin tamamlanmış haline ve diğer örneklerin de yer aldığı repoya [https://github.com/doganozturk/web-components](https://github.com/doganozturk/web-components) üzerinden erişebilirsiniz. Konu üzerine gerçekleştirdiğim sunuma da [buradan](https://youtu.be/IGDJyP_-p6A) ulaşabilirsiniz. Ayrıca bu örnekleri oluşturmam ve geliştirmem noktasında Web Components’i daha iyi anlamamı sağlayan ve örneklerinden yararlandığım Maximilian Schwarzmüller’in Udemy’deki [Web Components & Stencil.js — Build Custom HTML Elements](https://www.udemy.com/web-components-stenciljs-build-custom-html-elements/) dersini de konuyla ilgili herkese tavsiye ediyorum.
 
-*\* Bu yazı ilk olarak [labs.zingat.com](https://labs.zingat.com) adresinde belirtilen tarihte yayımlanmıştır.*
+_\* Bu yazı ilk olarak [labs.zingat.com](https://labs.zingat.com) adresinde belirtilen tarihte yayımlanmıştır._

@@ -1,8 +1,4 @@
-import {
-  component$,
-  useContext,
-  useStylesScoped$,
-} from "@builder.io/qwik";
+import { component$, useContext, useStylesScoped$ } from "@builder.io/qwik";
 import { ThemeContext } from "~/routes/layout";
 
 import styles from "./theme-switcher.css?inline";

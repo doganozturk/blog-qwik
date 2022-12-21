@@ -1,8 +1,5 @@
 import { component$, useStylesScoped$ } from "@builder.io/qwik";
-import {
-  StaticGenerateHandler,
-  useLocation
-} from "@builder.io/qwik-city";
+import { StaticGenerateHandler, useLocation } from "@builder.io/qwik-city";
 import { PostHeader } from "~/components/header/post-header/post-header";
 import * as fs from "fs";
 import WebComponents from "~/posts/web-components.mdx";
@@ -11,20 +8,22 @@ import CrossPlatform from "~/posts/cross-platform-development-react-native-web.m
 import Hoisting from "~/posts/javascript-temelleri-hoisting.mdx";
 import Decorators from "~/posts/decoratorleri-expressjs-temel-konseptleri-uzerinden-anlamak.mdx";
 
+import prismStyles from '~/styles/prism/prism-vsc-dark-plus.css?inline';
 import styles from "./index.css?inline";
 
 export const onStaticGenerate: StaticGenerateHandler = async () => {
   const fileNamesWithExtensions = await fs.promises.readdir("src/posts");
-  const fileNames = fileNamesWithExtensions.map((fileName) => fileName.replace(/\.md$/, ""));
+  const fileNames = fileNamesWithExtensions.map((fileName) =>
+    fileName.replace(/\.mdx$/, "")
+  );
 
   return {
-    params: fileNames.map((slug) => {
-      return { slug };
-    }),
+    params: fileNames.map((slug) => ({ slug })),
   };
 };
 
 export default component$(() => {
+  useStylesScoped$(prismStyles);
   useStylesScoped$(styles);
 
   const { params } = useLocation();
@@ -35,14 +34,12 @@ export default component$(() => {
     "cross-platform-development-react-native-web": CrossPlatform,
     "javascript-temelleri-hoisting": Hoisting,
     "decoratorleri-expressjs-temel-konseptleri-uzerinden-anlamak": Decorators,
-  }
+  };
 
   return (
     <>
       <PostHeader q:slot="header" />
-      <article class="post">
-        {map[params.slug]()}
-      </article>
+      <article class="post">{map[params.slug]()}</article>
     </>
   );
 });

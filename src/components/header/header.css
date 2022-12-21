@@ -1,21 +1,21 @@
 .header {
-    --avatar-size: 100px;
-    --title-mt: 15px;
-    --header-main-display: block;
+  --avatar-size: 100px;
+  --title-mt: 15px;
+  --header-main-display: block;
 
-    display: grid;
-    grid-auto-flow: column;
-    justify-content: space-between;
-    padding: 20px 0 10px 0;
+  display: grid;
+  grid-auto-flow: column;
+  justify-content: space-between;
+  padding: 20px 0 10px 0;
 }
 
 .header-main {
-    display: var(--header-main-display);
+  display: var(--header-main-display);
 }
 
 @media (min-width: 768px) {
-    .header {
-        --title-mt: 5px;
-        --header-main-display: flex;
-    }
+  .header {
+    --title-mt: 5px;
+    --header-main-display: flex;
+  }
 }

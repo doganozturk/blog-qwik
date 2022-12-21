@@ -1,18 +1,19 @@
 ---
-title: 'Cross-Platform Development: React-Native-Web'
+title: "Cross-Platform Development: React-Native-Web"
 permalink: "/cross-platform-development-react-native-web/"
 description: Cross-Platform Development’a niyet ettiğinizde en çok karşılaşacağınız ve kafanızı karıştıracak soru bu olacak. Benim bu noktada kişisel kanaatim, Web Development kökenli bir yazılım geliştirici olma perspektifinden tabii, kararı tamamen ihtiyaçlarınıza göre vermeniz. Küçük ve orta ölçekli projeler için, özellikle uygulamalarınız harika animasyonlara yahut native platformun _cutting-edge_ özelliklerine bağımlı değilse Hybrid bir uygulama işinizi fazlasıyla görecektir diyebilirim; lakin istekleriniz ve yazılım geliştirme takımınızın kompozisyonu (örneğin hem mobil uygulama hem de web geliştiricilerin olduğu ve uyumlu çalışabilecekleri bir ortam) uygunsa native çözümlere yönelmeniz daha sağlıklı olacaktır.
 date: 2019-09-22
 ---
 
 # Cross-Platform Development: React-Native-Web
+
 3 yıl önce
 
 Güncel bir proje için fikrinizin tüm popüler platformlarda yer almasını istiyor olmanız son derece makul. Bu gerçekten hareketle bugün bir uygulama inşa etmeye ve kullanıcılarınızın karşısına çıkmaya karar verdiğinizde muhtemelen en az, üç popüler platformda yer almak zorundasınız.
 
-*   Web
-*   iOS
-*   Android
+- Web
+- iOS
+- Android
 
 Bu üç düzlem için üç ayrı dilde, üç ayrı geliştirme kültürü ve platformların geliştirme araçlarını kullanarak ve bu ortamlarda geliştirme yapma gereklerini yerine getirerek aslında büyük oranda aynı işi yapan üç ayrı uygulama üreteceksiniz.
 
@@ -60,13 +61,11 @@ Ben kendi React-Native-Web serüvenimde Expo kullanmadım. Hem geliştirme platf
 
 Expo’yla ilgili son bir not: React-Native-Web’i React-Native ile bir araya getirme noktasında çok ciddi çabaları var. Burada yaptıkları çalışmalar çok önemli ve hali hazırdaki problemlerini giderip bu hususta yol alabilirlerse kolay kullanılabilir bir JS yönelimli Cross-Platform Development ortamını biz geliştiriciler için oluşturmuş olacaklar.
 
-* * *
+---
 
 ## React-Native-Web Tecrübelerim
 
 Geldik en can alıcı kısıma. Kendi React-Native-Web öğrenme ve geliştirme sürecimde yaşadıklarımdan dem vuracağım bu noktada.
-
-
 
 [Bu link](https://github.com/doganozturk/react-native-web-boilerplate)’te bu süreçte oluşturduğum bir repo var. Aslında biraz araştırırsanız göreceğiniz üzere üretilmiş pek çok React-Native-Web başlangıç projesi var; ancak hem React hem de React-Native tarafında versiyonlar ilerledikçe, ayrıca komünite tarafından geliştirilen yardımcı kütüphaneler de aynı şekilde geliştikçe bazı şeyler eskiyor. Bu da sürecin tekrar ele alınmasını gerekli kılabiliyor.
 
@@ -84,19 +83,27 @@ Import statement’ları için de benzer şekilde alias tanımlaması yapmak ger
 
 Web ve native için yazdığınız farklı kodların da yine platform bazlı ayrımını Webpack konfigürasyonunuzda “.web.js” uzantılı dosyalara öncelik verecek şekilde ayarlayacak bir çalışma yapmak gibi bir çözüm var. Yukarıda bahsettiğim navigasyon konusuna dönersek Web’de çalışacak kısmın ilgili dosyasını “.web.js” uzantılı hale getiriyor, native içinse standart dosyayı kullanıyoruz. Bu dosya diyelim ki “index.js” ise, bu yaklaşım sonucunda bir de “index.web.js” dosyanız oluyor. Webpack kodunuzu bundle ederken dosyanın “.web.js” uzantılı olan halini esas alıyor, bu da Web özelinde işler yapmanıza olanak tanıyor.
 
-* * *
+---
 
 Sona geldiğimizde React-Native-Web’in kullanılabilirliği üzerine bazı tespitlerde bulunmak istiyorum. Zingat özelinde örneğin, Zingat’ın ilanlarını listelediğimiz, kullanıcılara arama yapma ya da konut projelerinin detaylarını sunma gibi yüksek SEO gereksinimleri olan veya Pagespeed performansı özelinde çok ince çalışmamızın gerektiği modüller için kullanılabilir olduğunu düşünmüyorum. Aynı şekilde akıllı bir telefonun son API’larını kullanan, platform özelinde yüksek performans ve hakimiyet gerektirecek işler için de Web’i ve native’i bir araya getirmezdim diyebilirim.
 
 Bunun yanında eğer ilgili ön yüzleriniz yukarıda bahsettiğim durumlardan muafsa ve ekibinizin ortaya çıkacak karmaşıklıkla baş edebileceğini düşünüyorsanız (hem native hem de Web tarafında işinin ehli geliştiricilerinizin olması ön şart bence) tek bir codebase ile üç platform için de çıktı üretebilmek ciddi anlamda heyecan verici.
 
-* * *
+---
 
 <div class="video-wrapper">
-    <iframe class="lazy" width="560" height="315" title="Cross-Platform Development: React-Native-Web" data-src="https://www.youtube.com/embed/G5KBZWLhtMM" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
-    </iframe>
+  <iframe
+    loading="lazy"
+    width="560"
+    height="315"
+    title="Cross-Platform Development: React-Native-Web"
+    src="https://www.youtube.com/embed/G5KBZWLhtMM"
+    frameborder="0"
+    allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+    allowfullscreen
+  ></iframe>
 </div>
 
 Zingat Yazılım Ekibi olarak 29 Haziran 2019 tarihinde İTÜ Arı 3 Teknokent Konferans Salonu’nda düzenlediğimiz ikinci Zeetup etkinliğimizde bu konuda bir sunum gerçekleştirdim. Cross-Platform Development’ın merak uyandırıcı dünyasına React/React-Native özelinde ufak bir giriş anlamında göz atmanızı tavsiye ederim.
 
-*\* Bu yazı ilk olarak [labs.zingat.com](https://labs.zingat.com) adresinde belirtilen tarihte yayımlanmıştır.*
+_\* Bu yazı ilk olarak [labs.zingat.com](https://labs.zingat.com) adresinde belirtilen tarihte yayımlanmıştır._

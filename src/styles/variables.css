@@ -1,0 +1,26 @@
+:root {
+    /* CODE BLOCK COLORS */
+    --block-bg: #bdc3c7;
+    --block-text: #1a2334;
+
+    /* THEME */
+    /* LIGHT */
+    --bg-color-light: #ecf0f1;
+    --text-color-light: #34495e;
+    --title-color-light: #1a2334;
+    --misc-color-light: #d35400;
+    /* DARK */
+    --bg-color-dark: #1a2334;
+    --text-color-dark: #ecf0f1;
+    --title-color-dark: #bdc3c7;
+    --misc-color-dark: #f39c12;
+
+    /* FONTS */
+    --font-family: "Helvetica", sans-serif;
+    --font-family-code: "Menlo", monospace;
+    --font-weight-light: 300;
+    --font-weight-normal: 400;
+
+    /* SIZES */
+    --max-width: 720px;
+}
