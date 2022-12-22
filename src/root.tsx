@@ -53,6 +53,9 @@ export default component$(() => {
         <RouterHead />
       </head>
       <body lang="tr">
+        <script>
+          {`function ensureTheme(){document.querySelector(".theme-container")||requestAnimationFrame(ensureTheme),themeToEnsure=localStorage.getItem("theme")||"",document.querySelector(".theme-container").classList.add(themeToEnsure)}requestAnimationFrame(ensureTheme)`}
+        </script>
         <RouterOutlet />
         <ServiceWorkerRegister />
       </body>
