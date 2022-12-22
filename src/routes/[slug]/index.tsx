@@ -1,14 +1,19 @@
-import { component$, useStylesScoped$ } from "@builder.io/qwik";
+import * as fs from "fs";
+import {
+  component$, JSXChildren, JSXNode,
+  Resource,
+  useResource$,
+  useStyles$
+} from "@builder.io/qwik";
+import {
+  renderToString,
+} from "@builder.io/qwik/server";
 import { StaticGenerateHandler, useLocation } from "@builder.io/qwik-city";
 import { PostHeader } from "~/components/header/post-header/post-header";
-import * as fs from "fs";
-import WebComponents from "~/posts/web-components.mdx";
-import JSNation from "~/posts/amsterdam-jsnation-2019.mdx";
-import CrossPlatform from "~/posts/cross-platform-development-react-native-web.mdx";
-import Hoisting from "~/posts/javascript-temelleri-hoisting.mdx";
-import Decorators from "~/posts/decoratorleri-expressjs-temel-konseptleri-uzerinden-anlamak.mdx";
+import { asyncMap } from "~/util/asyncMap";
+import { PostSummary } from "~/components/post-summary-list/post-summary-list-item/post-summary-list-item";
 
-import prismStyles from '~/styles/prism/prism-vsc-dark-plus.css?inline';
+import prismStyles from "~/styles/prism/prism-vsc-dark-plus.css?inline";
 import styles from "./index.css?inline";
 
 export const onStaticGenerate: StaticGenerateHandler = async () => {
@@ -23,23 +28,42 @@ export const onStaticGenerate: StaticGenerateHandler = async () => {
 };
 
 export default component$(() => {
-  useStylesScoped$(prismStyles);
-  useStylesScoped$(styles);
+  useStyles$(prismStyles);
+  useStyles$(styles);
 
   const { params } = useLocation();
 
-  const map = {
-    "web-components": WebComponents,
-    "amsterdam-jsnation-2019": JSNation,
-    "cross-platform-development-react-native-web": CrossPlatform,
-    "javascript-temelleri-hoisting": Hoisting,
-    "decoratorleri-expressjs-temel-konseptleri-uzerinden-anlamak": Decorators,
-  };
+  const postResource = useResource$(async () => {
+    const modules = await import.meta.glob("/src/posts/*.mdx");
+
+    const posts = await asyncMap(Object.keys(modules), async (path) => {
+      if (path.includes(params.slug)) {
+        const mod = await modules[path]();
+        // @ts-ignore
+        const component = await renderToString(mod.default(), {
+          containerTagName: "div",
+        });
+
+        return {
+          meta: (mod as { frontmatter: PostSummary }).frontmatter,
+          html: component.html,
+        };
+      }
+    });
+
+    return posts.filter(Boolean)[0];
+  });
 
   return (
     <>
       <PostHeader q:slot="header" />
-      <article class="post">{map[params.slug]()}</article>
+      <Resource
+        value={postResource}
+        // @ts-ignore
+        onResolved={({ html }) => {
+          return <article class="post" dangerouslySetInnerHTML={html} />;
+        }}
+      />
     </>
   );
 });

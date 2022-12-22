@@ -2,50 +2,50 @@
   margin-top: 60px;
   font-family: var(--font-family);
 }
-h1 {
+.post h1 {
   color: var(--title-color);
   font-size: 26px;
   font-weight: var(--font-weight-light);
 }
-h1 + p {
+.post h1 + p {
   margin-top: 10px;
   font-size: 15px;
   color: var(--misc-color);
 }
-h2 {
+.post h2 {
   margin-top: 40px;
   color: var(--title-color);
   font-size: 24px;
   font-weight: var(--font-weight-light);
 }
-p {
+.post p {
   margin-top: 20px;
   line-height: 1.4;
 }
-hr + p {
+.post hr + p {
   margin-top: 40px;
 }
-a {
+.post a {
   color: var(--misc-color);
 }
-ul,
-ol {
+.post ul,
+.post ol {
   margin-top: 20px;
   padding-left: 20px;
   list-style: disc;
 }
-li {
+.post li {
   margin-top: 10px;
 }
-pre {
+.post pre {
   margin: 20px -10px 0 -10px;
 }
-pre code {
+.post pre code {
   font-family: var(--font-family-code);
   font-size: 15px;
   line-height: 1.4;
 }
-p code {
+.post p code {
   padding: 0 4px;
   font-family: var(--font-family-code);
   font-size: 15px;
@@ -53,41 +53,41 @@ p code {
   background-color: var(--block-bg);
   border-radius: 4px;
 }
-blockquote {
+.post blockquote {
   margin-top: 20px;
   padding-left: 30px;
   font-style: italic;
   line-height: 1.4;
 }
-hr {
+.post hr {
   margin-top: 40px;
   height: 2px;
   background-color: var(--text-color);
 }
-p em {
+.post p em {
   font-style: italic;
 }
-.video-wrapper {
+.post .video-wrapper {
   position: relative;
   margin-top: 20px;
   padding-bottom: 56.25%; /* 16:9 */
   height: 0;
 }
-.video-wrapper iframe {
+.post .video-wrapper iframe {
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
 }
-img {
+.post img {
   max-width: 100%;
   height: auto;
   margin-top: 20px;
 }
 
 @media (min-width: 768px) {
-  pre {
+  .post pre {
     margin: 20px 0 0 0;
     border-radius: 4px;
   }
