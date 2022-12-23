@@ -54,7 +54,7 @@ export default component$(() => {
       </head>
       <body lang="tr">
         <script>
-          {`function ensureTheme(){document.querySelector(".theme-container")||requestAnimationFrame(ensureTheme),themeToEnsure=localStorage.getItem("theme")||"",if(themeToEnsure)document.querySelector(".theme-container").classList.add(themeToEnsure)}requestAnimationFrame(ensureTheme)`}
+          {`function ensureTheme(){if(!document.querySelector(".theme-container")){requestAnimationFrame(ensureTheme)}themeToEnsure=localStorage.getItem("theme")||"";if(!themeToEnsure)return;document.querySelector(".theme-container").classList.add(themeToEnsure)}requestAnimationFrame(ensureTheme);`}
         </script>
         <RouterOutlet />
         <ServiceWorkerRegister />
