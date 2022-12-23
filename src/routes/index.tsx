@@ -3,7 +3,7 @@ import type { DocumentHead } from "@builder.io/qwik-city";
 import { MainHeader } from "~/components/header/main-header/main-header";
 import { PostSummaryList } from "~/components/post-summary-list/post-summary-list";
 import { PostSummary } from "~/components/post-summary-list/post-summary-list-item/post-summary-list-item";
-import { asyncMap } from "~/util/asyncMap";
+import { asyncMap } from "~/util";
 
 const title = "Doğan Öztürk | Blog";
 const description =
@@ -11,12 +11,19 @@ const description =
 
 export default component$(() => {
   const postsResource = useResource$(async () => {
-    const modules = await import.meta.glob("/src/posts/*.mdx");
+    const modules = await import.meta.glob("/src/routes/**/**/index.mdx");
 
     const posts = await asyncMap(Object.keys(modules), async (path) => {
-      const mod = await modules[path]();
+      const { title, description, date, permalink } = (await modules[
+        path
+      ]()) as PostSummary;
 
-      return (mod as { frontmatter: PostSummary }).frontmatter;
+      return {
+        title,
+        description,
+        date,
+        permalink,
+      };
     });
 
     return posts.sort((a, b) => {
