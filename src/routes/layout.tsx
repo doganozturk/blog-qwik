@@ -32,7 +32,7 @@ export default component$(() => {
     const theme = track(() => localStorage.getItem("theme"));
 
     if (!state.theme && theme) {
-      state.theme = localStorage.getItem("theme") || '';
+      state.theme = localStorage.getItem("theme") || "";
     }
   });
 

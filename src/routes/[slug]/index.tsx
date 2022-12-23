@@ -1,13 +1,11 @@
 import * as fs from "fs";
 import {
-  component$, JSXChildren, JSXNode,
+  component$,
   Resource,
   useResource$,
-  useStyles$
+  useStyles$,
 } from "@builder.io/qwik";
-import {
-  renderToString,
-} from "@builder.io/qwik/server";
+import { renderToString } from "@builder.io/qwik/server";
 import { StaticGenerateHandler, useLocation } from "@builder.io/qwik-city";
 import { PostHeader } from "~/components/header/post-header/post-header";
 import { asyncMap } from "~/util/asyncMap";

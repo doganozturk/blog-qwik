@@ -1,68 +1,68 @@
 * {
-    box-sizing: border-box;
+  box-sizing: border-box;
 }
 
 html,
 body,
 .theme-container,
 .container {
-    height: 100%;
+  height: 100%;
 }
 
 a {
-    color: inherit;
-    text-decoration: inherit;
+  color: inherit;
+  text-decoration: inherit;
 }
 a:hover {
-    opacity: 0.8;
+  opacity: 0.8;
 }
 
 .theme-container {
-    display: flex;
-    justify-content: center;
-    overflow: auto;
-    color: var(--text-color);
-    background-color: var(--bg-color);
-    font-family: var(--font-family);
-    font-weight: var(--font-weight-light);
+  display: flex;
+  justify-content: center;
+  overflow: auto;
+  color: var(--text-color);
+  background-color: var(--bg-color);
+  font-family: var(--font-family);
+  font-weight: var(--font-weight-light);
 }
 .theme-container.light {
+  --bg-color: var(--bg-color-light);
+  --text-color: var(--text-color-light);
+  --title-color: var(--title-color-light);
+  --misc-color: var(--misc-color-light);
+}
+.theme-container.dark {
+  --bg-color: var(--bg-color-dark);
+  --text-color: var(--text-color-dark);
+  --title-color: var(--title-color-dark);
+  --misc-color: var(--misc-color-dark);
+}
+@media (prefers-color-scheme: light) {
+  .theme-container {
     --bg-color: var(--bg-color-light);
     --text-color: var(--text-color-light);
     --title-color: var(--title-color-light);
     --misc-color: var(--misc-color-light);
+  }
 }
-.theme-container.dark {
+@media (prefers-color-scheme: dark) {
+  .theme-container {
     --bg-color: var(--bg-color-dark);
     --text-color: var(--text-color-dark);
     --title-color: var(--title-color-dark);
     --misc-color: var(--misc-color-dark);
-}
-@media (prefers-color-scheme: light) {
-    .theme-container {
-        --bg-color: var(--bg-color-light);
-        --text-color: var(--text-color-light);
-        --title-color: var(--title-color-light);
-        --misc-color: var(--misc-color-light);
-    }
-}
-@media (prefers-color-scheme: dark) {
-    .theme-container {
-        --bg-color: var(--bg-color-dark);
-        --text-color: var(--text-color-dark);
-        --title-color: var(--title-color-dark);
-        --misc-color: var(--misc-color-dark);
-    }
+  }
 }
 
 .container {
-    width: 100%;
-    max-width: var(--max-width);
-    display: flex;
-    flex-direction: column;
-    padding: 0 10px;
+  width: 100%;
+  max-width: var(--max-width);
+  display: flex;
+  flex-direction: column;
+  padding: 0 10px;
 }
 
 .main {
-    margin-top: 60px;
+  margin-top: 60px;
 }
