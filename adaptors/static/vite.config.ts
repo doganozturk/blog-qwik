@@ -12,7 +12,7 @@ export default extendConfig(baseConfig, () => {
     },
     plugins: [
       staticAdaptor({
-        origin: "https://doganozturk.dev",
+        origin: "http://doganozturkdev.s3-website-us-east-1.amazonaws.com",
       }),
     ],
   };
