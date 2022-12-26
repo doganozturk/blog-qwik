@@ -5,15 +5,15 @@
 
   /* THEME */
   /* LIGHT */
-  --bg-color-light: #ecf0f1;
-  --text-color-light: #34495e;
-  --title-color-light: #1a2334;
-  --misc-color-light: #bf4500;
+  --bg-color-light: #ededed;
+  --text-color-light: #3b3b3b;
+  --title-color-light: #343c47;
+  --misc-color-light: #ba5143;
   /* DARK */
-  --bg-color-dark: #1a2334;
-  --text-color-dark: #ecf0f1;
-  --title-color-dark: #bdc3c7;
-  --misc-color-dark: #f39c12;
+  --bg-color-dark: #003f5e;
+  --text-color-dark: #ededed;
+  --title-color-dark: #b5bdc8;
+  --misc-color-dark: #fecf48;
 
   /* FONTS */
   --font-family: "Helvetica", sans-serif;
