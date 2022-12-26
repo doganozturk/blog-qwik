@@ -5,6 +5,7 @@ import {
   ServiceWorkerRegister,
 } from "@builder.io/qwik-city";
 import { RouterHead } from "./components/router-head/router-head";
+import { themeHack } from "~/util";
 
 import reset from "~/styles/reset.css?inline";
 import variables from "~/styles/variables.css?inline";
@@ -53,9 +54,7 @@ export default component$(() => {
         <RouterHead />
       </head>
       <body lang="tr">
-        <script>
-          {`function ensureTheme(){if(!document.querySelector(".theme-container")){requestAnimationFrame(ensureTheme)}themeToEnsure=localStorage.getItem("theme")||"";if(!themeToEnsure)return;document.querySelector(".theme-container").classList.add(themeToEnsure)}requestAnimationFrame(ensureTheme);`}
-        </script>
+        <script dangerouslySetInnerHTML={themeHack} />
         <RouterOutlet />
         <ServiceWorkerRegister />
       </body>

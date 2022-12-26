@@ -1,6 +1,13 @@
 {
-  "name": "my-qwik-basic-starter",
-  "description": "App with Routing built-in (recommended)",
+  "name": "blog-qwik",
+  "description": "Doğan Öztürk's Personal Blog",
+  "homepage": "https://github.com/doganozturk/blog-qwik#readme",
+  "email": "doganozturk2005@gmail.com",
+  "url": "https://doganozturk.dev/",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/doganozturk/blog-qwik.git"
+  },
   "engines": {
     "node": ">=15.0.0"
   },
@@ -38,5 +45,8 @@
   },
   "dependencies": {
     "date-fns": "^2.29.3"
+  },
+  "volta": {
+    "node": "18.12.1"
   }
 }

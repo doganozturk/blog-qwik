@@ -1,5 +1,5 @@
 import { component$, Resource, useResource$ } from "@builder.io/qwik";
-import type { DocumentHead } from "@builder.io/qwik-city";
+import type { DocumentHead, DocumentHeadProps } from "@builder.io/qwik-city";
 import { MainHeader } from "~/components/header/main-header/main-header";
 import { PostSummaryList } from "~/components/post-summary-list/post-summary-list";
 import { PostSummary } from "~/components/post-summary-list/post-summary-list-item/post-summary-list-item";
@@ -9,30 +9,32 @@ const title = "Doğan Öztürk | Blog";
 const description =
   "Ben Doğan, yazılım mühendisiyim. Genel olarak yazılım, detayda ise web geliştirme, önyüz geliştirme, Node.js, Python vb. konularda düşüncelerimi paylaşmaya çalışıyorum.";
 
-export default component$(() => {
-  const postsResource = useResource$(async () => {
-    const modules = await import.meta.glob("/src/routes/**/**/index.mdx");
+export const getPosts = async (): Promise<PostSummary[]> => {
+  const modules = await import.meta.glob("/src/routes/**/**/index.mdx");
 
-    const posts = await asyncMap(Object.keys(modules), async (path) => {
-      const { title, description, date, permalink } = (await modules[
-        path
-      ]()) as PostSummary;
+  const posts = await asyncMap(Object.keys(modules), async (path) => {
+    const data = (await modules[
+      path
+    ]()) as DocumentHeadProps;
 
-      return {
-        title,
-        description,
-        date,
-        permalink,
-      };
-    });
-
-    return posts.sort((a, b) => {
-      const dateA = new Date(a.date).getTime();
-      const dateB = new Date(b.date).getTime();
-
-      return dateB - dateA;
-    });
+    return {
+      title: data.head.title || "",
+      description: data.head.meta.find((m) => m.name === "description")?.content || "",
+      date: data.head.frontmatter.date,
+      permalink: data.head.frontmatter.permalink
+    };
   });
+
+  return posts.sort((a, b) => {
+    const dateA = new Date(a.date).getTime();
+    const dateB = new Date(b.date).getTime();
+
+    return dateB - dateA;
+  });
+};
+
+export default component$(() => {
+  const postsResource = useResource$(getPosts);
 
   return (
     <>

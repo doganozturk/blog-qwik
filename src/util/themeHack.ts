@@ -1,0 +1,1 @@
+export const themeHack = `function ensureTheme(){if(!document.querySelector(".theme-container")){requestAnimationFrame(ensureTheme)}themeToEnsure=localStorage.getItem("theme")||"";if(!themeToEnsure)return;document.querySelector(".theme-container").classList.add(themeToEnsure)}requestAnimationFrame(ensureTheme);`
