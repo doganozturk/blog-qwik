@@ -1,6 +1,6 @@
 # My Personal Blog [![Netlify Status](https://api.netlify.com/api/v1/badges/bdbb0d4a-06fe-4acd-8117-18e4957cc978/deploy-status)](https://app.netlify.com/sites/doganozturk/deploys)
 
-This is my personal blog which I recently rewrite using [Qwik-City](https://qwik.builder.io/qwikcity/overview/). [My old blog](https://github.com/doganozturk/blog) had very simple setup, I especially like the idea of small CSS & JS footprint, inlining these resources for high [pagespeed](https://developers.google.com/speed/pagespeed/insights/?url=https://doganozturk.dev) performance. Qwik and Qwik-City give me nearly exact experience with a lot more features and better developer experience.
+This is my personal blog which I recently rewrite using [Qwik-City](https://qwik.builder.io/qwikcity/overview/). [My old blog](https://github.com/doganozturk/blog) had very simple setup, I especially like the idea of small CSS & JS footprint, inlining these resources for high [pagespeed](https://developers.google.com/speed/pagespeed/insights/?url=https://doganozturk.dev) performance. Qwik and Qwik-City give me even better results with a lot more features and better developer experience.
 
 ## Local Development
 
