@@ -13,7 +13,8 @@ If you want to set up a development environment for the project , you need these
 ```
 brew install node@18.12.1
 ```
-*Note: Especially for Node, I strongly recommend usage of a Node version management tool such as [Volta](https://volta.sh).
+
+\*Note: Especially for Node, I strongly recommend usage of a Node version management tool such as [Volta](https://volta.sh).
 
 ### Installing
 
@@ -31,4 +32,4 @@ npm start
 
 ## Author
 
-* **Doğan Öztürk** - [Github](https://github.com/doganozturk)
+- **Doğan Öztürk** - [Github](https://github.com/doganozturk)

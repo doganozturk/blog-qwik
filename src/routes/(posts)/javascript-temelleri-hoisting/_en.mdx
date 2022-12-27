@@ -1,0 +1,257 @@
+---
+title: "JavaScript Basics: Hoisting"
+description: "During job interviews with developers on Zingat, one of the problems we often encounter is that the candidate's relationships with the fundamental elements of the language they use could be more connected. Most are interested in current web frameworks (React, Vue, etc.) or JS-based cross-platform development environments (React-Native, Ionic, etc.). Still, they need to be closer to the story of JavaScript, the realities of the language, and the environments in which it works."
+permalink: "/javascript-temelleri-hoisting/"
+date: "2020-03-17"
+---
+
+import { formatDistance } from "~/util";
+
+export const title = "JavaScript Basics: Hoisting";
+export const date = "2020-03-17";
+
+# {title}
+
+<p>{formatDistance(date)}</p>
+
+During job interviews with developers on Zingat, one of the problems we often encounter is that the candidate's relationships with the fundamental elements of the language they use could be more connected. Most are interested in current web frameworks (React, Vue, etc.) or JS-based cross-platform development environments (React-Native, Ionic, etc.). Still, they need to be closer to the story of JavaScript, the realities of the language, and the environments in which it works.
+
+I have decided to start a new series of articles to produce a resource, collect and organize my knowledge on this topic, and create a personal reference point. I am embarking on this journey to present the information I have learned from the sources I have read and watched in a structured way.
+
+The things I will talk about here are already available on the Internet, and many things are said in Turkish and English on these topics. Naturally, those who have been developing with JavaScript for a long time will already know what is written here. However, this series of articles may be a good starting point for those who are just starting to learn the language or can use it to develop work but want to delve deeper.
+
+When the JavaScript engine runs a piece of code, it goes through some stages. We can describe these as:
+
+1. Creation phase
+2. Execution phase
+
+The JavaScript engine gives us the _global_ object and the _this_ keyword during the creation phase. For the browser environment, the _global_ is the _window_ object. _this_ is a separate topic; we will examine it later. These are what we have as a result of the creation of the _global execution context_. Try giving a blank `.js` file to your browser and printing the _global_ (_window_) and _this_ expressions in the developer console. You will see that you can access them even though your file is empty.
+
+One more thing happens during the creation phase. _Hoisting_, the subject of this article, occurs at this point. Let's have a piece of code like this:
+
+```javascript
+console.log(person);
+console.log(greetPerson);
+
+var person = "ahmet";
+
+function greetPerson() {
+  console.log("Hello " + person);
+}
+```
+
+In JavaScript, unlike many other programming languages, calling the functions that allow the _person_ and _greetPerson_ variables to be written to the console at the beginning of the code does not cause any errors. As a result of _Hoisting_, variable declarations and function declarations are hoisted. We can assume that the following situation occurs to facilitate our understanding:
+
+```javascript
+var person = undefined;
+
+function greetPerson() {
+  console.log("Hello " + person);
+}
+
+console.log(person); // undefined
+console.log(greetPerson); // function greetPerson()
+
+person = "ahmet";
+```
+
+However, this is different. The JavaScript engine goes through all the code blocks during the creation phase. It records the variable and function declarations in the memory of the _global execution context_ and any _function execution context_ (each function in JavaScript has its execution context).
+
+So why has such a need arisen? I want to share the following sentence attributed to Brendan Eich, which I also came across while preparing this article:
+
+> "var hoisting was thus [an] unintended consequence of function hoisting, no block scope, [and] JS as a 1995 rush job."
+
+It is the result of JavaScript's unique design again.
+
+There are some points to consider in our efforts to understand the topic of _Hoisting_. Let's examine them through examples:
+
+```javascript
+console.log(person);
+console.log(greetPerson);
+
+var person = "ahmet";
+
+(function greetPerson() {
+  console.log("Hello " + person);
+});
+```
+
+When we run this code, the things we explained above about the _person_ variable are still valid; however, the _greetPerson_ function declaration is now an _IIFE_ (_Immediately Invoked Function Expression_). In this case, there is no declaration. Only the _person_ variable will be hoisted when the JavaScript engine goes through this code.
+
+```javascript
+var person = undefined;
+
+console.log(person); // undefined
+console.log(greetPerson); // ReferenceError: greetPerson is not defined
+
+person = "ahmet";
+
+(function greetPerson() {
+  console.log("Hello " + person);
+});
+```
+
+Now let's consider only the _variable initialization_ situation:
+
+```javascript
+console.log(person);
+
+person = "ahmet";
+```
+
+We will get an error when we run the code. As we said at the beginning, only declarations are hoisted, and there is no declaration here.
+
+```javascript
+console.log(person); // ReferenceError: person is not defined
+
+person = "ahmet";
+```
+
+A similar situation also occurs with function expressions:
+
+```javascript
+console.log(person);
+console.log(greetPerson);
+
+var person = "ahmet";
+
+var greetPerson = function () {
+  console.log("Hello " + person);
+};
+```
+
+This time, the output will be as follows; in this context, this function expression is a variable declaration. As required by the working principle of _Hoisting_, it is treated in this context.
+
+```javascript
+var person = undefined;
+var greetPerson = undefined;
+
+console.log(person); // undefined
+console.log(greetPerson); // undefined
+
+person = "ahmet";
+
+greetPerson = function () {
+  console.log("Hello " + person);
+};
+```
+
+Let's develop our example a little further and include _function execution contexts_ in it:
+
+```javascript
+console.log(person);
+console.log(greetPerson);
+console.log(greetPerson());
+
+var person = "ahmet";
+
+function greetPerson() {
+  console.log("Hello " + person);
+
+  var person = "mehmet";
+}
+```
+
+Another thing to note is that hoisting occurs in the _greetPerson_ function, just as it does in the _global execution context_, and when the JavaScript engine sees the line `var person = 'mehmet';` it searches for memory for the _person_ variable (_memory allocation_). I would also like to draw your attention to the behavior of the _person_ variable due to how the _scope chain_ works in JavaScript.
+
+```javascript
+var person = undefined;
+
+function greetPerson() {
+  var person = undefined;
+
+  console.log("Hello " + person);
+
+  person = "mehmet";
+}
+
+console.log(person); // undefined
+console.log(greetPerson); // function greetPerson()
+console.log(greetPerson()); // 'Hello undefined'
+
+person = "ahmet";
+```
+
+Another example:
+
+```javascript
+console.log(person);
+
+var person = "ahmet";
+var person = "mehmet";
+```
+
+When _Hoisting_ occurs, we can assume that it will be as follows:
+
+```javascript
+var person = undefined;
+
+console.log(person); // undefined
+
+person = "ahmet";
+person = "mehmet";
+```
+
+So far, the examples we've seen are similar for variable declarations, so what about function declarations?
+
+```javascript
+console.log(greetPerson());
+
+function greetPerson() {
+  console.log("Hello");
+}
+
+function greetPerson() {
+  console.log("Hi");
+}
+```
+
+As soon as the JavaScript engine sees the first _greetPerson_ declaration, it will _hoist_ it, and then it will see the second function declaration and _hoist_ it similarly. It will write the second function in memory on top of the _greetPerson_ function.
+
+```javascript
+function greetPerson() {
+  console.log("Hi");
+}
+
+console.log(greetPerson()); // 'Hi'
+
+function greetPerson() {
+  console.log("Hello");
+}
+```
+
+Finally, look at the behavior of the _let_ and _const_ keywords introduced to our lives with ECMAScript 2015. In terms of _hoisting_:
+
+```javascript
+console.log(person);
+console.log(greetPerson);
+console.log(greetPerson());
+
+const person = "ahmet";
+
+function greetPerson() {
+  console.log("Hello " + person);
+
+  let person = "mehmet";
+}
+```
+
+The _let_, _const_, _var_, _class_, and _function_ keywords are hoisted; however, due to the difference in initialization, the use of _let_ and _const_ in this way causes a _ReferenceError_. While a variable declared with _let_ is uninitialized until the related _statement_ is executed, a variable declared with _var_ is also initialized with the _undefined_ primitive.
+
+```javascript
+console.log(person); // ReferenceError: person is not defined
+console.log(greetPerson);
+console.log(greetPerson());
+
+const person = "ahmet";
+
+function greetPerson() {
+  console.log("Hello " + person);
+
+  let person = "mehmet";
+}
+```
+
+If we remove the first console statement, we will get the same error due to the execution of the _greetPerson_ function caused by _let_.
+
+_\* This article was initially published on [labs.zingat.com](https://labs.zingat.com) on the date indicated._

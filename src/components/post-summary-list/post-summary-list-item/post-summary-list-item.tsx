@@ -1,14 +1,8 @@
 import { component$, useStylesScoped$ } from "@builder.io/qwik";
+import { PostSummary } from "~/models";
 import { formatDistance } from "~/util";
 
 import styles from "./post-summary-list-item.css?inline";
-
-export interface PostSummary {
-  title: string;
-  description: string;
-  permalink: string;
-  date: string;
-}
 
 export const PostSummaryListItem = component$(
   ({ title, description, permalink, date }: PostSummary) => {

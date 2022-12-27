@@ -3,6 +3,7 @@
   align-items: center;
   justify-content: center;
 }
-.back svg path {
+
+svg path {
   stroke: var(--text-color);
 }

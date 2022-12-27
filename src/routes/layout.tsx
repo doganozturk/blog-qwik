@@ -8,6 +8,13 @@ import {
 } from "@builder.io/qwik";
 import { Footer } from "~/components/footer/footer";
 
+export const LS_THEME = "theme";
+
+export enum ThemeType {
+  Light = "light",
+  Dark = "dark",
+}
+
 export interface Theme {
   theme: string;
 }
@@ -24,15 +31,15 @@ export default component$(() => {
     const theme = track(() => state.theme);
 
     if (theme) {
-      localStorage.setItem("theme", theme);
+      localStorage.setItem(LS_THEME, theme);
     }
   });
 
   useClientEffect$(({ track }) => {
-    const theme = track(() => localStorage.getItem("theme"));
+    const theme = track(() => localStorage.getItem(LS_THEME));
 
     if (!state.theme && theme) {
-      state.theme = localStorage.getItem("theme") || "";
+      state.theme = theme;
     }
   });
 

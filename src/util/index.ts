@@ -1,3 +1,3 @@
-export * from "./asyncMap";
-export * from "./formatDistance";
-export * from "./themeHack";
+export * from "./async-map";
+export * from "./format-distance";
+export * from "./theme-hack";

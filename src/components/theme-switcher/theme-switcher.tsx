@@ -1,5 +1,5 @@
 import { component$, useContext, useStylesScoped$ } from "@builder.io/qwik";
-import { ThemeContext } from "~/routes/layout";
+import { ThemeContext, ThemeType } from "~/routes/layout";
 
 import styles from "./theme-switcher.css?inline";
 
@@ -12,7 +12,8 @@ export const ThemeSwitcher = component$(() => {
     <div
       class="theme-switcher"
       onClick$={() => {
-        state.theme = state.theme === "light" ? "dark" : "light";
+        state.theme =
+          state.theme === ThemeType.Light ? ThemeType.Dark : ThemeType.Light;
       }}
     >
       <span class="switch switch-light">🌞</span>

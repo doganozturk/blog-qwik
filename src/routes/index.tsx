@@ -2,26 +2,21 @@ import { component$, Resource, useResource$ } from "@builder.io/qwik";
 import type { DocumentHead, DocumentHeadProps } from "@builder.io/qwik-city";
 import { MainHeader } from "~/components/header/main-header/main-header";
 import { PostSummaryList } from "~/components/post-summary-list/post-summary-list";
-import { PostSummary } from "~/components/post-summary-list/post-summary-list-item/post-summary-list-item";
+import { PostSummary } from "~/models";
 import { asyncMap } from "~/util";
-
-const title = "Doğan Öztürk | Blog";
-const description =
-  "Ben Doğan, yazılım mühendisiyim. Genel olarak yazılım, detayda ise web geliştirme, önyüz geliştirme, Node.js, Python vb. konularda düşüncelerimi paylaşmaya çalışıyorum.";
 
 export const getPosts = async (): Promise<PostSummary[]> => {
   const modules = await import.meta.glob("/src/routes/**/**/index.mdx");
 
   const posts = await asyncMap(Object.keys(modules), async (path) => {
-    const data = (await modules[
-      path
-    ]()) as DocumentHeadProps;
+    const data = (await modules[path]()) as DocumentHeadProps;
 
     return {
       title: data.head.title || "",
-      description: data.head.meta.find((m) => m.name === "description")?.content || "",
+      description:
+        data.head.meta.find((m) => m.name === "description")?.content || "",
       date: data.head.frontmatter.date,
-      permalink: data.head.frontmatter.permalink
+      permalink: data.head.frontmatter.permalink,
     };
   });
 
@@ -48,6 +43,10 @@ export default component$(() => {
     </>
   );
 });
+
+const title = "Doğan Öztürk | Blog";
+const description =
+  "Ben Doğan, yazılım mühendisiyim. Genel olarak yazılım, detayda ise web geliştirme, önyüz geliştirme, Node.js, Python vb. konularda düşüncelerimi paylaşmaya çalışıyorum.";
 
 export const head: DocumentHead = {
   title,

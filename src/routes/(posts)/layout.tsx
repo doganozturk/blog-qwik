@@ -22,7 +22,7 @@ export default component$(() => {
 export const head: DocumentHead = ({ head }) => {
   const description = head.meta.find((m) => m.name === "description")?.content;
 
-  return ({
+  return {
     ...head,
     meta: [
       ...head.meta,
@@ -33,17 +33,20 @@ export const head: DocumentHead = ({ head }) => {
       { name: "twitter:description", content: description },
       {
         name: "twitter:image",
-        content: "https://doganozturk.dev/images/avatar.jpg"
+        content: "https://doganozturk.dev/images/avatar.jpg",
       },
       { property: "og:title", content: head.title },
       { property: "og:type", content: "article" },
-      { property: "og:url", content: "https://doganozturk.dev" + head.frontmatter.permalink },
+      {
+        property: "og:url",
+        content: "https://doganozturk.dev" + head.frontmatter.permalink,
+      },
       {
         property: "og:image",
-        content: "https://doganozturk.dev/images/avatar.jpg"
+        content: "https://doganozturk.dev/images/avatar.jpg",
       },
       { property: "og:description", content: description },
-      { property: "og:site_name", content: "doganozturk.dev" }
-    ]
-  });
+      { property: "og:site_name", content: "doganozturk.dev" },
+    ],
+  };
 };

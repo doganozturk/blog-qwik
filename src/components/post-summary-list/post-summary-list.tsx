@@ -1,18 +1,12 @@
-import { component$, useStylesScoped$ } from "@builder.io/qwik";
-import {
-  PostSummary,
-  PostSummaryListItem,
-} from "./post-summary-list-item/post-summary-list-item";
-
-import styles from "./post-summary-list.css?inline";
+import { component$ } from "@builder.io/qwik";
+import { PostSummaryListItem } from "./post-summary-list-item/post-summary-list-item";
+import { PostSummary } from "~/models";
 
 interface PostSummaryListProps {
   data: PostSummary[];
 }
 
 export const PostSummaryList = component$(({ data }: PostSummaryListProps) => {
-  useStylesScoped$(styles);
-
   return (
     <section class="post-summary-list">
       {data.map(({ title, description, permalink, date }) => (
