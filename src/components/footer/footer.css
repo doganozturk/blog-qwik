@@ -13,6 +13,6 @@
 
 .link {
   margin-right: 5px;
-  color: olive;
+  color: var(--misc-color);
   font-size: 15px;
 }
