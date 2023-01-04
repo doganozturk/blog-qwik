@@ -1,4 +1,4 @@
-# My Personal Blog [![Netlify Status](https://api.netlify.com/api/v1/badges/bdbb0d4a-06fe-4acd-8117-18e4957cc978/deploy-status)](https://app.netlify.com/sites/doganozturk/deploys)
+# My Personal Blog
 
 This is my blog which I recently rewrote using [Qwik-City](https://qwik.builder.io/qwikcity/overview/). [My old blog](https://github.com/doganozturk/blog) had a straightforward setup; I especially like the idea of a minor CSS & JS footprint, inlining these resources for high [pagespeed](https://developers.google.com/speed/pagespeed/insights/?url=https://doganozturk.dev) performance. Qwik and Qwik-City give me even better results with many more features and a better developer experience.
 

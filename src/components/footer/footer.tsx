@@ -42,7 +42,7 @@ export const Footer = component$(() => {
         target: "_blank",
         rel: "noopener",
       },
-      text: "cv .",
+      text: "cv",
     },
   ];
 
