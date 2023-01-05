@@ -8,9 +8,7 @@ export const Header = component$(() => {
 
   return (
     <header class="header">
-      <a href="/" class="header-main">
-        <Slot />
-      </a>
+      <Slot />
       <ThemeSwitcher />
     </header>
   );

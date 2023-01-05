@@ -8,16 +8,18 @@ export const MainHeader = component$(() => {
 
   return (
     <Header>
-      <img
-        class="avatar"
-        src="/images/avatar.jpg"
-        loading="lazy"
-        alt="Doğan Öztürk"
-      />
-      <div class="title">
-        <h1 class="name">Doğan Öztürk</h1>
-        <p class="info">Yazılım ve diğer şeyler üzerine kişisel karalamalar</p>
-      </div>
+      <a href="/" className="header-main">
+        <img
+          class="avatar"
+          src="/images/avatar.jpg"
+          loading="lazy"
+          alt="Doğan Öztürk"
+        />
+        <div class="title">
+          <h1 class="name">Doğan Öztürk</h1>
+          <p class="info">Yazılım ve diğer şeyler üzerine kişisel karalamalar</p>
+        </div>
+      </a>
     </Header>
   );
 });
