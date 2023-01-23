@@ -1,10 +1,10 @@
-import { component$, useStyles$ } from "@builder.io/qwik";
+import { component$, useStylesScoped$ } from "@builder.io/qwik";
 import { Header, HeaderType } from "~/components/header/header";
 
 import styles from "./main-header.css?inline";
 
 export const MainHeader = component$(() => {
-  useStyles$(styles);
+  useStylesScoped$(styles);
 
   return (
     <Header type={HeaderType.Main}>
