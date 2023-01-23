@@ -44,8 +44,8 @@ export default component$(() => {
   });
 
   return (
-    <div className={`theme-container ${state.theme}`}>
-      <div className="container">
+    <div class={`theme-container ${state.theme}`}>
+      <div class="container">
         <Slot name="header" />
         <Slot />
         <Footer />

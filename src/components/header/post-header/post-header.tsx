@@ -8,7 +8,7 @@ export const PostHeader = component$(() => {
 
   return (
     <Header type={HeaderType.Post}>
-      <div className="back">
+      <div class="back">
         <svg width="15" height="20" viewBox="0 0 50 80">
           <path
             fill="none"

@@ -19,7 +19,7 @@ export const Header = component$(({ type }: HeaderProps) => {
     <header class="header">
       <a
         href="/"
-        className="header-main"
+        class="header-main"
         aria-label={type === HeaderType.Post ? "back" : ""}
       >
         <Slot />
