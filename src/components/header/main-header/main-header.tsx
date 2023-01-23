@@ -9,14 +9,14 @@ export const MainHeader = component$(() => {
   return (
     <Header type={HeaderType.Main}>
       <img
-        className="avatar"
+        class="avatar"
         src="/images/avatar.jpg"
         loading="lazy"
         alt="Doğan Öztürk"
       />
-      <div className="title">
-        <h1 className="name">Doğan Öztürk</h1>
-        <p className="info">
+      <div class="title">
+        <h1 class="name">Doğan Öztürk</h1>
+        <p class="info">
           Yazılım ve diğer şeyler üzerine kişisel karalamalar
         </p>
       </div>
