@@ -3,7 +3,7 @@ import type { DocumentHead, DocumentHeadProps } from "@builder.io/qwik-city";
 import { MainHeader } from "~/components/header/main-header/main-header";
 import { PostSummaryList } from "~/components/post-summary-list/post-summary-list";
 import { PostSummary } from "~/models";
-import { asyncMap } from "~/util";
+import { asyncMap, Locale } from "~/util";
 
 export const getPosts = async (): Promise<PostSummary[]> => {
   const modules = await import.meta.glob("/src/routes/**/**/index.mdx");
@@ -17,15 +17,18 @@ export const getPosts = async (): Promise<PostSummary[]> => {
         data.head.meta.find((m) => m.name === "description")?.content || "",
       date: data.head.frontmatter.date,
       permalink: data.head.frontmatter.permalink,
+      lang: data.head.frontmatter.lang,
     };
   });
 
-  return posts.sort((a, b) => {
-    const dateA = new Date(a.date).getTime();
-    const dateB = new Date(b.date).getTime();
+  return posts
+    .filter(({ lang }) => lang === Locale.en)
+    .sort((a, b) => {
+      const dateA = new Date(a.date).getTime();
+      const dateB = new Date(b.date).getTime();
 
-    return dateB - dateA;
-  });
+      return dateB - dateA;
+    });
 };
 
 export default component$(() => {
@@ -46,7 +49,7 @@ export default component$(() => {
 
 const title = "Doğan Öztürk | Blog";
 const description =
-  "Ben Doğan, yazılım mühendisiyim. Genel olarak yazılım, detayda ise web geliştirme, önyüz geliştirme, Node.js, Python vb. konularda düşüncelerimi paylaşmaya çalışıyorum.";
+  "I'm Doğan, a software engineer passionate about front-end development, JavaScript and Node.js. On my blog, I share my expertise and experiences in tech, as well as my interests in role-playing games, computer games, sci-fi and more.";
 
 export const head: DocumentHead = {
   title,
