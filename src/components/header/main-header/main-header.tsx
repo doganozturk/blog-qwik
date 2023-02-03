@@ -17,7 +17,7 @@ export const MainHeader = component$(() => {
       <div class="title">
         <h1 class="name">Doğan Öztürk</h1>
         <p class="info">
-          Yazılım ve diğer şeyler üzerine kişisel karalamalar
+          Reflections on Technology, Culture, and Life
         </p>
       </div>
     </Header>
