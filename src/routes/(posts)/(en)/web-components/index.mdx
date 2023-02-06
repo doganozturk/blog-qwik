@@ -1,0 +1,199 @@
+---
+title: "Web Components"
+description: "In the web front-end projects that we develop, it is a fact that if no style guide contributes to the development of all departments based on the company and ensures maintenance, every time a new product is added, new buttons, labels, form elements, modals, etc. have to be developed. This situation eventually leads to increased complexity in front-end projects and development and maintenance costs."
+permalink: "/web-components/"
+date: "2019-06-17"
+lang: "en"
+---
+
+import { formatDistance } from "~/util";
+
+export const title = "Web Components";
+export const date = "2019-06-17";
+
+# {title}
+
+<p>{formatDistance(date)}</p>
+
+_\* This article is also available in [Turkish](/tr/web-components/)._
+
+Web Components are one of the front-end development concepts that excite me the most lately. In this article, I will discuss the technology that allows us to develop reusable and encapsulated web components using _HTML_, _CSS_, and _JavaScript_.
+
+In the web front-end projects that we develop, it is a fact that if no style guide contributes to the development of all departments based on the company and ensures maintenance, every time a new product is added, new buttons, labels, form elements, modals, etc. have to be developed. This situation eventually leads to increased complexity in front-end projects and development and maintenance costs.
+
+Of course, this problem is seen by many software developers worldwide, and various solutions have been produced. _React_, _Vue_, and _Angular_, currently preferred as modern front-end development frameworks, fundamentally solve this problem. Especially the fact that _React_ provides a functional output of the current state of the view (of course, along with one-way data flow) also brought up the idea of perceiving and developing complex front-ends as a component whole.
+
+Speaking specifically about Web Components, we can say that what has been done for years with frameworks is presented in the form supported by the platform of the essential elements that make up a web project at the browser level (_native_). Thus, we can now write reusable web components with the vital technologies we have at hand (_HTML_, _CSS_, and _JavaScript_).
+
+Three browser APIs implement the Web Components concept possible. These are:
+
+**1\. Custom Elements**
+
+With the Custom Elements API, we can create and use our tags as native HTML tags. In this context, Web Components are custom HTML elements we produce.
+
+For example, the `<zingat-suggest />` custom element can contain the entire complexity of Zingat's suggest box, just like the `<video>` tag contains other elements (play, stop buttons, etc.).
+
+**2\. Shadow DOM**
+
+Shadow DOM is an API that allows us to create a "shadow" tree for an element separate from the main DOM tree. This way, the styles and behaviors defined within the shadow tree do not affect the rest of the page and vice versa.
+
+**3\. HTML Templates**
+
+HTML Templates allow us to define fragments of HTML code that are not displayed in the initial rendering of the page but can be reused later. This can be useful for Web Components where the same structure is used multiple times.
+
+We have briefly talked about the basic theory of Web Components. For more detailed information, you can use [MDN's Web Components documentation](https://developer.mozilla.org/en-US/docs/Web/Web_Components).
+
+---
+
+Now, I also want to take a look at how it works on the code side, going through the examples from the mini-workshop I conducted at [Zeetup](https://www.meetup.com/zingat/), which the Zingat Software Team organized at Nurol Tower on March 30, 2019:
+
+Creating a web component is very simple. We create an object using the class syntax introduced with ES6 and then register our component by referencing it with the `window.customElements.define()` method, which returns a reference to the `CustomElementRegistry` object provided by the platform.
+
+```javascript
+class ToolTip extends HTMLElement {}
+
+customElements.define("zingat-tooltip", ToolTip);
+```
+
+Thus, we now have a Web Component, `<zingat-tooltip>`, that we can use in our markup. When this tooltip contains any text in its HTML, I want it to add a star to the end of that text, and when the mouse cursor hovers over that star, I want a message of my choice to become visible.
+
+```javascript
+class  ToolTip  extends  HTMLElement {
+	constructor() {
+		super();
+
+		this.tooltipIcon  =  null;
+		this.attachShadow({ mode:  'open' });
+
+		this.shadowRoot.innerHTML = \`
+			<slot></slot><span>\*</span>
+		\`;
+	}
+...
+```
+
+Here, I use the `<slot>` to place the text I've included within the `<zingat-tooltip>` tags into the shadowRoot, and I add a star with a `<span>` tag at the end of the text.
+
+```javascript
+...
+
+	render(e) {
+		const visible = e.type === 'mouseenter';
+
+		let tooltipContent = this.shadowRoot.querySelector('div');
+
+		if (visible) {
+			tooltipContent = document.createElement('div');
+			tooltipContent.innerHTML = '<span>' + this.text + '</span>';
+			tooltipContent.style.backgroundColor = this.bgColor;
+		}
+
+		if (visible) {
+			this.shadowRoot.appendChild(tooltipContent);
+		} else if (!visible && tooltipContent) {
+			this.shadowRoot.removeChild(tooltipContent);
+		}
+	}
+
+	connectedCallback() {
+		this.text = this.getAttribute('text') || this.text;
+		this.bgColor = this.getAttribute('bg-color') || this.bgColor;
+
+		this.tooltipIcon = this.shadowRoot.querySelector('span');
+
+		this.tooltipIcon.addEventListener('mouseenter', this.render.bind(this));
+		this.tooltipIcon.addEventListener('mouseleave', this.render.bind(this));
+	}
+
+	disconnectedCallback() {
+		this.tooltipIcon.removeEventListener('mouseenter', this.render);
+		this.tooltipIcon.removeEventListener('mouseleave', this.render);
+	}
+
+	...
+```
+
+Above, we wrote a simple `render()` method. This method creates a `<div>` containing the text we want to display when we go over the star and perform it in the `mouseenter` event. In the `mouseleave` event, we can remove this content box according to the controls in the `render()` function.
+
+Again, in the code snippet above, we were introduced to another concept related to Web Components, the **Lifecycle Callbacks**. The most frequently used callback is the `connectedCallback()` function, invoked when our component is mounted to the DOM. In the `disconnectedCallback()` method, we perform cleanup operations to prevent memory leaks when we remove our component from the DOM, as you can imagine.
+
+Another necessary **Lifecycle Callback** is `attributeChangedCallback()`. This is a structure that adds _reactivity_ to Web Components. In the code above, we used two properties, `this.text` and `this.bgColor`. These are examples of the values we dynamically give to our component, `<zingat-tooltip text="This is a tooltip text!" bg-color="#fff">...` With `attributeChangedCallback()`, the component is aware of this situation and reacts accordingly when these _attributes_ are changed.
+
+```javascript
+class ToolTip extends HTMLElement {
+	constructor() {
+		super();
+
+		this.tooltipIcon = null;
+		this.text = 'Standart metin';
+		this.bgColor = "#fff";
+
+		this.attachShadow({ mode: 'open' });
+		this.shadowRoot.innerHTML = \`
+			<style>
+				span {
+					cursor: pointer;
+				}
+
+				div {
+					background-color: ${this.bgColor};
+					color: #000;
+					padding: 0.5rem;
+					border: 1px solid #000;
+					border-radius: 4px;
+					box-shadow: 2px 2px 4px 0 rgba(0, 0, 0, 0.5);
+					position: absolute;
+					top: 0.5rem;
+					left: 0.5rem;
+					z-index: 1;
+				}
+			</style>
+
+			<slot></slot><span>\*</span>
+		\`;
+	}
+
+	...
+
+	attributeChangedCallback(name, oldValue, newValue) {
+		if (oldValue === newValue) {
+			return;
+		}
+
+		if (name === 'text') {
+			this.text = newValue;
+		}
+
+		if (name === 'bg-color') {
+			this.bgColor = newValue;
+		}
+	}
+
+	static get observedAttributes() {
+		return \['text', 'bg-color'\];
+	}
+}
+```
+
+In the code block, you can see that we set default values for the `text` and `bgColor` properties in the constructor. Then, in the `connectedCallback()`, we read and update these values from the _attributes_. To be able to react to these changes, we also monitored these two properties with the `observedAttributes` _getter_.
+
+In the code block above, there is also an example of a CSS writing specific (_scoped_) to this component. All the CSS declarations written in the `<style>` tags opened in the shadowRoot are independent and unaffected by others in the light DOM.
+
+---
+
+<div class="video-wrapper">
+  <iframe
+    loading="lazy"
+    width="560"
+    height="315"
+    title="Web Components"
+    src="https://www.youtube.com/embed/IGDJyP_-p6A"
+    frameborder="0"
+    allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+    allowfullscreen
+  ></iframe>
+</div>
+
+The completed version of this project and other examples can be accessed at [https://github.com/doganozturk/web-components](https://github.com/doganozturk/web-components). You can also access my presentation on the subject [here](https://youtu.be/IGDJyP_-p6A). I also recommend Maximilian Schwarzmüller's course on Udemy, [Web Components & Stencil.js — Build Custom HTML Elements](https://www.udemy.com/web-components-stenciljs-build-custom-html-elements/), which helped me better understand and use Web Components and from which I benefited from the examples.
+
+_\* This article was initially published on [labs.zingat.com](https://labs.zingat.com) on the date specified._

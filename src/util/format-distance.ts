@@ -8,7 +8,7 @@ export enum Locale {
 
 export const formatDistance = (date: string, locale: Locale = Locale.en) => {
   return formatDistanceFn(new Date(date), new Date(), {
-    locale : locale === Locale.tr ? tr : undefined,
+    locale: locale === Locale.tr ? tr : undefined,
     addSuffix: false,
   });
 };
