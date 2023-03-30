@@ -1,0 +1,117 @@
+---
+title: "Cross-Platform Development: React-Native-Web"
+description: "When you intend to pursue Cross-Platform Development, this will be the most common and confusing question you will encounter. From the perspective of being a web development-originated software developer, I suggest making your decision entirely based on your needs. For small and medium-sized projects, especially if your applications are not dependent on great animations or the cutting-edge features of the native platform, I can say that a hybrid application will more than suffice; however, if your requirements and the composition of your software development team (for example, having both mobile application and web developers who can work compatibly in an environment) are suitable, turning to native solutions will be healthier."
+permalink: "/cross-platform-development-react-native-web/"
+date: "2019-09-22"
+lang: "en"
+---
+
+import { formatDistance, Locale } from "~/util";
+
+export const title = "Cross-Platform Development: React-Native-Web";
+export const date = "2019-09-22";
+
+# {title}
+
+<p>{formatDistance(date, Locale.en)}</p>
+
+_\* This article is also available in [Turkish](/tr/cross-platform-development-react-native-web/)._
+
+It is reasonable for you to want your idea to be present on all popular platforms for a current project. With this in mind, when you decide to build an app today and present it to your users, you are most likely required to be on at least three popular platforms:
+
+- Web
+- iOS
+- Android
+
+For these three platforms, you will produce three separate apps that essentially do the same job, using three different languages, three distinct development cultures, and the development tools of the platforms while meeting the requirements for development in these environments.
+
+Considering all these factors, `Cross-Platform Development` can be seen as today's holy grail, or El Dorado for IT projects. It is a software development concept that allows you to bring your project or idea to life with a single development environment, a single codebase, and shared processes, all at much lower costs, ensuring your presence on all widely-used platforms.
+
+Of course, only some projects can have the same competitive opportunities and strengths. The number of developers in your team, their experience, and their loyalty play a significant role in the process. Likewise, product management, design processes, and test flow management on all these separate applications contribute to increasing complexity in your world.
+
+## Hybrid or Native?
+
+When you intend to pursue Cross-Platform Development, this will be the most common and confusing question you will encounter. From the perspective of being a web development-originated software developer, I suggest making your decision entirely based on your needs. For small and medium-sized projects, especially if your applications are not dependent on great animations or the cutting-edge features of the native platform, I can say that a hybrid application will more than suffice; however, if your requirements and the composition of your software development team (for example, having both mobile application and web developers who can work compatibly in an environment) are suitable, turning to native solutions will be healthier.
+
+## The Future of Cross-Platform Development
+
+It will be a more discussed and applied method in the coming years; as devices diversify, alternative platforms emerge, and the need for projects to present themselves and be found in different environments increase. In this context, although Web Development currently seems to be in the middle of these needs as a unifying development environment/culture, development opportunities that can create output for both Web and iOS and Android on an abstraction level above the Web, as in Hummingbird developed by the Flutter team, will occupy our agendas even more.
+
+## React
+
+At this point, I want to talk about React, the most popular JavaScript library in the application front-end development world in recent years. From here, we will naturally move on to React-Native and React-Native-Web.
+
+React does not have any information about the platform it will work on. React is only concerned with the view, that is, what we see. While expressing this to us, it uses some basic concepts. These are the `Component`'s, which can be considered as the Lego pieces we use when building the view - in the React world, each `Component` is essentially a function that renders the view.
+
+React offers a declarative, not imperative, code-writing perspective. It solves this with the principle of `Component`'s re-rendering with the change of `state` and `prop`'s.
+
+## Using React on the Web
+
+As I mentioned, React needs to know which platform it is running. It is based on defining `Component`'s and their relationships, and the concepts of `state` and `prop`. It allows you to create a UI in a _declarative_ way.
+
+To use React on the Web, we use an additional library called ReactDOM. ReactDOM contains DOM-specific methods, which enable your React components to work on the Web thanks to these methods.
+
+## React-Native
+
+React-Native was released as OSS on GitHub by Facebook in March 2015. Adhering to the "learn once, write everywhere" principle introduced by React, it quickly became one of the leading development platforms for Cross-Platform Development. The library's performance on GitHub is in good shape as of the date this article was written.
+
+## React-Native-Web
+
+While researching Cross-Platform solutions, I came across React-Native-Web. It is a library written by Nicolas Gallagher. Nicolas Gallagher is a software developer who played a tech-lead role while developing Twitter's PWA and is currently working at Facebook. React-Native-Web was first released in July 2015 and has been developed and is still being developed as a JavaScript library.
+
+The core idea of React-Native-Web is quite simple. Just as we use a single Component language with React-Native and convert them to Android and iOS counterparts, this library also transforms the same abstractions into their corresponding DOM-compatible HTML tags. Thanks to this mapping, we can use the same language in the render() functions for all three platforms while keeping the business logic, state management, and component hierarchy we hold at the React level.
+
+## Expo
+
+Expo is a set of tools built on top of React-Native. It offers tools that make your life much easier while developing with React-Native. For example, when you start your application with Expo CLI, you can build your application for the desired platform with simple CLI commands. You can easily open and debug your app on your device by scanning the QR code provided with the Expo Client app installed on your phone. It also allows you to access device-specific APIs like camera, accelerometer, etc., with many libraries, which saves you from development costs. In addition to all its benefits, being a ready-made solution limits your world. Adding modules written in platform-specific languages (Objective-C, Swift, Java, or Kotlin) to your React-Native project is impossible. Also, as a disadvantage of coming up with ready-made solutions, your application size increases.
+
+I didn't use Expo in my React-Native-Web journey. It is a better method to learn the development platform, reduce my dependencies, and know the purpose of every library I use. However, you can use Expo without hesitation for small or medium-sized applications and be quite comfortable during your development process.
+
+A final note on Expo: They have serious efforts to bring React-Native-Web and React-Native together. Their work here is vital, and if they can solve their current problems and progress in this regard, they will create an easy-to-use JS-oriented Cross-Platform Development environment for us developers.
+
+---
+
+## My React-Native-Web Experiences
+
+Here comes the most exciting part. I will talk about my experiences in learning and developing React-Native-Web.
+
+I have created a repository during this process, which you can find at [this link](https://github.com/doganozturk/react-native-web-boilerplate). Many React-Native-Web starter projects have been created if you do a little research. However, as both React and React-Native versions advance, and the helper libraries developed by the community also improve, some things need to be updated. This can sometimes require the process to be revisited.
+
+In my work, I tried to learn the purposes of all the packages used and to set up the structure from scratch by stumbling along.
+
+My first task was to create a starter project using the "react-native init" command with React-Native-CLI, as recommended in the React-Native documentation. I shaped the structure that included Web on this foundation. It is important to base it on React-Native; because there are many more "moving parts" on the native side, which makes that side more fragile, in my opinion. Therefore, it is crucial to lay the foundation for the native application and add the Web to obtain more reliable results.
+
+Again, at this point, one of the fundamental problems you encounter when you combine Web and React-Native is the issue of navigation. Ultimately, the Web platform includes the routing concept and can navigate to different pages via URLs. At the same time, native manages different "views" transitions between views, which, although similar to routing on the Web, actually contains different concepts.
+
+After some research, I found the React-Navigation library suitable to solve the navigation issue. React-Navigation and Expo developers are working together to make React-Native-Web more accessible. Of course, more than using React-Navigation alone is required; you may need to write wrappers that will allow you to run both navigation situations.
+
+Another critical issue is the issue of how JS is bundled for the Web. At this point, it is necessary to make a Webpack configuration independent of the native project. Because many React-Native packages are not already compiled to be compatible with ES5, specific Babel loader settings must be made to handle this situation.
+
+Similarly, an alias definition is also required for import statements.
+
+There is also a solution like making a working that sets the platform-based separation of different codes you write for Web and native to give priority to files with the ".web.js" extension in your Webpack configuration. Going back to the navigation issue mentioned above, we make the part that will work on the Web ".web.js" extension, and we use the standard file for native. If this file is, say, "index.js", you also have an "index.web.js" file with this approach. When Webpack bundles your code, it uses the ".web.js" extension of the file, which allows you to work specifically on the Web.
+
+---
+
+Finally, I want to make some observations about the usability of React-Native-Web. For example, in the case of Zingat, it is unsuitable for modules with high SEO requirements, such as listing Zingat's advertisements, searching for users, or presenting details of housing projects that require very delicate work in terms of Pagespeed performance. Similarly, I can say that I would not bring Web and native together for work that requires high performance and mastery specific to the platform and that uses the latest APIs of a smartphone.
+
+On the other hand, if your relevant front-ends are exempt from the situations mentioned above and if you think that your team can cope with the complexity that will arise (I believe it is a prerequisite to have competent developers in both native and Web sides), it is fascinating to be able to produce output for three platforms with a single codebase.
+
+---
+
+<div class="video-wrapper">
+  <iframe
+    loading= "lazy"
+    width= "560"
+    height= "315"
+    title= "Cross-Platform Development: React-Native-Web"
+    src="https://www.youtube.com/embed/G5KBZWLhtMM"
+    frameborder= "0"
+    allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+    allowfullscreen
+  ></iframe>
+</div>
+
+As Zingat Software Team, we organized our second Zeetup event on June 29, 2019, at ITU Arı 3 Technopark Conference Hall, where I presented on this topic. I recommend you look at the fascinating world of Cross-Platform Development with a small introduction to React/React-Native.
+
+_\* This article was first published on the date specified at [labs.zingat.com](https://labs.zingat.com)._
