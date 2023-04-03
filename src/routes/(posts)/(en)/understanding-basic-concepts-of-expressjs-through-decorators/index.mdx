@@ -1,0 +1,278 @@
+---
+title: "Understanding Basic Concepts of Express.js through Decorators"
+description: "ES6, or also known as ES2015, became the standard on June 17, 2015. Before that and, of course, since that day, ECMAScript, commonly known as JavaScript, has been trying to meet the growing needs of the Web. Every year, new concepts and structures are added to the core of the language."
+permalink: "/understanding-basic-concepts-of-expressjs-through-decorators/"
+date: "2020-01-02"
+lang: "en"
+---
+
+import { formatDistance } from "~/util";
+
+export const title =
+  "Understanding Basic Concepts of Express.js through Decorators";
+export const date = "2020-01-02";
+
+# {title}
+
+<p>{formatDistance(date)}</p>
+
+_\* This article is also available in [Turkish](/tr/decoratorleri-expressjs-temel-konseptleri-uzerinden-anlamak/)._
+
+ES6, or also known as ES2015, became the standard on June 17, 2015. Before that and, of course, since that day, ECMAScript, commonly known as JavaScript, has been trying to meet the growing needs of the Web. Every year, new concepts and structures are added to the core of the language. These, by their nature, are innovations that enable us, who write JS-based applications, to make our work even easier, and create code foundations that are more scalable and easier to manage, maintain, and develop.
+
+The topic I want to discuss in this article is actually such an addition. Ecma International, Technical Committee 39, is a board that determines the rules of the ECMAScript language, plans the features to be added to the language every year, presents the proposals of its members, discusses them, and includes the agreed-upon features as standards. Decorators, which I will touch upon in this article, are a new concept currently at the stage 2 phase. However, don't be misled by the term "new"; there are structures in many other languages that perform similar functions – let's say it's new for the JS world. You can review the current proposals and their stages here: https://github.com/tc39/proposals.
+
+Decorators are a language feature that brings new metaprogramming capabilities to the Class syntax introduced to JavaScript with ES6, essentially enabling us to create more readable, functional, maintainable, and manageable abstractions. According to Wikipedia's definition, metaprogramming is a programming technique used for a computer program to read, generate, analyze, or modify another program or itself. In this context, with the practical use of decorators in JS, it becomes possible for us to implement a more robust object-oriented programming concept.
+
+After all these words, we will write a simple Node.js/Express.js MVC application example through a more practical approach, using basic examples of some decorator types, and we will integrate them with fundamental Express.js concepts such as Controller, Middleware, and Router.
+
+Honestly, similar or related works to the example I am about to explain have been eye-opening for me in terms of the practical use of decorators. Especially if you've had the opportunity to develop applications specifically with Node.js and Express.js (or other Node.js microframeworks like Koa, Fastify), this approach will make decorators more understandable for you as well.
+
+Our starting application is a very simple Express.js example built on top of a basic TypeScript boilerplate:
+
+```javascript
+import express, { Request, Response, Router } from "express";
+import bodyParser from "body-parser";
+
+const app = express();
+const port = process.env.PORT || 3000;
+const router = Router();
+
+app.use(bodyParser.urlencoded({ extended: true }));
+
+router.get("/user", (req: Request, res: Response): void => {
+  res.send(`
+    <div>
+        <form action="/user" method="post">
+            <div>
+                <label for="name">Name:</label>
+                <input type="text" name="name">
+            </div>
+            <div>
+                <label for="email">Email:</label>
+                <input type="email" name="email">
+            </div>
+            <div>
+                <label for="age">Age:</label>
+                <input type="number" name="age">
+            </div>
+            <div>
+                <label for="address">Address:</label>
+                <input type="text" name="address">
+            </div>
+            <button>SEND</button>
+        </form>
+    </div>
+    `);
+});
+
+router.post("/user", (req: Request, res: Response): void => {
+  const { name, email, age, address } = req.body;
+
+  res.send(`
+      <div>
+          <h1>USER INFO:</h1>
+          <p>
+              Name: ${name}
+          </p>
+          <p>
+              Email: ${email}
+          </p>
+          <p>
+              Age: ${age}
+          </p>
+          <p>
+              Address: ${address}
+          </p>
+          <p>
+              Is Admin: ${!!res.locals.isAdmin}
+          </p>
+      </div>
+    `);
+});
+
+app.use(router);
+
+app.listen(port, (): void => {
+  console.log(`Server started on port ${port}`);
+});
+```
+
+As can be seen, we have two controllers. They handle GET and POST requests at the `/user` path.
+
+Our code is currently TypeScript compatible, and when you run it, the TypeScript compiler will not throw any errors; however, of course, if we are using TypeScript, we should want our code to be less procedural and have more OOP features. Naturally, we might consider designing and managing the controller through an API like this:
+
+```javascript
+import { Request, Response } from "express";
+import { Controller, Get, Post, Middleware } from "../decorators";
+import { isAdmin, logger } from "../middlewares";
+
+@Controller("/user")
+export class UserController {
+  @Get()
+  getUser(req: Request, res: Response): void {
+    res.send(`
+            <div>
+                <form action="/user" method="post">
+                    <div>
+                        <label for="name">Name:</label>
+                        <input type="text" name="name">
+                    </div>
+                    <div>
+                        <label for="email">Email:</label>
+                        <input type="email" name="email">
+                    </div>
+                    <div>
+                        <label for="age">Age:</label>
+                        <input type="number" name="age">
+                    </div>
+                    <div>
+                        <label for="address">Address:</label>
+                        <input type="text" name="address">
+                    </div>
+                    <button>SEND</button>
+                </form>
+            </div>
+        `);
+  }
+
+  @Post()
+  @Middleware([logger, isAdmin])
+  postUser(req: Request, res: Response): void {
+    const { name, email, age, address } = req.body;
+
+    res.send(`
+            <div>
+                <h1>USER INFO:</h1>
+                <p>
+                    Name: ${name}
+                </p>
+                <p>
+                    Email: ${email}
+                </p>
+                <p>
+                    Age: ${age}
+                </p>
+                <p>
+                    Address: ${address}
+                </p>
+                <p>
+                    Is Admin: ${!!res.locals.isAdmin}
+                </p>
+            </div>
+        `);
+  }
+}
+```
+
+Let's say the code writing style we want to achieve at the end of the day is this. In the example, you will probably notice the `@Controller`, `@Get`, `@Post`, and `@Middleware` decorators. We will create these decorators and assign controller duties to a TypeScript class. We will also assign the methods defined within the class as `request handlers` using various decorators. Similarly, with the `@Middleware` decorator factory, we can pass the request through the middlewares we choose in the desired order before it reaches the controller.
+
+Decorator factories are simply functions that return decorators when invoked. In this example, all the structures we use are decorator factories. They take or can take various parameters, and eventually, they return decorators that allow us to manipulate the UserController class and its methods. There are five types of decorators in TypeScript: class, method, accessor, property, and parameter decorators. In this article, we will examine class and method examples.
+
+Let's start with our decorator that makes the methods belonging to the controller act as request handlers:
+
+```javascript
+import { HttpMethods, ControllerDecoratorParams } from "../enums";
+
+function createRouteMethod(method: HttpMethods) {
+  return function (path?: string): Function {
+    return function (target: any, propertyKey: string): void {
+      Reflect.defineMetadata(
+        ControllerDecoratorParams.Path,
+        path,
+        target,
+        propertyKey
+      );
+      Reflect.defineMetadata(
+        ControllerDecoratorParams.Method,
+        method,
+        target,
+        propertyKey
+      );
+    };
+  };
+}
+
+export const Get = createRouteMethod(HttpMethods.Get);
+export const Post = createRouteMethod(HttpMethods.Post);
+export const Put = createRouteMethod(HttpMethods.Put);
+export const Patch = createRouteMethod(HttpMethods.Patch);
+export const Delete = createRouteMethod(HttpMethods.Delete);
+```
+
+What it does is actually quite simple: Instead of writing for each HTTP method one by one, we have a function called `createRouteMethod` that returns the decorator factory we will use at the end of the day. It takes a string value like 'get', 'post', but since we are in the TypeScript world, we have the option to manage these parameters through an enum. The decorator factory itself takes a `path` parameter, you can think of it as making a GET request to the '/user' path, and eventually returns the decorator itself. Inside the decorator function, we store the `path` and `method` parameters, which indicate which HTTP method we handle, as metadata for later use.
+
+Our decorator example that allows us to use the request handler-based middleware structure is as follows:
+
+```javascript
+import { ControllerDecoratorParams } from "../enums";
+import { RequestHandler } from "express";
+
+export function Middleware(middlewares: RequestHandler[]): Function {
+  return function (target: any, propertyKey: string): void {
+    Reflect.defineMetadata(
+      ControllerDecoratorParams.Middleware,
+      middlewares,
+      target,
+      propertyKey
+    );
+  };
+}
+```
+
+We also provide the desired middleware functions (think of them as classic middleware functions) as an Array to this decorator factory, and ultimately, we store this Array as metadata.
+
+The main element that processes this stored information at the beginning of the runtime and ensures the operation of the architecture we set up is the @Controller decorator:
+
+```javascript
+import { AppRouter } from "../router/AppRouter";
+import { HttpMethods, ControllerDecoratorParams } from "../enums";
+import { RequestHandler } from "express";
+
+export function Controller(path: string): Function {
+  return function (target: any): void {
+    const router = AppRouter.router;
+
+    for (const _action in target.prototype) {
+      if (target.prototype.hasOwnProperty(_action)) {
+        const _path: string =
+          Reflect.getMetadata(
+            ControllerDecoratorParams.Path,
+            target.prototype,
+            _action
+          ) || "";
+        const method: HttpMethods = Reflect.getMetadata(
+          ControllerDecoratorParams.Method,
+          target.prototype,
+          _action
+        );
+        const middlewares: RequestHandler[] =
+          Reflect.getMetadata(
+            ControllerDecoratorParams.Middleware,
+            target.prototype,
+            _action
+          ) || [];
+
+        router[method](
+          `${path}${_path}`,
+          middlewares,
+          target.prototype[_action]
+        );
+      }
+    }
+  };
+}
+```
+
+Here, we iterate through all the methods defined in the UserController class and extract the defined metadata for each if it exists, and then make the desired definitions with the help of our router, which we designed as a singleton. What we do dynamically here generates the following output:
+
+```javascript
+router.get("/user", [], getUser);
+router.post("/user", [logger, isAdmin], postUser);
+```
+
+You can examine popular projects like [Nest.js](https://nestjs.com) and [Ts.ED](https://tsed.io) for similar structures and much more professionally prepared, usable versions of what I am trying to describe.
+
+You can access and review the project I used in this article at [https://github.com/doganozturk/express-typescript-decorators](https://github.com/doganozturk/express-typescript-decorators).
+
+_\* This article was first published on labs.zingat.com on the specified date._
