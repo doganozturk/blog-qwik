@@ -1,0 +1,273 @@
+---
+title: "Amsterdam JSNation 2019"
+description: "On June 7th, I had the opportunity to represent the Zingat Software Team at the JSNation conference held in the prestigious city of Amsterdam, the capital of the Netherlands. Amsterdam, one of the most visited cities in Europe by travelers, hosted the conference at a central location in an old church called Zuiderkerk. This venue also attracts attention as the place where Rembrandt created his famous painting, The Night Watch."
+permalink: "/amsterdam-jsnation-2019/"
+date: "2019-06-11"
+lang: "en"
+---
+
+import { formatDistance, Locale } from "~/util";
+
+export const title = "Amsterdam JSNation 2019";
+export const date = "2019-06-11";
+
+# {title}
+
+<p>{formatDistance(date, Locale.en)}</p>
+
+_\* This article is also available in [Turkish](/tr/amsterdam-jsnation-2019/)._
+
+On June 7th, I had the opportunity to represent the Zingat Software Team at the JSNation conference held in the prestigious city of Amsterdam, the capital of the Netherlands. Amsterdam, one of the most visited cities in Europe by travelers, hosted the conference at a central location in an old church called Zuiderkerk. This venue also attracts attention as the place where Rembrandt created his famous painting, The Night Watch.
+
+Amsterdam JSNation took place in two separate locations this year. Zuiderkerk was the main conference center, while Uilenburg synagogue, a five-minute walk from the church, hosted Node.js-focused presentations. Although the locations were close to each other and strolling through Amsterdam's historical streets was enjoyable, I can say that I had to shuttle back and forth quite a bit between the two locations, especially when trying to watch the presentations live.
+
+<img
+    loading="lazy"
+    src="/images/posts/amsterdam-jsnation-2019/zuiderkerk.jpeg"
+    alt="Zuiderkerk - Main Hall"
+/>
+
+JavaScript is one of the most important elements of Zingat's code stack. We have various JS applications that we develop for backend or frontend needs, including our platform's essential parts, such as the zingat.com website, an MVC Node.js — Express application. We closely follow developments in JavaScript and constantly strive to keep our applications up to date. In this context, Amsterdam JSNation was an event I was eager to attend both because of its exotic location and the presence of some names from the JS community that I follow.
+
+<img
+    loading="lazy"
+    src="/images/posts/amsterdam-jsnation-2019/uilenburg.jpeg"
+    alt="Uilenburg - Node.js Hall"
+/>
+
+I tried to attend a variety of presentations, making an effort to be an audience member for both backend and frontend talks. Zuiderkerk hosted presentations mostly focused on JavaScript's use in frontend, while Uilenburg synagogue had backend-focused narratives. I can say that the GitNation team, who organized the event, did a good job in making the presentations diverse and interesting; they managed to create content ranging from WebGL to automatic page performance measurement methodologies, functional programming paradigms to Angular development, and error management in Node.js backends.
+
+<img
+    loading="lazy"
+    src="/images/posts/amsterdam-jsnation-2019/amsterdam.jpeg"
+    alt="Amsterdam"
+/>
+
+<img
+    loading="lazy"
+    src="/images/posts/amsterdam-jsnation-2019/opening.jpeg"
+    alt="JSNation Opening"
+/>
+
+At the time of writing this post, they had not yet separately posted the presentations on their official YouTube page. Therefore, I will share the starting points of the presentations from the entire stream, along with the presentations I attended and the notes I took.
+
+After arriving at the event venue in the morning, getting inside, and putting on the printed badge with my name on it, I took my seat to listen to Kyle Simpson's opening speech. Kyle Simpson is the author of the popular "You Don't Know JS" series, which you can read for free from his GitHub repo ([https://github.com/getify/You-Dont-Know-JS](https://github.com/getify/You-Dont-Know-JS)). He has a long history in programming and has been a developer involved in every stage of the web's evolution over the years. I particularly enjoyed his thoughts on how JavaScript is increasingly becoming a compile target. He provided a fun and thought-provoking critique of the increasingly complex Web and JavaScript development culture, drawing on our shared experiences of learning web development by right-clicking on an interesting web page in a browser, selecting "View Source," and examining and trying to understand the HTML.
+
+<div class="video-wrapper">
+    <iframe
+        loading="lazy"
+        width="560"
+        height="315"
+        title="Keep betting on JavaScript - Kyle Simpson"
+        src="https://www.youtube.com/embed/ZrKjgSfpppM"
+        frameborder="0"
+        allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+        allowfullscreen
+    ></iframe>
+</div>
+
+After the first talk, I went to the Node.js room and watched a presentation on the Quasar Framework by its creator, Razvan Stoenescu. It offers an overall solution using Vue.js in the background that allows you to develop hybrid mobile, desktop (electron), and web applications with a single codebase. I could say that it convinced me to create a small application with it.
+
+<div class="video-wrapper">
+    <iframe
+        loading="lazy"
+        width="560"
+        height="315"
+        title="SSR with Quasar Framework - Razvan Stoenescu"
+        src="https://www.youtube.com/embed/RUWawfKVomw"
+        frameborder="0"
+        allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+        allowfullscreen
+    ></iframe>
+</div>
+
+Waleed Ashraf's presentation on using RabbitMQ and PM2 to manage multiple Node.js processes was particularly insightful regarding transitioning from Node.js's built-in cluster structure to a more manageable and scalable architecture.
+
+[https://waleedashraf.me/switching-from-cluster-module-to-pm2-and-rabbitmq-in-nodejs/](<https://waleedashraf.me/switching-from-cluster-module-to-pm2-and-rabbitmq-in-nodejs/](https://waleedashraf.me/switching-from-cluster-module-to-pm2-and-rabbitmq-in-nodejs/)>)
+
+<div class="video-wrapper">
+    <iframe
+        loading="lazy"
+        width="560"
+        height="315"
+        title="RabbitMQ and PM2 in Node.js for managing Multiple Processes - Waleed Ashraf"
+        src="https://www.youtube.com/embed/fM9qwbofop0"
+        frameborder="0"
+        allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+        allowfullscreen
+    ></iframe>
+</div>
+
+After these two presentations, I returned to the main hall and listened to Tobias Koppers, the creator of Webpack, discussing Webpack 5. He talked about the breaking changes in this version and why and how they made those decisions.
+
+<img
+    loading="lazy"
+    src="/images/posts/amsterdam-jsnation-2019/webpack.jpeg"
+    alt="Webpack 5"
+/>
+
+<div class="video-wrapper">
+    <iframe
+        loading="lazy"
+        width="560"
+        height="315"
+        title="Why Breaking Changes? What is next? - Tobias Koppers"
+        src="https://www.youtube.com/embed/p-MhcctQBlY"
+        frameborder="0"
+        allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+        allowfullscreen
+    ></iframe>
+</div>
+
+One of the presentations that caught my attention was Andre Staltz's talk on Lenses as a functional programming paradigm, where he discussed state management using examples from Cycle.js and React/Vue.
+
+<img
+    loading="lazy"
+    src="/images/posts/amsterdam-jsnation-2019/lenses.jpeg"
+    alt="Cycle.js"
+/>
+
+<div class="video-wrapper">
+    <iframe
+        loading="lazy"
+        width="560"
+        height="315"
+        title="Functional Lenses for Contemporary Frameworks"
+        src="https://www.youtube.com/embed/5R3l2r1XxKI"
+        frameborder="0"
+        allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+        allowfullscreen
+    ></iframe>
+</div>
+
+After this talk, I reluctantly left the main hall again because I was curious about Babel maintainer Henry Zhu's presentation on contributing to and becoming a developer for an open-source project. However, I headed back to the Node.js room with a sense of duty.
+
+Viktor Turskyi's presentation on the tactics they applied on Node.js — Express for clean architecture and the experiences they had at his company was successful. He also mentioned that they would publish the architecture they used on GitHub.
+
+<div class="video-wrapper">
+  <iframe
+    loading="lazy"
+    width="560"
+    height="315"
+    title="The Working Architecture of Node.js Applications - Viktor Turskyi"
+    src="https://www.youtube.com/embed/eVGdV53q68I"
+    frameborder="0"
+    allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+    allowfullscreen
+  ></iframe>
+</div>
+
+Matthias Dugué's presentation on stateless, zero-knowledge backends, especially on the Node.js — MongoDB — Express stack, included interesting points about JWT usage and user authentication processes.
+
+<div class="video-wrapper">
+    <iframe
+        loading="lazy"
+        width="560"
+        height="315"
+        title="Building Zero-Knowledge Backends - Matthias Dugue"
+        src="https://www.youtube.com/embed/1QueApYNfPI"
+        frameborder="0"
+        allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+        allowfullscreen
+    ></iframe>
+</div>
+
+Max Gallo, in his presentation, explained map and filter operators in RxJS, observers, and how operators are chained through a live coding sequence, offering content that I found successful in terms of functional programming.
+
+<img
+    loading="lazy"
+    src="/images/posts/amsterdam-jsnation-2019/rxjs.jpeg"
+    alt="RxJs"
+/>
+
+<div class="video-wrapper">
+    <iframe
+        loading="lazy"
+        width="560"
+        height="315"
+        title="Reinventing RxJS - Max Gallo"
+        src="https://www.youtube.com/embed/7sdVXMTFVbE"
+        frameborder="0"
+        allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+        allowfullscreen
+    ></iframe>
+</div>
+
+Paulo Lopes' presentation on using GraalJS on GraalVM, explaining how they managed to go beyond the performance gains achieved by languages like Go or Rust with benchmark studies on an alternative, V8-less Node.js runtime, was one of the most impressive contents.
+
+<div class="video-wrapper">
+    <iframe
+        loading="lazy"
+        width="560"
+        height="315"
+        title="10 Things I Learned Making the Fastest JS Server Runtime in the World - Paulo Lopes"
+        src="https://www.youtube.com/embed/JUJ85k3aEg4"
+        frameborder="0"
+        allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+        allowfullscreen
+    ></iframe>
+</div>
+
+Ruben Bridgewater, a Node.js core contributor, gave a presentation on error handling in Node.js applications, particularly for codebases using promises and async/await, filled with real-life examples.
+
+<div class="video-wrapper">
+    <iframe
+        loading="lazy"
+        width="560"
+        height="315"
+        title="Error Handling: Doing It Right! - Ruben Bridgewater"
+        src="https://www.youtube.com/embed/hNaNjBBAdBo"
+        frameborder="0"
+        allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+        allowfullscreen
+    ></iframe>
+</div>
+
+Katie Koschland from Financial Times gave a presentation on load testing methodology using Artillery, adorned with her own experiences, and focusing on the theme of crazy bugs that we all have to face from time to time.
+
+<div class="video-wrapper">
+    <iframe
+        loading="lazy"
+        width="560"
+        height="315"
+        title="Ready, Steady, Crash! - Katie Koschland"
+        src="https://www.youtube.com/embed/r8DbY3FCRww"
+        frameborder="0"
+        allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+        allowfullscreen
+    ></iframe>
+</div>
+
+I returned to the main hall for the last two presentations of the day. Christian Bromann's information on automatic performance tests was interesting, and as it is one of the topics we care about the most at Zingat, I listened carefully.
+
+<div class="video-wrapper">
+    <iframe
+        loading="lazy"
+        width="560"
+        height="315"
+        title="Automated Performance Testing With WebDriver - Christian Bromann"
+        src="https://www.youtube.com/embed/Al7zlLdd_es"
+        frameborder="0"
+        allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+        allowfullscreen
+    ></iframe>
+</div>
+
+David Rousset, in the final presentation of the event, showcased the technologies behind a game he developed as a PWA using WebGL and Babylon.js for VR, mobile, and web in an extremely entertaining way for the audience.
+
+<div class="video-wrapper">
+    <iframe
+        loading="lazy"
+        width="560"
+        height="315"
+        title="Using WebGL and PWA to Build an Adaptive Game for Touch, Mouse and VR Devices - David Rousset"
+        src="https://www.youtube.com/embed/l9DGNQN4uqU"
+        frameborder="0"
+        allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+        allowfullscreen
+    ></iframe>
+</div>
+
+The heavily attended event left behind enjoyable memories and new friendships. I hope to be there in the coming years with an even larger team.
+
+_* This article was originally published on [labs.zingat.com](https://labs.zingat.com) on the specified date._

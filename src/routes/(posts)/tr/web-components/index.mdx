@@ -3,16 +3,19 @@ title: "Web Components"
 description: "Geliştirdiğimiz web ön-yüz projelerinde, özellikle de firma bazlı tüm departmanların gelişimine katkıda bulunduğu ve bakımını sağladığı styleguide’larınız yoksa; her yeni ürün ekleme süreci sonunda yeni button’lar, label’lar, form element’leri, modal’lar vb. geliştirmek durumunda kalındığı bir gerçek. Bu durum da bir süre sonra ön-yüz projelerinde karmaşıklığın yükselmesine ve geliştirme ve bakım maliyetlerinin artmasına sebep oluyor."
 permalink: "/web-components/"
 date: "2019-06-17"
+lang: "tr"
 ---
 
-import { formatDistance } from "~/util";
+import { formatDistance, Locale } from "~/util";
 
 export const title = "Web Components";
 export const date = "2019-06-17";
 
 # {title}
 
-<p>{formatDistance(date)}</p>
+<p>{formatDistance(date, Locale.tr)}</p>
+
+_\* Bu makale [İngilizce](/web-components/) olarak da okunabilir._
 
 Web Components beni son zamanlarda en fazla heyecanlandıran ön-yüz geliştirme konseptlerinden biri. Bu yazımda, _HTML_, _CSS_ ve _JavaScript_ ile tekrar tekrar kullanılabilir ve kapsüllenmiş web bileşenleri geliştirmemizi sağlayan bu teknolojiler bütününden bahsedeceğim.
 
