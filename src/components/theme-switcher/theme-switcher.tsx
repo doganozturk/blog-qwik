@@ -16,8 +16,12 @@ export const ThemeSwitcher = component$(() => {
           state.theme === ThemeType.Light ? ThemeType.Dark : ThemeType.Light;
       }}
     >
-      {state.theme === ThemeType.Dark && <span class="switch switch-light">🌞</span>}
-      {state.theme === ThemeType.Light && <span class="switch switch-dark">🌚</span>}
+      {state.theme === ThemeType.Dark && (
+        <span class="switch switch-light">🌞</span>
+      )}
+      {state.theme === ThemeType.Light && (
+        <span class="switch switch-dark">🌚</span>
+      )}
     </div>
   );
 });
