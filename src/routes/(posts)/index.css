@@ -38,7 +38,7 @@
   margin-top: 10px;
 }
 .post li pre {
-  margin: 20px -10px 0 -30px;
+  margin-left: -30px;
 }
 .post pre {
   margin: 20px -10px 0 -10px;
@@ -96,5 +96,8 @@
   .post pre {
     margin: 20px 0 0 0;
     border-radius: 4px;
+  }
+  .post li pre {
+    margin-left: -20px;
   }
 }

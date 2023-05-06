@@ -1,0 +1,253 @@
+---
+title: "Webpack Module Federation ile Micro Frontend Mimarisi (2. Bölüm)"
+description: "Trendyol GO’da micro-frontends mimarisine geçiş tecrübemizi paylaştığımız ilk yazımızda karar verme sürecimizden ve temel tasarım tercihlerimizden bahsetmiştik. PoC sonrasında sıra bütün projenin bölünmesi ve Module Federation’a uygun olarak geliştirmelerin yapılmasına geldi."
+permalink: "/tr/webpack-module-federation-ile-micro-frontend-mimarisi-bolum-2/"
+date: "2021-11-10"
+lang: "tr"
+---
+
+import { formatDistance, Locale } from "~/util";
+
+export const title = "Webpack Module Federation ile Micro Frontend Mimarisi (2. Bölüm)";
+export const date = "2021-11-10";
+
+# {title}
+
+<p>{formatDistance(date, Locale.tr)}</p>
+
+_\* Bu makale [İngilizce](/micro-frontends-architecture-with-webpack-module-federation-part-2/) olarak da okunabilir._
+
+**Trendyol GO**’da micro-frontends mimarisine geçiş tecrübemizi paylaştığımız [ilk yazımızda](https://medium.com/@sercaneraslan/webpack-module-federation-ile-micro-frontend-mimarisi-part-1-f8a5d0313b12) karar verme sürecimizden ve temel tasarım tercihlerimizden bahsetmiştik. PoC sonrasında sıra bütün projenin bölünmesi ve Module Federation’a uygun olarak geliştirmelerin yapılmasına geldi.
+
+Bu süreçte karşılaştığımız problemleri ve çözümlerimizi paylaşacağız.
+
+## Create-React-App ve Module Federation
+
+Uygulamamız [create-react-app](https://create-react-app.dev/) ile oluşturulmuştu. CRA bugün itibariyle Webpack 5'i desteklemiyor. Module Federation’ı kullanmak için ise Webpack 5'e geçmek gerekiyor.
+
+Başta, CRA’ten eject etmeden Webpack ayarlarını modifiye etmemizi sağlayacak bir yöntem aradık. [Craco](https://github.com/gsoft-inc/craco) ve [react-app-rewired](https://github.com/timarney/react-app-rewired) gibi çözümleri denedik; ancak bu araçlar isteklerimizi tam anlamıyla karşılamadı. Örneğin Craco standart CRA ayarlarını ezmemizi sağlasa da Webpack 5 uyumluluğu konusunda problemler gördük.
+
+Araştırmamız sürerken [Razzle](https://github.com/jaredpalmer/razzle) isimli bir build tool’u ile karşılaştık. Bu araçla hem Webpack ayarlarını istediğimiz gibi ezebildiğimizi gördük hem de Webpack 5 desteği olduğu için basit bir Webpack güncellemesi ile Module Federation’ı implement etmeye başlama şansımız oldu; ancak bir sonraki başlık altında detaylarını görebileceğiniz üzere, bu build tool’undan bir süre sonra vazgeçmek durumunda kaldık.
+
+## Production Mode Hataları ve Custom Webpack 5 Config’e Geçiş
+
+Webpack’in production mode’unda build aldıktan sonra kurduğumuz yapıda birtakım tutarsızlıklar ve hatalar oluştuğunu fark ettik.
+
+- Routing esnasında oluşan **Uncaught TypeError: Cannot read property ‘call’ of undefined** hataları.
+- Micro-frontend’lerde **Maximum call stack size exceeded** hataları.
+- **Minified material-ui error** problemleri.
+
+Hataların sebeplerini araştırdık ve problemlerin tercih ettiğimiz build tool’unun kendi içinde Webpack production build’leri için uyguladığı optimizasyonlarla ilintili olduğunu gördük. Bunların içinde bazı [Terser](https://webpack.js.org/plugins/terser-webpack-plugin/) plugin ayarları ve **AggressiveMergingPlugin** kullanımı gibi örnekler var.
+
+Problemlerle karşılaşınca uygulamamızın ihtiyaçlarını karşılayacak basit bir Webpack 5 konfigürasyonu yazmayı tercih ettik. Webpack 5'in production mode için sağladığı standart optimizasyonlar uygulamalarımızın herhangi bir problem oluşmadan çalışmasını sağladı.
+
+## Routing
+
+Micro-frontend’lerin kendi routing’lerini yönetmeleri Shell’le aralarındaki ilişkinin loosely coupled kalması için önemli konulardan biri.
+
+Kurduğumuz yapıda Shell üzerinde route seviyesinde micro-frontend modüllerini yüklemeyi tercih ettik. **/mf-a** path’ine gelindiğinde Shell lazy olarak Micro-Frontend-A uygulamasını yüklüyor, aynı şekilde **/mf-b** path’inde Micro-Frontend-B’yi yüklüyor.
+
+```javascript
+// shell/src/Shell.js
+
+import ...
+
+const MicroFrontendA = lazy(() => import('MicroFrontendA/MicroFrontendARoutes'));
+const MicroFrontendB = lazy(() => import('MicroFrontendB/MicroFrontendBRoutes'));
+
+const Shell = () => {
+    return (
+        <Router>
+            <Menu />
+            <main>
+                <Suspense fallback={<div>Yükleniyor...</div>}>
+                    <Switch>
+                        <Route exact path="/">
+                            <Redirect to="/mf-a" />
+                        </Route>
+                        <Route path="/mf-a">
+                            <MicroFrontendA />
+                        </Route>
+                        <Route path="/mf-b">
+                            <MicroFrontendB />
+                        </Route>
+                    </Switch>
+                </Suspense>
+            </main>
+        </Router>
+    );
+};
+
+export default Shell;
+```
+
+Buradan sonra kontrol micro-frontend’lere geçiyor. Micro-Frontend-A kendi alt modüllerini kendisi üzerinde ayarlanan routing’le hallediyor. Yukarıda örnekle ilişkilendirmek gerekirse, **/mf-a** path’ine gelindiğinde **PageA**, **/mf-a/page-b** path’ine gelindiğinde **PageB** yükleniyor:
+
+```javascript
+// micro-frontend-a/src/pages/MicroFrontendARoutes.js
+
+import React, { lazy } from 'react';
+import { Switch, Route, useRouteMatch } from 'react-router-dom';
+import withPermissions from 'Shell/hoc/withPermissions';
+
+const PageA = lazy(() => import('pages/pageA/PageA'));
+const PageB = lazy(() => import('pages/pageB/PageB'));
+
+const MicroFrontendARoutes = () => {
+    const { path } = useRouteMatch();
+
+    return (
+        <Switch>
+            <Route
+                exact
+                path={path}
+                render={() => withPermissions(['VIEW_PAGE_A'])(PageA)}
+            />
+            <Route
+                exact
+                path={`${path}/page-b`}
+                render={() => withPermissions(['VIEW_PAGE_B'])(PageB)}
+            />
+        </Switch>
+    );
+};
+
+export default MicroFrontendARoutes;
+```
+
+## Ortak Context ve Hook’ların Paylaşımı
+
+Authentication başta olmak üzere admin panelde kullandığımız ortak context’ler ve bu context’leri consume eden hook’lar var. Module Federation’da bu yapıları paylaşmak aslında çok kolay; fakat biraz ilginç bir çözümü var şu an için.
+
+Shell’in webpack.config.js’i için verdiğim örneğe bakarsanız, **shared** tarafında ince bir dokunuş var. Kütüphanelerin altında ortak bir context’i consume eden bir hook da paylaşılıyor. Zaten uygulama her zaman Shell altında render olduğu için bütün context provider’lar doğru sırayla yükleniyor ve hook’ları da örnekteki gibi paylaştığımızda ortak context’leri doğru şekilde micro-frontend’ler içerisinde kullanabiliyor hale geliyoruz.
+
+```javascript
+// shell/webpack.config.js
+
+const { dependencies: deps } = require('./package.json');
+
+const moduleFederationOptions = {
+    ...
+    exposes: {
+        ...
+        './hooks/useToastr': './src/hooks/useToastr',
+    },
+    shared: [
+        {
+            ...
+        },
+        './src/hooks/useToastr', // Burada!
+    ],
+};
+```
+
+## Material-UI Hataları
+
+Projemizde **material-ui@v4** kullanıyoruz. Module Federation’a geçtikten sonra bazı stil uyuşmazlıkları ve bu kütüphane kaynaklı görünen hatalar oluştu.
+
+- material-ui, core, styles, icons, pickers ve lab gibi birbirleriyle ilişkili alt paketleri bir arada kullanıyor. Bu paketlerin uyum içinde çalışması Module Federation yapısında çok önemli. Bu nedenle bu paketleri Shell ve micro-frontend’lerin tümünde **shared** altından paylaşmak ve **material-ui/styles**’ı özellikle **singleton** olarak tanımlamak oluşacak sorunların büyük çoğunluğunu giderecektir:
+
+    ```javascript
+    // webpack.config.js
+    
+    const { dependencies: deps } = require('./package.json');
+    
+    const moduleFederationOptions = {
+        ...
+        shared: {
+            ...deps, // Dependency olarak eklenen mui paketleri paylaşılıyor
+            '@material-ui/styles': {
+                singleton: true, // styles singleton olarak belirleniyor
+            },
+        },
+    };
+    ```
+
+- material-ui ve alt paketlerinin tümü için named import’lar kullanmak ve bunu her noktada aynı şekilde yapmak gerekiyor. Örneğin **Comment** component’ini bu şekilde kullandıysanız Shell’de ve micro-frontend’lerin tümünde gerçekleştirilen kullanımlar böyle olmalı:
+
+    ```javascript
+    import { Comment } from '@material-ui/icons';
+    ```
+    
+    Başka bir modülde aşağıdaki gibi kullanmamalısınız:
+    
+    ```javascript
+    import Comment from '@material-ui/icons/Comment';
+    ```
+
+- **material-ui/pickers** ve **material-ui/lab** kütüphanelerinin ekstra theme instance’ları oluşturması sebebiyle de temel component’lerde (Button vs.) bazı stil bozulmaları oluşabiliyor. Bu hatanın v4 için çözümü kütüphane tarafında bulunmuyor. Duruma göre özel çözümler uygulamak gerekebilir.
+
+## Hot Reload / Fast Refresh
+
+Karşımıza çıkan sorunu örneklemek gerekirse: Micro-Frontend-A’da yaptığımız bir değişiklik eğer uygulamayı Shell üzerinden ziyaret ediyorsak Hot Reload’ı tetiklemiyor. Böylece geliştirme anında bir miktar yavaşlamış oluyoruz, her değişiklikten sonra refresh etmek durumunda kalıyoruz.
+
+Bu problemin çözümü için Module Federation ekibi [@module-federation/fmr](https://www.npmjs.com/package/@module-federation/fmr) paketini geliştirdi. Webpack konfigürasyonuna plugin olarak dahil edildiğinde Module Federation yapınızda herhangi bir uygulamada yapılan değişiklik Hot Reload’ı otomatik olarak çalıştırıyor.
+
+Fast Refresh için henüz bir çözümleri yok, süreç içerisinde ona da çözüm gelecektir.
+
+## Deployment
+
+Module Federation ile böldüğümüz uygulamaları canlıya alma sürecinde karşılaştığımız iki temel problem oldu:
+
+- **publicPath**’in runtime’da dinamik olarak ayarlanması.
+
+    Module Federation ile kompleks bir uygulama oluşturulduğunda Shell micro-frontend’lere ait paylaşılmış dosyaları nereden çekecek veya micro-frontend’ler için Shell’e ait dosyalar nereden gelecek vs. bir çok dosya yolunun ayarlanması gerekiyor. Bunu da publicPath’i doğru biçimde belirleyerek düzenleyebiliyoruz.
+    
+    **Trendyol GO**’da uygulamalarımızı Docker image’ları halinde bir kere oluşturuyoruz, ardından farklı ortamlarda ortam değişkenleriyle farklı ayarları almalarını sağlıyoruz. publicPath build anında belirlendiğinde sorunu büyük konfigürasyon dosyalarıyla çözmek zorunda kalacaktık, bu da optimize bir çözüm olmayacaktı.
+    
+    [Zack Jackson](https://github.com/ScriptedAlchemy)’ın [bu makalede](https://scriptedalchemy.medium.com/micro-fe-architecture-webpack-5-module-federation-and-custom-startup-code-9cb3fcd066c) belirttiği yöntemi biraz değiştirip uyguladık ve son derece basit şekilde dinamik remote’ların runtime’da atanmasını sağlamış olduk.
+    
+    Bizim kullandığımız yöntemde **setPublicPath.js** adlı bir dosya var. İçeriği aşağıdaki biçimde:
+    
+    ```javascript
+    // shell/src/setPublicPath.js
+    
+    __webpack_public_path__ = `${new URL(document.currentScript.src).origin}/`;
+    ```
+    
+    Bu dosyayı build anında Webpack ayarlarındaki entry’yi manipüle ederek asıl startup koduyla birleştiriyoruz:
+    
+    ```javascript
+    // shell/webpack.config.js
+    
+    entry: {
+        Shell: './src/setPublicPath',
+        main: './src/index',
+    },
+    ```
+
+- Module Federation ayarlarında atanan remote url’lerinin runtime’da dinamik biçimde ayarlanması.
+
+    Bu iş için **External Remotes Plugin**’i kullandık.
+    
+    ```javascript
+    // shell/webpack.config.js
+    
+    const moduleFederationOptions = {
+        ...
+        remotes: {
+            MicroFrontendA: 'MicroFrontendA@[window.MF_A_URL]/remoteEntry.js',
+            MicroFrontendB: 'MicroFrontendB@[window.MF_B_URL]/remoteEntry.js',
+        },
+        ...
+    };
+    ```
+    
+    window.MF_A_URL ve window.MF_B_URL’i runtime’da ayarlama kısmı da şöyle:
+    
+    ```javascript
+    // shell/src/index.js
+    
+    import config from 'config'; // ortam bazlı dinamik değerler
+    
+    window.MF_A_URL = config.MF_A_URL;
+    window.MF_B_URL = config.MF_B_URL;
+    
+    import('./bootstrap');
+    ```
+    
+---
+
+Bu sürecin nihayetinde stabil bir uygulamaya kavuştuk. Önümüzde birçok farklı gelişim noktası olsa da artık domain takımları diğer takımlara bağımlı olmadan kendi modüllerini geliştirebiliyor ve ürünlerini hızla son kullanıcının karşısına çıkarabiliyor.
+
+Kalabalık ekiplerde iş yönetimi problemlerini çözmek için Module Federation efektif bir çözüm. Umarız geçiş sürecinden edindiğimiz tecrübeler kendi monolith’lerini bu yolla parçalamak isteyenler için yardımcı bir kaynak olur.
