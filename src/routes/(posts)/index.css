@@ -37,6 +37,9 @@
 .post li {
   margin-top: 10px;
 }
+.post li pre {
+  margin-left: -30px;
+}
 .post pre {
   margin: 20px -10px 0 -10px;
 }
@@ -85,10 +88,16 @@
   height: auto;
   margin-top: 20px;
 }
+.post strong {
+  font-weight: 500;
+}
 
 @media (min-width: 768px) {
   .post pre {
     margin: 20px 0 0 0;
     border-radius: 4px;
+  }
+  .post li pre {
+    margin-left: -20px;
   }
 }
