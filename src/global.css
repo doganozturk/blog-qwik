@@ -3,9 +3,7 @@
 }
 
 html,
-body,
-.theme-container,
-.container {
+body {
   height: 100%;
 }
 
