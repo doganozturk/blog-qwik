@@ -7,6 +7,7 @@ import {
   useStore,
 } from "@builder.io/qwik";
 import { Footer } from "~/components/footer/footer";
+import { ColorScheme, getColorScheme } from "~/util";
 
 export const LS_THEME = "theme";
 
@@ -38,7 +39,16 @@ export default component$(() => {
   useClientEffect$(({ track }) => {
     const theme = track(() => localStorage.getItem(LS_THEME));
 
-    if (!state.theme && theme) {
+    if (!theme) {
+      state.theme =
+        getColorScheme() === ColorScheme.Dark
+          ? ThemeType.Dark
+          : ThemeType.Light;
+
+      return;
+    }
+
+    if (!state.theme) {
       state.theme = theme;
     }
   });

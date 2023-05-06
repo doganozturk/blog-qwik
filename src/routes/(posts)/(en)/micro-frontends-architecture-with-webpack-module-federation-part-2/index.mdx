@@ -8,7 +8,8 @@ lang: "en"
 
 import { formatDistance } from "~/util";
 
-export const title = "Micro Frontends Architecture with Webpack Module Federation (Part 2)";
+export const title =
+  "Micro Frontends Architecture with Webpack Module Federation (Part 2)";
 export const date = "2021-11-05";
 
 # {title}
@@ -86,30 +87,30 @@ After that, control passes to micro-frontends. Micro-Frontend-A handles its own 
 ```javascript
 // micro-frontend-a/src/pages/MicroFrontendARoutes.js
 
-import React, { lazy } from 'react';
-import { Switch, Route, useRouteMatch } from 'react-router-dom';
-import withPermissions from 'Shell/hoc/withPermissions';
+import React, { lazy } from "react";
+import { Switch, Route, useRouteMatch } from "react-router-dom";
+import withPermissions from "Shell/hoc/withPermissions";
 
-const PageA = lazy(() => import('pages/pageA/PageA'));
-const PageB = lazy(() => import('pages/pageB/PageB'));
+const PageA = lazy(() => import("pages/pageA/PageA"));
+const PageB = lazy(() => import("pages/pageB/PageB"));
 
 const MicroFrontendARoutes = () => {
-    const { path } = useRouteMatch();
-    
-    return (
-        <Switch>
-            <Route
-                exact
-                path={path}
-                render={() => withPermissions(['VIEW_PAGE_A'])(PageA)}
-            />
-            <Route
-                exact
-                path={`${path}/page-b`}
-                render={() => withPermissions(['VIEW_PAGE_B'])(PageB)}
-            />
-        </Switch>
-    );
+  const { path } = useRouteMatch();
+
+  return (
+    <Switch>
+      <Route
+        exact
+        path={path}
+        render={() => withPermissions(["VIEW_PAGE_A"])(PageA)}
+      />
+      <Route
+        exact
+        path={`${path}/page-b`}
+        render={() => withPermissions(["VIEW_PAGE_B"])(PageB)}
+      />
+    </Switch>
+  );
 };
 
 export default MicroFrontendARoutes;
@@ -147,33 +148,33 @@ We are using [material-ui@v4](https://v4.mui.com/) in our project. After migrati
 
 - material-ui uses related sub-packages such as core, styles, icons, pickers and lab together. It is very important in the Module Federation structure that these packages work in harmony. Therefore, sharing these packages under **shared** across Shell and all micro-frontends and defining **material-ui/styles** specifically as a singleton will fix most of the problems:
 
-    ```javascript
-    // webpack.config.js
-    
-    const { dependencies: deps } = require('./package.json');
-    
-    const moduleFederationOptions = {
-        ...
-        shared: {
-            ...deps, // Sharing mui packages added as dependencies
-            '@material-ui/styles': {
-                singleton: true, // Sharing styles package as singleton
-            },
-        },
-    };
-    ```
+  ```javascript
+  // webpack.config.js
+
+  const { dependencies: deps } = require('./package.json');
+
+  const moduleFederationOptions = {
+      ...
+      shared: {
+          ...deps, // Sharing mui packages added as dependencies
+          '@material-ui/styles': {
+              singleton: true, // Sharing styles package as singleton
+          },
+      },
+  };
+  ```
 
 - It is necessary to use named imports for material-ui and all its sub-packages, and to do it the same way at every point. For example, if you used the Comment icon component like this, the usage in the Shell and all micro-frontends should be like this:
 
-    ```javascript
-    import { Comment } from '@material-ui/icons';
-    ```
-    
-    You **should not use it** in another module like:
-    
-    ```javascript
-    import Comment from '@material-ui/icons/Comment';
-    ```
+  ```javascript
+  import { Comment } from "@material-ui/icons";
+  ```
+
+  You **should not use it** in another module like:
+
+  ```javascript
+  import Comment from "@material-ui/icons/Comment";
+  ```
 
 - Due to the fact that the **material-ui/pickers** and **material-ui/lab** libraries create extra theme instances, some style problems may occur in the basic components (Button etc.). [The solution for this error for v4 is not found on the library side](https://github.com/module-federation/module-federation-examples/issues/1071). Depending on the situation, it may be necessary to apply special solutions per page/module.
 
@@ -191,60 +192,60 @@ There were two main problems we encountered in the process of bringing the appli
 
 - Dynamically setting **publicPath** in runtime.
 
-    When a complex application is created with Module Federation, these kind of questions occur: Where will Shell get the shared files of micro-frontends? Which paths will the files belonging to Shell come from for micro-frontends? Many file paths need to be set. We control these by specifying the publicPath Webpack option correctly.
-    
-    In **Trendyol GO**, we create our applications as Docker images once, then we enable them to receive different settings with environment variables in different environments. We would have to solve the problem with large configuration files if publicPath was set on the build time, which would not be an optimized solution.
-    
-    We slightly modified the method that [Zack Jackson](https://github.com/ScriptedAlchemy) mentioned [in this article](https://scriptedalchemy.medium.com/micro-fe-architecture-webpack-5-module-federation-and-custom-startup-code-9cb3fcd066c), and made it very simple to assign dynamic publicPath at runtime.
-    
-    In the method we use, there is a file called setPublicPath.js. The content is in the following format:
-    
-    ```javascript
-    // shell/src/setPublicPath.js
-    
-    __webpack_public_path__ = `${new URL(document.currentScript.src).origin}/`;
-    ```
-    
-    We combine this file with the original startup code by manipulating the **entry** in the Webpack settings at build time:
-    
-    ```javascript
-    // shell/webpack.config.js
-    
-    entry: {
-        Shell: './src/setPublicPath',
-        main: './src/index',
-    },
-    ```
+  When a complex application is created with Module Federation, these kind of questions occur: Where will Shell get the shared files of micro-frontends? Which paths will the files belonging to Shell come from for micro-frontends? Many file paths need to be set. We control these by specifying the publicPath Webpack option correctly.
+
+  In **Trendyol GO**, we create our applications as Docker images once, then we enable them to receive different settings with environment variables in different environments. We would have to solve the problem with large configuration files if publicPath was set on the build time, which would not be an optimized solution.
+
+  We slightly modified the method that [Zack Jackson](https://github.com/ScriptedAlchemy) mentioned [in this article](https://scriptedalchemy.medium.com/micro-fe-architecture-webpack-5-module-federation-and-custom-startup-code-9cb3fcd066c), and made it very simple to assign dynamic publicPath at runtime.
+
+  In the method we use, there is a file called setPublicPath.js. The content is in the following format:
+
+  ```javascript
+  // shell/src/setPublicPath.js
+
+  __webpack_public_path__ = `${new URL(document.currentScript.src).origin}/`;
+  ```
+
+  We combine this file with the original startup code by manipulating the **entry** in the Webpack settings at build time:
+
+  ```javascript
+  // shell/webpack.config.js
+
+  entry: {
+      Shell: './src/setPublicPath',
+      main: './src/index',
+  },
+  ```
 
 - Dynamic setting of remote urls assigned in Module Federation settings in runtime.
 
-    We used the [External Remotes Plugin](https://www.npmjs.com/package/external-remotes-plugin) for this work.
-    
-    ```javascript
-    // shell/webpack.config.js
-    
-    const moduleFederationOptions = {
-        ...
-        remotes: {
-            MicroFrontendA: 'MicroFrontendA@[window.MF_A_URL]/remoteEntry.js',
-            MicroFrontendB: 'MicroFrontendB@[window.MF_B_URL]/remoteEntry.js',
-        },
-        ...
-    };
-    ```
+  We used the [External Remotes Plugin](https://www.npmjs.com/package/external-remotes-plugin) for this work.
 
-    Here’s how to set **window.MF_A_URL** and **window.MF_B_URL** in runtime:
+  ```javascript
+  // shell/webpack.config.js
 
-    ```javascript
-    // shell/src/index.js
-    
-    import config from 'config'; // dynamic vars. from an .env file e.g.
-    
-    window.MF_A_URL = config.MF_A_URL;
-    window.MF_B_URL = config.MF_B_URL;
-    
-    import('./bootstrap');
-    ```
+  const moduleFederationOptions = {
+      ...
+      remotes: {
+          MicroFrontendA: 'MicroFrontendA@[window.MF_A_URL]/remoteEntry.js',
+          MicroFrontendB: 'MicroFrontendB@[window.MF_B_URL]/remoteEntry.js',
+      },
+      ...
+  };
+  ```
+
+  Here’s how to set **window.MF_A_URL** and **window.MF_B_URL** in runtime:
+
+  ```javascript
+  // shell/src/index.js
+
+  import config from "config"; // dynamic vars. from an .env file e.g.
+
+  window.MF_A_URL = config.MF_A_URL;
+  window.MF_B_URL = config.MF_B_URL;
+
+  import("./bootstrap");
+  ```
 
 ---
 
