@@ -1,0 +1,253 @@
+---
+title: "Micro Frontends Architecture with Webpack Module Federation (Part 2)"
+description: "In our first article where we shared our experience of transitioning to micro-frontends architecture at Trendyol GO, we talked about our decision-making process and our basic design preferences. After the POC, it was time to split the entire project and make improvements in accordance with the Module Federation."
+permalink: "/micro-frontends-architecture-with-webpack-module-federation-part-2/"
+date: "2021-11-05"
+lang: "en"
+---
+
+import { formatDistance } from "~/util";
+
+export const title = "Micro Frontends Architecture with Webpack Module Federation (Part 2)";
+export const date = "2021-11-05";
+
+# {title}
+
+<p>{formatDistance(date)}</p>
+
+_\* This article is also available in [Turkish](/tr/webpack-module-federation-ile-micro-frontend-mimarisi-bolum-2/)._
+
+[In our first article](https://medium.com/@sercaneraslan/micro-frontend-architecture-with-webpack-module-federation-part-1-9827d436bd1e) where we shared our experience of transitioning to micro-frontends architecture at **Trendyol GO**, we talked about our decision-making process and our basic design preferences. After the POC, it was time to split the entire project and make improvements in accordance with the **Module Federation**.
+
+We will share the problems we encountered in this process and our solutions to these problems.
+
+## Create-React-App and Module Federation
+
+Our app was built with [create-react-app](https://github.com/facebook/create-react-app). CRA does not support Webpack 5 as of today. In order to use Module Federation, it is necessary to switch to Webpack 5.
+
+Initially, we looked for a way to modify Webpack settings without ejecting from the CRA. We tried solutions like [Craco](https://github.com/dilanx/craco) and [react-app-rewired](https://github.com/timarney/react-app-rewired); however, these tools did not fully meet our demands. For example, although Craco allowed us to override the standard CRA settings, we saw problems with Webpack 5 compatibility.
+
+While we were researching, we came across a build tool called [Razzle](https://github.com/jaredpalmer/razzle). With this tool, we saw that we could modify Webpack settings as we wanted and we had the chance to start implementing the Module Federation with a simple Webpack update, since it supports Webpack 5; however, as you can see the details under the next heading, we had to give up on this build tool after a while.
+
+## Production Mode Errors and Switching to Custom Webpack 5 Config
+
+After building the applications in Webpack’s production mode, we noticed that there were some inconsistencies and errors in our micro-frontends structure.
+
+- **Uncaught TypeError: Cannot read property ‘call’ of undefined** errors during routing.
+- **Maximum call stack size exceeded** errors on micro-frontends.
+- **Minified material-ui error** problems.
+
+We investigated the errors and found that the problems were related to the optimizations that our preferred build tool implemented for Webpack production builds. These include some **Terser** plugin settings and cases such as using **AggressiveMergingPlugin**.
+
+When faced with problems, we chose to write a simple Webpack 5 configuration that would meet the needs of our application. Webpack 5’s standard optimizations for production mode enabled our applications to run without any problems.
+
+## Routing
+
+One of the important issues is that micro-frontends manage their own routings to keep their relationship with Shell **loosely coupled**.
+
+In the structure we set up, we preferred to install micro-frontend modules at the route level on the Shell. When the **/mf-a** path is reached, the Shell lazy loads the **Micro-Frontend-A** application, in the same way it loads **Micro-Frontend-B** when the user gets to the **/mf-b** path.
+
+```javascript
+// shell/src/Shell.js
+
+import ...
+
+const MicroFrontendA = lazy(() => import('MicroFrontendA/MicroFrontendARoutes'));
+const MicroFrontendB = lazy(() => import('MicroFrontendB/MicroFrontendBRoutes'));
+
+const Shell = () => {
+    return (
+        <Router>
+            <Menu />
+            <main>
+                <Suspense fallback={<div>Yükleniyor...</div>}>
+                    <Switch>
+                        <Route exact path="/">
+                            <Redirect to="/mf-a" />
+                        </Route>
+                        <Route path="/mf-a">
+                            <MicroFrontendA />
+                        </Route>
+                        <Route path="/mf-b">
+                            <MicroFrontendB />
+                        </Route>
+                    </Switch>
+                </Suspense>
+            </main>
+        </Router>
+    );
+};
+
+export default Shell;
+```
+
+After that, control passes to micro-frontends. Micro-Frontend-A handles its own submodules with the routing set on it. To relate to the example above, **PageA** is loaded when the path **/mf-a** is navigated to, **PageB** is loaded when the path is **/mf-a/page-b**:
+
+```javascript
+// micro-frontend-a/src/pages/MicroFrontendARoutes.js
+
+import React, { lazy } from 'react';
+import { Switch, Route, useRouteMatch } from 'react-router-dom';
+import withPermissions from 'Shell/hoc/withPermissions';
+
+const PageA = lazy(() => import('pages/pageA/PageA'));
+const PageB = lazy(() => import('pages/pageB/PageB'));
+
+const MicroFrontendARoutes = () => {
+    const { path } = useRouteMatch();
+    
+    return (
+        <Switch>
+            <Route
+                exact
+                path={path}
+                render={() => withPermissions(['VIEW_PAGE_A'])(PageA)}
+            />
+            <Route
+                exact
+                path={`${path}/page-b`}
+                render={() => withPermissions(['VIEW_PAGE_B'])(PageB)}
+            />
+        </Switch>
+    );
+};
+
+export default MicroFrontendARoutes;
+```
+
+## Sharing Common Contexts and Hooks
+
+There are common contexts that we use in our application, especially Authentication, and hooks that consume these contexts. It’s actually very easy to share these constructs in the Module Federation; but it has an interesting solution for now.
+
+If you look at the example I gave for the Shell’s webpack.config.js, there is a subtle touch on the shared side. A hook that consumes a common context is also shared under the libraries. Since the application is always rendered under the Shell, all context providers are loaded in the correct order, and when we share the hooks as in the example, we can use the common contexts in micro-frontends without any errors.
+
+```javascript
+// shell/webpack.config.js
+
+const { dependencies: deps } = require('./package.json');
+
+const moduleFederationOptions = {
+    ...
+    exposes: {
+        ...
+        './hooks/useToastr': './src/hooks/useToastr',
+    },
+    shared: [
+        {
+            ...
+        },
+        './src/hooks/useToastr', // Here!
+    ],
+};
+```
+
+## Material-UI Errors
+
+We are using [material-ui@v4](https://v4.mui.com/) in our project. After migrating to Module Federation, there were some style mismatches and errors that appeared to be caused by this library.
+
+- material-ui uses related sub-packages such as core, styles, icons, pickers and lab together. It is very important in the Module Federation structure that these packages work in harmony. Therefore, sharing these packages under **shared** across Shell and all micro-frontends and defining **material-ui/styles** specifically as a singleton will fix most of the problems:
+
+    ```javascript
+    // webpack.config.js
+    
+    const { dependencies: deps } = require('./package.json');
+    
+    const moduleFederationOptions = {
+        ...
+        shared: {
+            ...deps, // Sharing mui packages added as dependencies
+            '@material-ui/styles': {
+                singleton: true, // Sharing styles package as singleton
+            },
+        },
+    };
+    ```
+
+- It is necessary to use named imports for material-ui and all its sub-packages, and to do it the same way at every point. For example, if you used the Comment icon component like this, the usage in the Shell and all micro-frontends should be like this:
+
+    ```javascript
+    import { Comment } from '@material-ui/icons';
+    ```
+    
+    You **should not use it** in another module like:
+    
+    ```javascript
+    import Comment from '@material-ui/icons/Comment';
+    ```
+
+- Due to the fact that the **material-ui/pickers** and **material-ui/lab** libraries create extra theme instances, some style problems may occur in the basic components (Button etc.). [The solution for this error for v4 is not found on the library side](https://github.com/module-federation/module-federation-examples/issues/1071). Depending on the situation, it may be necessary to apply special solutions per page/module.
+
+## Live Reload / Hot Reload / Fast Refresh
+
+To exemplify the problem we encountered: A change we made in Micro-Frontend-A does not trigger Hot Reload if we visit the application via the Shell. Thus, we slow down a little at the time of development, we have to refresh after each change.
+
+To solve this problem, the Module Federation team developed the [@module-federation/fmr](https://www.npmjs.com/package/@module-federation/fmr) package. When it is included as a plugin in the Webpack configuration, any change in your Module Federation structure will automatically run Live Reload.
+
+There is no solution for Hot Reload/Fast Refresh yet. We hope a solution will be provided in the process.
+
+## Deployment
+
+There were two main problems we encountered in the process of bringing the applications live:
+
+- Dynamically setting **publicPath** in runtime.
+
+    When a complex application is created with Module Federation, these kind of questions occur: Where will Shell get the shared files of micro-frontends? Which paths will the files belonging to Shell come from for micro-frontends? Many file paths need to be set. We control these by specifying the publicPath Webpack option correctly.
+    
+    In **Trendyol GO**, we create our applications as Docker images once, then we enable them to receive different settings with environment variables in different environments. We would have to solve the problem with large configuration files if publicPath was set on the build time, which would not be an optimized solution.
+    
+    We slightly modified the method that [Zack Jackson](https://github.com/ScriptedAlchemy) mentioned [in this article](https://scriptedalchemy.medium.com/micro-fe-architecture-webpack-5-module-federation-and-custom-startup-code-9cb3fcd066c), and made it very simple to assign dynamic publicPath at runtime.
+    
+    In the method we use, there is a file called setPublicPath.js. The content is in the following format:
+    
+    ```javascript
+    // shell/src/setPublicPath.js
+    
+    __webpack_public_path__ = `${new URL(document.currentScript.src).origin}/`;
+    ```
+    
+    We combine this file with the original startup code by manipulating the **entry** in the Webpack settings at build time:
+    
+    ```javascript
+    // shell/webpack.config.js
+    
+    entry: {
+        Shell: './src/setPublicPath',
+        main: './src/index',
+    },
+    ```
+
+- Dynamic setting of remote urls assigned in Module Federation settings in runtime.
+
+    We used the [External Remotes Plugin](https://www.npmjs.com/package/external-remotes-plugin) for this work.
+    
+    ```javascript
+    // shell/webpack.config.js
+    
+    const moduleFederationOptions = {
+        ...
+        remotes: {
+            MicroFrontendA: 'MicroFrontendA@[window.MF_A_URL]/remoteEntry.js',
+            MicroFrontendB: 'MicroFrontendB@[window.MF_B_URL]/remoteEntry.js',
+        },
+        ...
+    };
+    ```
+
+    Here’s how to set **window.MF_A_URL** and **window.MF_B_URL** in runtime:
+
+    ```javascript
+    // shell/src/index.js
+    
+    import config from 'config'; // dynamic vars. from an .env file e.g.
+    
+    window.MF_A_URL = config.MF_A_URL;
+    window.MF_B_URL = config.MF_B_URL;
+    
+    import('./bootstrap');
+    ```
+
+---
+
+At the end of this process, we achieved a stable application. Although there are many different improvements in front of us, from now on domain teams can develop their own modules without being dependent on other teams and quickly bring their products to the end user.
+
+Module Federation is an effective solution for solving business management problems in large teams. We hope that the experience we gained from the transition process will be a helpful resource for those who want to break their monoliths this way.

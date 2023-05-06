@@ -37,6 +37,9 @@
 .post li {
   margin-top: 10px;
 }
+.post li pre {
+  margin: 20px -10px 0 -30px;
+}
 .post pre {
   margin: 20px -10px 0 -10px;
 }
@@ -84,6 +87,9 @@
   max-width: 100%;
   height: auto;
   margin-top: 20px;
+}
+.post strong {
+  font-weight: 500;
 }
 
 @media (min-width: 768px) {
