@@ -1,6 +1,7 @@
 .post {
   margin-top: 60px;
   font-family: var(--font-family);
+  line-height: 1.4;
 }
 .post h1 {
   color: var(--title-color);
@@ -20,7 +21,6 @@
 }
 .post p {
   margin-top: 20px;
-  line-height: 1.4;
 }
 .post hr + p {
   margin-top: 40px;
@@ -46,7 +46,6 @@
 .post pre code {
   font-family: var(--font-family-code);
   font-size: 15px;
-  line-height: 1.4;
 }
 .post p code {
   padding: 0 4px;
@@ -60,7 +59,6 @@
   margin-top: 20px;
   padding-left: 30px;
   font-style: italic;
-  line-height: 1.4;
 }
 .post hr {
   margin-top: 40px;
