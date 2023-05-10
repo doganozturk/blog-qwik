@@ -18,6 +18,10 @@
   /* FONTS */
   --font-family: "Helvetica", sans-serif;
   --font-family-code: "Menlo", monospace;
+  --font-size-sm: 14px;
+  --font-size-md: 18px;
+  --font-size-lg: 24px;
+  --font-size-xl: 32px;
   --font-weight-light: 300;
   --font-weight-normal: 400;
 

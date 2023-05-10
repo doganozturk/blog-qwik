@@ -5,18 +5,18 @@
 }
 .post h1 {
   color: var(--title-color);
-  font-size: 26px;
+  font-size: var(--font-size-md);
   font-weight: var(--font-weight-light);
 }
 .post h1 + p {
   margin-top: 10px;
-  font-size: 15px;
+  font-size: var(--font-size-sm);
   color: var(--misc-color);
 }
 .post h2 {
   margin-top: 40px;
   color: var(--title-color);
-  font-size: 24px;
+  font-size: var(--font-size-lg);
   font-weight: var(--font-weight-light);
 }
 .post p {
@@ -45,12 +45,12 @@
 }
 .post pre code {
   font-family: var(--font-family-code);
-  font-size: 15px;
+  font-size: var(--font-size-sm);
 }
 .post p code {
   padding: 0 4px;
   font-family: var(--font-family-code);
-  font-size: 15px;
+  font-size: var(--font-size-sm);
   color: var(--block-text);
   background-color: var(--block-bg);
   border-radius: 4px;

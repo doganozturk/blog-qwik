@@ -1,9 +1,4 @@
-.back {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-svg path {
-  stroke: var(--text-color);
+span {
+  font-weight: var(--font-weight-normal);
+  color: var(--title-color);
 }
