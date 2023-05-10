@@ -8,11 +8,18 @@
 
 .links {
   display: flex;
-  align-items: center;
+  gap: 10px;
 }
 
 .link {
-  margin-right: 5px;
   color: var(--misc-color);
-  font-size: 15px;
+  font-size: var(--font-size-sm);
+}
+
+.link a {
+  padding: 5px;
+}
+
+.link:first-child a {
+  padding-left: 0;
 }

@@ -6,14 +6,14 @@
 }
 
 .title {
-  font-size: 18px;
+  font-size: var(--font-size-md);
   line-height: 1.2;
   color: var(--title-color);
 }
 
 .date {
   margin-top: 8px;
-  font-size: 14px;
+  font-size: var(--font-size-sm);
   color: var(--misc-color);
 }
 

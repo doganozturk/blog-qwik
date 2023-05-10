@@ -10,7 +10,7 @@ export const Footer = component$(() => {
       linkProps: {
         href: "mailto:doganozturk2005@gmail.com",
       },
-      text: "mail .",
+      text: "mail",
     },
     {
       linkProps: {
@@ -18,7 +18,7 @@ export const Footer = component$(() => {
         target: "_blank",
         rel: "noopener",
       },
-      text: "twitter .",
+      text: "twitter",
     },
     {
       linkProps: {
@@ -26,7 +26,7 @@ export const Footer = component$(() => {
         target: "_blank",
         rel: "noopener",
       },
-      text: "github .",
+      text: "github",
     },
     {
       linkProps: {
@@ -34,7 +34,7 @@ export const Footer = component$(() => {
         target: "_blank",
         rel: "noopener",
       },
-      text: "linkedin .",
+      text: "linkedin",
     },
     {
       linkProps: {
@@ -52,9 +52,7 @@ export const Footer = component$(() => {
         {links.map((link) => {
           return (
             <li class="link">
-              <a {...link.linkProps}>
-                <span>{link.text}</span>
-              </a>
+              <a {...link.linkProps}>{link.text}</a>
             </li>
           );
         })}

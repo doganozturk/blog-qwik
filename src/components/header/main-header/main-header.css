@@ -6,7 +6,7 @@
 
 .name {
   margin-left: -2px;
-  font-size: 32px;
+  font-size: var(--font-size-xl);
   font-weight: var(--font-weight-normal);
 }
 
