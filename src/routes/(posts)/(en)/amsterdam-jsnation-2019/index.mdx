@@ -6,6 +6,7 @@ date: "2019-06-11"
 lang: "en"
 ---
 
+import { PostVideo } from "~/components/post-video/post-video";
 import { formatDistance, Locale } from "~/util";
 
 export const title = "Amsterdam JSNation 2019";
@@ -53,50 +54,23 @@ At the time of writing this post, they had not yet separately posted the present
 
 After arriving at the event venue in the morning, getting inside, and putting on the printed badge with my name on it, I took my seat to listen to Kyle Simpson's opening speech. Kyle Simpson is the author of the popular "You Don't Know JS" series, which you can read for free from his GitHub repo ([https://github.com/getify/You-Dont-Know-JS](https://github.com/getify/You-Dont-Know-JS)). He has a long history in programming and has been a developer involved in every stage of the web's evolution over the years. I particularly enjoyed his thoughts on how JavaScript is increasingly becoming a compile target. He provided a fun and thought-provoking critique of the increasingly complex Web and JavaScript development culture, drawing on our shared experiences of learning web development by right-clicking on an interesting web page in a browser, selecting "View Source," and examining and trying to understand the HTML.
 
-<div class="video-wrapper">
-  <iframe
-    loading="lazy"
-    width="560"
-    height="315"
-    title="Keep betting on JavaScript - Kyle Simpson"
-    src="https://www.youtube.com/embed/ZrKjgSfpppM"
-    frameborder="0"
-    allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
-    allowfullscreen
-  ></iframe>
-</div>
+<PostVideo id="ZrKjgSfpppM" title="Keep betting on JavaScript - Kyle Simpson" />
 
 After the first talk, I went to the Node.js room and watched a presentation on the Quasar Framework by its creator, Razvan Stoenescu. It offers an overall solution using Vue.js in the background that allows you to develop hybrid mobile, desktop (electron), and web applications with a single codebase. I could say that it convinced me to create a small application with it.
 
-<div class="video-wrapper">
-  <iframe
-    loading="lazy"
-    width="560"
-    height="315"
-    title="SSR with Quasar Framework - Razvan Stoenescu"
-    src="https://www.youtube.com/embed/RUWawfKVomw"
-    frameborder="0"
-    allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
-    allowfullscreen
-  ></iframe>
-</div>
+<PostVideo
+  id="RUWawfKVomw"
+  title="SSR with Quasar Framework - Razvan Stoenescu"
+/>
 
 Waleed Ashraf's presentation on using RabbitMQ and PM2 to manage multiple Node.js processes was particularly insightful regarding transitioning from Node.js's built-in cluster structure to a more manageable and scalable architecture.
 
-[https://waleedashraf.me/switching-from-cluster-module-to-pm2-and-rabbitmq-in-nodejs/](<https://waleedashraf.me/switching-from-cluster-module-to-pm2-and-rabbitmq-in-nodejs/](https://waleedashraf.me/switching-from-cluster-module-to-pm2-and-rabbitmq-in-nodejs/)>)
+https://waleedashraf.me/switching-from-cluster-module-to-pm2-and-rabbitmq-in-nodejs
 
-<div class="video-wrapper">
-  <iframe
-    loading="lazy"
-    width="560"
-    height="315"
-    title="RabbitMQ and PM2 in Node.js for managing Multiple Processes - Waleed Ashraf"
-    src="https://www.youtube.com/embed/fM9qwbofop0"
-    frameborder="0"
-    allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
-    allowfullscreen
-  ></iframe>
-</div>
+<PostVideo
+  id="fM9qwbofop0"
+  title="RabbitMQ and PM2 in Node.js for managing Multiple Processes - Waleed Ashraf"
+/>
 
 After these two presentations, I returned to the main hall and listened to Tobias Koppers, the creator of Webpack, discussing Webpack 5. He talked about the breaking changes in this version and why and how they made those decisions.
 
@@ -106,18 +80,10 @@ After these two presentations, I returned to the main hall and listened to Tobia
   alt="Webpack 5"
 />
 
-<div class="video-wrapper">
-  <iframe
-    loading="lazy"
-    width="560"
-    height="315"
-    title="Why Breaking Changes? What is next? - Tobias Koppers"
-    src="https://www.youtube.com/embed/p-MhcctQBlY"
-    frameborder="0"
-    allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
-    allowfullscreen
-  ></iframe>
-</div>
+<PostVideo
+  id="p-MhcctQBlY"
+  title="Why Breaking Changes? What is next? - Tobias Koppers"
+/>
 
 One of the presentations that caught my attention was Andre Staltz's talk on Lenses as a functional programming paradigm, where he discussed state management using examples from Cycle.js and React/Vue.
 
@@ -127,50 +93,26 @@ One of the presentations that caught my attention was Andre Staltz's talk on Len
   alt="Cycle.js"
 />
 
-<div class="video-wrapper">
-  <iframe
-    loading="lazy"
-    width="560"
-    height="315"
-    title="Functional Lenses for Contemporary Frameworks"
-    src="https://www.youtube.com/embed/5R3l2r1XxKI"
-    frameborder="0"
-    allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
-    allowfullscreen
-  ></iframe>
-</div>
+<PostVideo
+  id="5R3l2r1XxKI"
+  title="Functional Lenses for Contemporary Frameworks - Andre Staltz"
+/>
 
 After this talk, I reluctantly left the main hall again because I was curious about Babel maintainer Henry Zhu's presentation on contributing to and becoming a developer for an open-source project. However, I headed back to the Node.js room with a sense of duty.
 
 Viktor Turskyi's presentation on the tactics they applied on Node.js — Express for clean architecture and the experiences they had at his company was successful. He also mentioned that they would publish the architecture they used on GitHub.
 
-<div class="video-wrapper">
-  <iframe
-    loading="lazy"
-    width="560"
-    height="315"
-    title="The Working Architecture of Node.js Applications - Viktor Turskyi"
-    src="https://www.youtube.com/embed/eVGdV53q68I"
-    frameborder="0"
-    allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
-    allowfullscreen
-  ></iframe>
-</div>
+<PostVideo
+  id="eVGdV53q68I"
+  title="The Working Architecture of Node.js Applications - Viktor Turskyi"
+/>
 
 Matthias Dugué's presentation on stateless, zero-knowledge backends, especially on the Node.js — MongoDB — Express stack, included interesting points about JWT usage and user authentication processes.
 
-<div class="video-wrapper">
-  <iframe
-    loading="lazy"
-    width="560"
-    height="315"
-    title="Building Zero-Knowledge Backends - Matthias Dugue"
-    src="https://www.youtube.com/embed/1QueApYNfPI"
-    frameborder="0"
-    allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
-    allowfullscreen
-  ></iframe>
-</div>
+<PostVideo
+  id="1QueApYNfPI"
+  title="Building Zero-Knowledge Backends - Matthias Dugue"
+/>
 
 Max Gallo, in his presentation, explained map and filter operators in RxJS, observers, and how operators are chained through a live coding sequence, offering content that I found successful in terms of functional programming.
 
@@ -180,93 +122,39 @@ Max Gallo, in his presentation, explained map and filter operators in RxJS, obse
   alt="RxJs"
 />
 
-<div class="video-wrapper">
-  <iframe
-    loading="lazy"
-    width="560"
-    height="315"
-    title="Reinventing RxJS - Max Gallo"
-    src="https://www.youtube.com/embed/7sdVXMTFVbE"
-    frameborder="0"
-    allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
-    allowfullscreen
-  ></iframe>
-</div>
+<PostVideo id="7sdVXMTFVbE" title="Reinventing RxJS - Max Gallo" />
 
 Paulo Lopes' presentation on using GraalJS on GraalVM, explaining how they managed to go beyond the performance gains achieved by languages like Go or Rust with benchmark studies on an alternative, V8-less Node.js runtime, was one of the most impressive contents.
 
-<div class="video-wrapper">
-  <iframe
-    loading="lazy"
-    width="560"
-    height="315"
-    title="10 Things I Learned Making the Fastest JS Server Runtime in the World - Paulo Lopes"
-    src="https://www.youtube.com/embed/JUJ85k3aEg4"
-    frameborder="0"
-    allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
-    allowfullscreen
-  ></iframe>
-</div>
+<PostVideo
+  id="JUJ85k3aEg4"
+  title="10 Things I Learned Making the Fastest JS Server Runtime in the World - Paulo Lopes"
+/>
 
 Ruben Bridgewater, a Node.js core contributor, gave a presentation on error handling in Node.js applications, particularly for codebases using promises and async/await, filled with real-life examples.
 
-<div class="video-wrapper">
-  <iframe
-    loading="lazy"
-    width="560"
-    height="315"
-    title="Error Handling: Doing It Right! - Ruben Bridgewater"
-    src="https://www.youtube.com/embed/hNaNjBBAdBo"
-    frameborder="0"
-    allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
-    allowfullscreen
-  ></iframe>
-</div>
+<PostVideo
+  id="hNaNjBBAdBo"
+  title="Error Handling: Doing It Right! - Ruben Bridgewater"
+/>
 
 Katie Koschland from Financial Times gave a presentation on load testing methodology using Artillery, adorned with her own experiences, and focusing on the theme of crazy bugs that we all have to face from time to time.
 
-<div class="video-wrapper">
-  <iframe
-    loading="lazy"
-    width="560"
-    height="315"
-    title="Ready, Steady, Crash! - Katie Koschland"
-    src="https://www.youtube.com/embed/r8DbY3FCRww"
-    frameborder="0"
-    allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
-    allowfullscreen
-  ></iframe>
-</div>
+<PostVideo id="r8DbY3FCRww" title="Ready, Steady, Crash! - Katie Koschland" />
 
 I returned to the main hall for the last two presentations of the day. Christian Bromann's information on automatic performance tests was interesting, and as it is one of the topics we care about the most at Zingat, I listened carefully.
 
-<div class="video-wrapper">
-  <iframe
-    loading="lazy"
-    width="560"
-    height="315"
-    title="Automated Performance Testing With WebDriver - Christian Bromann"
-    src="https://www.youtube.com/embed/Al7zlLdd_es"
-    frameborder="0"
-    allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
-    allowfullscreen
-  ></iframe>
-</div>
+<PostVideo
+  id="Al7zlLdd_es"
+  title="Automated Performance Testing With WebDriver - Christian Bromann"
+/>
 
 David Rousset, in the final presentation of the event, showcased the technologies behind a game he developed as a PWA using WebGL and Babylon.js for VR, mobile, and web in an extremely entertaining way for the audience.
 
-<div class="video-wrapper">
-  <iframe
-    loading="lazy"
-    width="560"
-    height="315"
-    title="Using WebGL and PWA to Build an Adaptive Game for Touch, Mouse and VR Devices - David Rousset"
-    src="https://www.youtube.com/embed/l9DGNQN4uqU"
-    frameborder="0"
-    allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
-    allowfullscreen
-  ></iframe>
-</div>
+<PostVideo
+  id="l9DGNQN4uqU"
+  title="Using WebGL and PWA to Build an Adaptive Game for Touch, Mouse and VR Devices - David Rousset"
+/>
 
 The heavily attended event left behind enjoyable memories and new friendships. I hope to be there in the coming years with an even larger team.
 

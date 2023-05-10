@@ -136,7 +136,6 @@ We had two problems in the creation of the final report from partial coverage re
 - The second issue is about nyc. We saw that the local installation of this tool somehow could not merge partial files correctly. As a solution, we never moved node_modules to this step and preferred to run nyc with npx.
 
   ```yaml
-
   ---
   script: — npx nyc merge coverage_dump .nyc_output/out.json
     — npx nyc report — reporter=html
