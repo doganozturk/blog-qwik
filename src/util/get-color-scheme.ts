@@ -1,6 +1,7 @@
 export enum ColorScheme {
   Dark = "dark",
   Light = "light",
+  NoPreference = "no-preference",
 }
 
 export const getColorScheme = (): ColorScheme => {
@@ -18,5 +19,5 @@ export const getColorScheme = (): ColorScheme => {
     return ColorScheme.Light;
   }
 
-  return ColorScheme.Light;
+  return ColorScheme.NoPreference;
 };
