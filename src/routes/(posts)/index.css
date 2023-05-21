@@ -45,12 +45,12 @@
 }
 .post pre code {
   font-family: var(--font-family-code);
-  font-size: var(--font-size-sm);
+  font-size: var(--font-size-code);
 }
 .post p code {
   padding: 0 4px;
   font-family: var(--font-family-code);
-  font-size: var(--font-size-sm);
+  font-size: var(--font-size-code);
   color: var(--block-text);
   background-color: var(--block-bg);
   border-radius: 4px;
