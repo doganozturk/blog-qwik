@@ -47,7 +47,8 @@
   font-family: var(--font-family-code);
   font-size: var(--font-size-code);
 }
-.post p code {
+.post p code,
+.post ul li code {
   padding: 0 4px;
   font-family: var(--font-family-code);
   font-size: var(--font-size-code);
