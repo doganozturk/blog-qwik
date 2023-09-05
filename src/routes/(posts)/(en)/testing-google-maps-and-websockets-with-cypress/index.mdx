@@ -175,8 +175,13 @@ it(
 
 Two challenges remain:
 
-- **Accessing Objects through Window:** A cleaner approach could involve using `cy.stub`. While there is an open [GitHub](https://github.com/cypress-io/cypress/issues/2492) issue advocating WebSocket support for Cypress, and some methods do exist for this use case, these options appear overly complex.
-- **Using Timed Waits:** The unpredictable arrival time of triggered socket messages presents a problem. Implementing a socket `onmessage` handler specifically for the test environment could potentially address this issue.
+- **Accessing Objects through Window:**
+
+    A cleaner approach could involve using `cy.stub`. While there is an open [GitHub](https://github.com/cypress-io/cypress/issues/2492) issue advocating WebSocket support for Cypress, and some methods do exist for this use case, these options appear overly complex.
+
+- **Using Timed Waits:**
+
+    The unpredictable arrival time of triggered socket messages presents a problem. Implementing a socket `onmessage` handler specifically for the test environment could potentially address this issue.
 
 ---
 
