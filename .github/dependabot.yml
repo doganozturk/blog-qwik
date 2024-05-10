@@ -6,7 +6,7 @@ updates:
       interval: "weekly"
     open-pull-requests-limit: 5
     labels:
-      - "dependency"
+      - "dependencies"
       - "npm"
     rebase-strategy: "auto"
     allow:
