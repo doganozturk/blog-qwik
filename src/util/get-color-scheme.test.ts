@@ -1,6 +1,10 @@
 import { getColorScheme, ColorScheme } from "./get-color-scheme";
 import { vi } from "vitest";
 
+vi.mock("@builder.io/qwik", () => ({
+  isServer: false,
+}));
+
 describe("getColorScheme", () => {
   beforeEach(() => {
     window.matchMedia = vi.fn();

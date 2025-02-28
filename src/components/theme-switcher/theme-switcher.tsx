@@ -6,20 +6,20 @@ import styles from "./theme-switcher.css?inline";
 export const ThemeSwitcher = component$(() => {
   useStylesScoped$(styles);
 
-  const state = useContext(ThemeContext);
+  const theme = useContext(ThemeContext);
 
   return (
     <div
       class="theme-switcher"
       onClick$={() => {
-        state.theme =
-          state.theme === ThemeType.Light ? ThemeType.Dark : ThemeType.Light;
+        theme.value =
+          theme.value === ThemeType.Light ? ThemeType.Dark : ThemeType.Light;
       }}
     >
-      {state.theme === ThemeType.Dark && (
+      {theme.value === ThemeType.Dark && (
         <span class="switch switch-light">🌞</span>
       )}
-      {state.theme === ThemeType.Light && (
+      {theme.value === ThemeType.Light && (
         <span class="switch switch-dark">🌚</span>
       )}
     </div>

@@ -1,11 +1,14 @@
 import {
   component$,
-  createContext,
   Slot,
-  useClientEffect$,
+  useTask$,
   useContextProvider,
-  useStore,
+  useSignal,
+  createContextId,
+  useOnDocument,
+  $,
 } from "@builder.io/qwik";
+import { isServer } from "@builder.io/qwik";
 import { Footer } from "~/components/footer/footer";
 import { ColorScheme, getColorScheme } from "~/util";
 
@@ -16,45 +19,37 @@ export enum ThemeType {
   Dark = "dark",
 }
 
-export interface Theme {
-  theme: string;
-}
-
-export const ThemeContext = createContext<Theme>("theme-context");
+export const ThemeContext = createContextId<{ value: string }>("theme-context");
 
 export default component$(() => {
-  const state = useStore<Theme>({
-    theme: "",
-  });
-  useContextProvider(ThemeContext, state);
+  const theme = useSignal<string>("");
+  useContextProvider(ThemeContext, theme);
 
-  useClientEffect$(({ track }) => {
-    const theme = track(() => state.theme);
+  // Save theme to localStorage when it changes
+  useTask$(({ track }) => {
+    const currentTheme = track(() => theme.value);
 
-    if (theme) {
-      localStorage.setItem(LS_THEME, theme);
-    }
-  });
-
-  useClientEffect$(({ track }) => {
-    const theme = track(() => localStorage.getItem(LS_THEME));
-
-    if (!theme) {
-      state.theme =
-        getColorScheme() === ColorScheme.Dark
-          ? ThemeType.Dark
-          : ThemeType.Light;
-
+    if (isServer || !currentTheme) {
       return;
     }
 
-    if (!state.theme) {
-      state.theme = theme;
-    }
+    localStorage.setItem(LS_THEME, currentTheme);
   });
 
+  // Initialize theme from localStorage or system preference
+  useOnDocument(
+    "DOMContentLoaded",
+    $(() => {
+      theme.value =
+        localStorage.getItem(LS_THEME) ||
+        (getColorScheme() === ColorScheme.Dark
+          ? ThemeType.Dark
+          : ThemeType.Light);
+    })
+  );
+
   return (
-    <div class={`theme-container ${state.theme}`}>
+    <div class={`theme-container ${theme.value}`}>
       <div class="container">
         <Slot name="header" />
         <Slot />

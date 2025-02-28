@@ -9,7 +9,7 @@
     "url": "https://github.com/doganozturk/blog-qwik.git"
   },
   "engines": {
-    "node": ">=15.0.0"
+    "node": ">=16.0.0"
   },
   "type": "module",
   "private": true,
@@ -17,7 +17,7 @@
     "build": "qwik build",
     "build.client": "vite build",
     "build.preview": "vite build --ssr src/entry.preview.tsx",
-    "build.server": "vite build -c adaptors/static/vite.config.ts",
+    "build.server": "vite build -c adapters/static/vite.config.ts",
     "build.types": "tsc --incremental --noEmit",
     "deploy": "echo 'Run \"npm run qwik add\" to install a server adaptor'",
     "dev": "vite --mode ssr",
@@ -32,22 +32,22 @@
     "qwik": "qwik"
   },
   "devDependencies": {
-    "@builder.io/qwik": "0.16.2",
-    "@builder.io/qwik-city": "0.0.128",
+    "@builder.io/qwik": "1.12.1",
+    "@builder.io/qwik-city": "1.12.1",
     "@testing-library/jest-dom": "^6.6.3",
-    "@types/eslint": "8.4.10",
+    "@types/eslint": "8.44.6",
     "@types/node": "^22.10.5",
-    "@typescript-eslint/eslint-plugin": "5.45.0",
-    "@typescript-eslint/parser": "5.45.0",
+    "@typescript-eslint/eslint-plugin": "6.14.0",
+    "@typescript-eslint/parser": "6.14.0",
     "@vitest/coverage-v8": "^2.1.8",
-    "eslint": "8.28.0",
-    "eslint-plugin-qwik": "0.15.2",
+    "eslint": "^8.57.0",
+    "eslint-plugin-qwik": "1.12.1",
     "jsdom": "^26.0.0",
-    "node-fetch": "3.3.0",
-    "prettier": "2.8.0",
-    "typescript": "4.9.3",
-    "vite": "4.5.2",
-    "vite-tsconfig-paths": "^3.5.0",
+    "node-fetch": "3.3.2",
+    "prettier": "3.1.0",
+    "typescript": "5.3.3",
+    "vite": "5.0.10",
+    "vite-tsconfig-paths": "^4.2.1",
     "vitest": "^2.1.8"
   },
   "dependencies": {

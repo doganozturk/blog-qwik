@@ -15,9 +15,9 @@ export const getPosts = async (): Promise<PostSummary[]> => {
       title: data.head.title || "",
       description:
         data.head.meta.find((m) => m.name === "description")?.content || "",
-      date: data.head.frontmatter.date,
-      permalink: data.head.frontmatter.permalink,
-      lang: data.head.frontmatter.lang,
+      date: data.head.frontmatter.date as string,
+      permalink: data.head.frontmatter.permalink as string,
+      lang: data.head.frontmatter.lang as string,
     };
   });
 

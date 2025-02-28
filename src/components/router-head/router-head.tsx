@@ -12,18 +12,18 @@ export const RouterHead = component$(() => {
     <>
       <title>{head.title}</title>
 
-      <link rel="canonical" href={loc.href} />
+      <link rel="canonical" href={loc.url.href} />
 
-      {head.meta.map((m) => (
-        <meta {...m} />
+      {head.meta.map((m, index) => (
+        <meta key={`meta-${index}`} {...m} />
       ))}
 
-      {head.links.map((l) => (
-        <link {...l} />
+      {head.links.map((l, index) => (
+        <link key={`link-${index}`} {...l} />
       ))}
 
-      {head.styles.map((s) => (
-        <style {...s.props} dangerouslySetInnerHTML={s.style} />
+      {head.styles.map((s, index) => (
+        <style key={`style-${index}`} {...s.props} dangerouslySetInnerHTML={s.style} />
       ))}
     </>
   );

@@ -3,4 +3,5 @@ export interface PostSummary {
   description: string;
   permalink: string;
   date: string;
+  lang: string;
 }
