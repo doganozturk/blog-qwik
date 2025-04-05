@@ -6,7 +6,7 @@ import { PostSummary } from "~/models";
 import { asyncMap, Locale } from "~/util";
 
 export const getPosts = async (): Promise<PostSummary[]> => {
-  const modules = await import.meta.glob("/src/routes/**/**/index.mdx");
+  const modules = import.meta.glob("/src/routes/**/**/index.mdx");
 
   const posts = await asyncMap(Object.keys(modules), async (path) => {
     const data = (await modules[path]()) as DocumentHeadProps;

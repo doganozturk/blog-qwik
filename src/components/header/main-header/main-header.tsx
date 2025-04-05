@@ -1,6 +1,6 @@
 import { component$, useStylesScoped$ } from "@builder.io/qwik";
 import { Header, HeaderType } from "~/components/header/header";
-import ImgAvatar from "~/media/images/avatar.jpg?jsx";
+import avatarSrc from "~/media/images/avatar.jpg";
 
 import styles from "./main-header.css?inline";
 
@@ -9,7 +9,8 @@ export const MainHeader = component$(() => {
 
   return (
     <Header type={HeaderType.Main}>
-      <ImgAvatar
+      <img 
+        src={avatarSrc}
         class="avatar"
         loading="lazy"
         alt="Doğan Öztürk"

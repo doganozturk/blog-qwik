@@ -25,6 +25,7 @@
   "include": [
     "src",
     "*.d.ts",
-    "*.config.ts"
+    "*.config.ts",
+    "vitest.setup.ts"
   ],
 }

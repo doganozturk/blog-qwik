@@ -9,13 +9,14 @@ interface PostSummaryListProps {
 export const PostSummaryList = component$(({ data }: PostSummaryListProps) => {
   return (
     <section class="post-summary-list">
-      {data.map(({ title, description, permalink, date }) => (
+      {data.map(({ title, description, permalink, date, lang }) => (
         <PostSummaryListItem
           key={title}
           title={title}
           description={description}
           permalink={permalink}
           date={date}
+          lang={lang}
         />
       ))}
     </section>

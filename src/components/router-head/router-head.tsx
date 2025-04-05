@@ -12,7 +12,7 @@ export const RouterHead = component$(() => {
     <>
       <title>{head.title}</title>
 
-      <link rel="canonical" href={loc.url.href} />
+      <link rel="canonical" href={loc.href} />
 
       {head.meta.map((m, index) => (
         <meta key={`meta-${index}`} {...m} />

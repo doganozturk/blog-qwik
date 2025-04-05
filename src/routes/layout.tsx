@@ -4,11 +4,11 @@ import {
   useTask$,
   useContextProvider,
   useSignal,
-  createContextId,
+  createContext,
   useOnDocument,
   $,
 } from "@builder.io/qwik";
-import { isServer } from "@builder.io/qwik";
+import { isServer } from "@builder.io/qwik/build";
 import { Footer } from "~/components/footer/footer";
 import { ColorScheme, getColorScheme } from "~/util";
 
@@ -19,7 +19,7 @@ export enum ThemeType {
   Dark = "dark",
 }
 
-export const ThemeContext = createContextId<{ value: string }>("theme-context");
+export const ThemeContext = createContext<{ value: string }>("theme-context");
 
 export default component$(() => {
   const theme = useSignal<string>("");
