@@ -2,7 +2,7 @@ import { component$, Resource, useResource$ } from "@builder.io/qwik";
 import type { DocumentHead, DocumentHeadProps } from "@builder.io/qwik-city";
 import { MainHeader } from "~/components/header/main-header/main-header";
 import { PostSummaryList } from "~/components/post-summary-list/post-summary-list";
-import { PostSummary } from "~/models";
+import { PostSummary } from "~/components/post-summary-list/post-summary-list-item/post-summary-list-item";
 import { asyncMap, Locale } from "~/util";
 
 export const getPosts = async (): Promise<PostSummary[]> => {

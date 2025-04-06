@@ -4,7 +4,7 @@ import {
   useTask$,
   useContextProvider,
   useSignal,
-  createContext,
+  createContextId,
   useOnDocument,
   $,
 } from "@builder.io/qwik";
@@ -19,7 +19,7 @@ export enum ThemeType {
   Dark = "dark",
 }
 
-export const ThemeContext = createContext<{ value: string }>("theme-context");
+export const ThemeContext = createContextId<{ value: string }>("theme-context");
 
 export default component$(() => {
   const theme = useSignal<string>("");
@@ -45,7 +45,7 @@ export default component$(() => {
         (getColorScheme() === ColorScheme.Dark
           ? ThemeType.Dark
           : ThemeType.Light);
-    })
+    }),
   );
 
   return (

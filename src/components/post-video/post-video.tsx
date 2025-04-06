@@ -22,8 +22,8 @@ export const PostVideo = component$(({ id, title }: PostVideoProps) => {
         title={title}
         src={src}
         allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
-        allowFullScreen
-        srcDoc={srcDoc}
+        allowFullscreen
+        srcdoc={srcDoc}
       ></iframe>
     </div>
   );

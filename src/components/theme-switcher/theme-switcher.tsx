@@ -6,7 +6,7 @@ import styles from "./theme-switcher.css?inline";
 export const ThemeSwitcher = component$(() => {
   useStylesScoped$(styles);
 
-  const theme = useContext(ThemeContext);
+  const theme = useContext<{ value: string }>(ThemeContext);
 
   return (
     <div

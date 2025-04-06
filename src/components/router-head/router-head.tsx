@@ -12,7 +12,7 @@ export const RouterHead = component$(() => {
     <>
       <title>{head.title}</title>
 
-      <link rel="canonical" href={loc.href} />
+      <link rel="canonical" href={loc.url.href} />
 
       {head.meta.map((m, index) => (
         <meta key={`meta-${index}`} {...m} />
@@ -23,7 +23,11 @@ export const RouterHead = component$(() => {
       ))}
 
       {head.styles.map((s, index) => (
-        <style key={`style-${index}`} {...s.props} dangerouslySetInnerHTML={s.style} />
+        <style
+          key={`style-${index}`}
+          {...s.props}
+          dangerouslySetInnerHTML={s.style}
+        />
       ))}
     </>
   );
