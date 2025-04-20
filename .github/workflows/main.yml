@@ -22,6 +22,8 @@ jobs:
           aws-region: us-east-1
       - name: Install modules
         run: npm ci
+      - name: Run tests
+        run: npm test
       - name: Build application
         run: npm run build
       - name: Deploy to S3

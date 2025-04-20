@@ -1,10 +1,10 @@
+import { isServer } from "@builder.io/qwik/build";
+
 export enum ColorScheme {
   Dark = "dark",
   Light = "light",
   NoPreference = "no-preference",
 }
-
-import { isServer } from "@builder.io/qwik/build";
 
 export const getColorScheme = (): ColorScheme => {
   if (isServer) {
