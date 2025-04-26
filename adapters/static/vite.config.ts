@@ -3,6 +3,7 @@ import { extendConfig } from "@builder.io/qwik-city/vite";
 import { qwikCity } from "@builder.io/qwik-city/vite";
 import { generate } from "@builder.io/qwik-city/static";
 import baseConfig from "../../vite.config";
+import path from "node:path";
 
 export default extendConfig(baseConfig, () => {
   return {
@@ -20,8 +21,11 @@ export default extendConfig(baseConfig, () => {
         closeBundle: async () => {
           await generate({
             origin: "http://doganozturk.dev",
-            outDir: "./dist",
-            renderModulePath: "./src/entry.ssr.tsx",
+            outDir: path.resolve(__dirname, "./dist"),
+            renderModulePath: path.resolve(
+              __dirname,
+              "../../dist/entry.ssr.js",
+            ),
             qwikCityPlanModulePath: "@qwik-city-plan",
           });
         },
