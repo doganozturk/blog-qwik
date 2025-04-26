@@ -1,7 +1,6 @@
 import { test, expect, describe } from "vitest";
 import { ThemeSwitcher } from "./theme-switcher";
 import { createDOM } from "../../../vitest.setup";
-import { ThemeType } from "~/routes/layout";
 
 describe("ThemeSwitcher", () => {
   test(`[ThemeSwitcher Component]: Should be defined`, async () => {
@@ -51,7 +50,9 @@ describe("ThemeSwitcher", () => {
     expect(screen.outerHTML).toContain("🌚"); // Moon emoji for light theme
     const switchElementAfterToggle = screen.querySelector(".switch");
     expect(switchElementAfterToggle).not.toBeNull();
-    expect(switchElementAfterToggle?.classList.contains("switch-dark")).toBe(true);
+    expect(switchElementAfterToggle?.classList.contains("switch-dark")).toBe(
+      true,
+    );
   });
 
   test(`[ThemeSwitcher Component]: Should have correct CSS classes`, async () => {
