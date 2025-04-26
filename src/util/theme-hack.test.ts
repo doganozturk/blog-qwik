@@ -1,3 +1,4 @@
+/* @vitest-environment jsdom */
 import { themeHack } from "./theme-hack";
 
 describe("themeHack", () => {

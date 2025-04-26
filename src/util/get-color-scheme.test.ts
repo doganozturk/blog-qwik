@@ -1,3 +1,4 @@
+/* @vitest-environment jsdom */
 import { getColorScheme, ColorScheme } from "./get-color-scheme";
 import { vi } from "vitest";
 

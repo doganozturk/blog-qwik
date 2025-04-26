@@ -26,6 +26,6 @@
     "src",
     "*.d.ts",
     "*.config.ts",
-    "vitest.setup.ts"
+    "vitest.setup.tsx"
   ],
 }

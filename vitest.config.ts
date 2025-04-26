@@ -1,15 +1,16 @@
 import { defineConfig } from "vitest/config";
 import tsconfigPaths from "vite-tsconfig-paths";
+import { qwikVite } from "@builder.io/qwik/optimizer";
 
 export default defineConfig({
-  plugins: [tsconfigPaths() as any],
+  plugins: [qwikVite(), tsconfigPaths() as any],
   test: {
     globals: true,
-    environment: "jsdom",
+    environment: "node",
     coverage: {
       reporter: ["text", "json", "html"],
     },
-    setupFiles: ["./vitest.setup.ts"],
+    setupFiles: ["./vitest.setup.tsx"],
     deps: {
       interopDefault: true,
     },
