@@ -12,7 +12,7 @@ describe("Header", () => {
     await render(
       <Header type={HeaderType.Main}>
         <div>Test Content</div>
-      </Header>
+      </Header>,
     );
 
     expect(screen.outerHTML).toContain("header");
@@ -24,7 +24,7 @@ describe("Header", () => {
     await render(
       <Header type={HeaderType.Post}>
         <div>Test Content</div>
-      </Header>
+      </Header>,
     );
 
     expect(screen.outerHTML).toContain("header");
@@ -37,7 +37,7 @@ describe("Header", () => {
     await renderMain(
       <Header type={HeaderType.Main}>
         <div>Test Content</div>
-      </Header>
+      </Header>,
     );
 
     const anchorMain = screenMain.querySelector("a.header-main");
@@ -49,7 +49,7 @@ describe("Header", () => {
     await renderPost(
       <Header type={HeaderType.Post}>
         <div>Test Content</div>
-      </Header>
+      </Header>,
     );
 
     const anchorPost = screenPost.querySelector("a.header-main");
@@ -62,7 +62,7 @@ describe("Header", () => {
     await render(
       <Header type={HeaderType.Main}>
         <div>Test Content</div>
-      </Header>
+      </Header>,
     );
 
     const themeSwitcher = screen.querySelector(".theme-switcher");
@@ -74,7 +74,7 @@ describe("Header", () => {
     await render(
       <Header type={HeaderType.Main}>
         <div>Test Content</div>
-      </Header>
+      </Header>,
     );
 
     const headerElement = screen.querySelector("header");

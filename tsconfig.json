@@ -22,10 +22,5 @@
     }
   },
   "files": ["./.eslintrc.cjs"],
-  "include": [
-    "src",
-    "*.d.ts",
-    "*.config.ts",
-    "vitest.setup.tsx"
-  ],
+  "include": ["src", "*.d.ts", "*.config.ts", "vitest.setup.tsx"]
 }

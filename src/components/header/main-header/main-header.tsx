@@ -9,12 +9,7 @@ export const MainHeader = component$(() => {
 
   return (
     <Header type={HeaderType.Main}>
-      <img 
-        src={avatarSrc}
-        class="avatar"
-        loading="lazy"
-        alt="Doğan Öztürk"
-      />
+      <img src={avatarSrc} class="avatar" loading="lazy" alt="Doğan Öztürk" />
       <div class="title">
         <h1 class="name">Doğan Öztürk</h1>
         <p class="info">Reflections on Technology, Culture, and Life</p>

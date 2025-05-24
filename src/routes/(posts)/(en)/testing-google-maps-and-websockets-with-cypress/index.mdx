@@ -8,8 +8,7 @@ lang: "en"
 
 import { formatDistance } from "~/util";
 
-export const title =
-    "Testing Google Maps and WebSockets with Cypress";
+export const title = "Testing Google Maps and WebSockets with Cypress";
 export const date = "2023-09-04";
 
 # {title}
@@ -17,10 +16,10 @@ export const date = "2023-09-04";
 <p>{formatDistance(date)}</p>
 
 <img
-    src="/images/posts/testing-google-maps-and-websockets-with-cypress/live-map.webp"
-    alt="A small part of Trendyol GO’s Live Map application"
-    width="1400"
-    height="998"
+  src="/images/posts/testing-google-maps-and-websockets-with-cypress/live-map.webp"
+  alt="A small part of Trendyol GO’s Live Map application"
+  width="1400"
+  height="998"
 ></img>
 
 In previous articles, we discussed Trendyol GO’s React-based admin micro-frontend application, highlighting our use of Google Maps and WebSockets for specific functionalities. This article delves into our testing approach for these components using Cypress.
@@ -40,16 +39,19 @@ This article aims to offer an overview of our advanced UI testing strategies, wi
 Google Maps renders through a canvas, making certain test scenarios impossible to write:
 
 1. **Capture Marker Creation:** Upon receiving a specific delivery and courier response, markers are placed on the map for couriers, stores, and buyers.
-    - Are the markers correctly instantiated according to the mock data?
+
+   - Are the markers correctly instantiated according to the mock data?
 
 2. **Test Dynamic Polylines:** These lines define the current relation for a given delivery (or deliveries) between courier, buyer (or buyers) and store. They change their colors based on the order state.
-    - Are the polylines correctly instantiated according to the mock data?
+
+   - Are the polylines correctly instantiated according to the mock data?
 
 3. **Handle Real-time Location Updates:** Let’s say a WebSocket LOCATION_UPDATE event is triggered for a courier.
-    - Does the courier marker move correctly on the map? Is the socket event properly processed?
+
+   - Does the courier marker move correctly on the map? Is the socket event properly processed?
 
 4. **Move Associated Polylines:** For the scenario above, the polylines attached to the courier should move accordingly.
-    - Do the polylines move correctly on the map?
+   - Do the polylines move correctly on the map?
 
 Given the application’s complexity, manual testing is unscalable, necessitating automated tests for a myriad of possible scenarios. However, writing tests for a canvas-based interface presents challenges. Rendering the map within the DOM solely for testing is impossible. For markers, the `markerOptions` property offers an `optimize` setting, but enabling it only converts the markers to DOM elements, excluding other elements like polylines and polygons.
 
@@ -60,39 +62,39 @@ Moreover, assessing marker position changes purely via the UI is unfeasible. Whi
 To address these testing challenges, we employ a mock socket server with the requisite message handlers. This lightweight Node.js server operates on a separate port and interacts with Cypress test code. Initialized prior to the test suite and terminated afterward, it runs as an independent process in the same CI/CD environment as the test suite, causing no performance issues. For more complex scenarios, it can also be configured as a standalone mock server and integrated as a service in the GitLab CI/CD pipeline.
 
 ```js
-const WebSocket = require('ws');
+const WebSocket = require("ws");
 
 const wss = new WebSocket.Server({ port: 4040 });
 
-wss.on('connection', (ws) => {
-    ws.on('message', async (m) => {
-        try {
-            const { type, subZoneIds, payload } = JSON.parse(m);
+wss.on("connection", (ws) => {
+  ws.on("message", async (m) => {
+    try {
+      const { type, subZoneIds, payload } = JSON.parse(m);
 
-            switch (type) {
-                case 'SUBSCRIBE':
-                    ws.send(
-                        JSON.stringify({
-                            type: 'INFO',
-                            message: `Subscribed to zoneId null subZoneIds ${JSON.stringify(
-                                subZoneIds,
-                            )}`,
-                        }),
-                    );
+      switch (type) {
+        case "SUBSCRIBE":
+          ws.send(
+            JSON.stringify({
+              type: "INFO",
+              message: `Subscribed to zoneId null subZoneIds ${JSON.stringify(
+                subZoneIds,
+              )}`,
+            }),
+          );
 
-                    break;
-                case 'TRIGGER_LOCATION_UPDATE':
-                case 'TRIGGER_DELIVERY_STATE_UPDATE':
-                    ws.send(JSON.stringify(payload));
+          break;
+        case "TRIGGER_LOCATION_UPDATE":
+        case "TRIGGER_DELIVERY_STATE_UPDATE":
+          ws.send(JSON.stringify(payload));
 
-                    break;
-                default:
-                    break;
-            }
-        } catch (error) {
-            console.log(error);
-        }
-    });
+          break;
+        default:
+          break;
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  });
 });
 ```
 
@@ -103,72 +105,66 @@ The handlers in the mock socket server receive payloads from our Cypress test co
 Mocking API calls is straightforward with Cypress, but WebSocket messages present a challenge due to their event-driven nature; the UI can’t predict when a message will be received. Our workaround involves writing objects like socket connections, markers, and polylines to the window object, but only in the test environment. This allows us to manipulate their states and movements. We can then initiate socket messages to validate application behavior. While not the ideal Cypress solution, this approach serves as a minimally intrusive workaround in our case. Access to the window object is required to interact with the socket connection and other objects.
 
 ```js
-it(
-    'should render couriers, stores, buyers and handles a simple location update',
-    () => {
-        // These are functions that mock API calls.
-        // we simplified these here for demonstration purposes.
-        cy.mockDeliveries();
-        cy.mockCouriers();
+it("should render couriers, stores, buyers and handles a simple location update", () => {
+  // These are functions that mock API calls.
+  // we simplified these here for demonstration purposes.
+  cy.mockDeliveries();
+  cy.mockCouriers();
 
-        // Simulate some user interaction on UI.
-        LiveMapPage.getSelect('Alt Bölge Seçimi').click();
-        LiveMapPage.getOption('IST 1').click();
+  // Simulate some user interaction on UI.
+  LiveMapPage.getSelect("Alt Bölge Seçimi").click();
+  LiveMapPage.getOption("IST 1").click();
 
-        // Wait for API calls to finish.
-        cy.wait([
-            '@mockDeliveries',
-            '@mockCouriers',
-        ]);
+  // Wait for API calls to finish.
+  cy.wait(["@mockDeliveries", "@mockCouriers"]);
 
-        cy.window().then((win) => {
-            // Get courier's current marker.
-            const courierMarker =
-                win.liveMapCourierMarkers.courier_marker_24741.current;
+  cy.window().then((win) => {
+    // Get courier's current marker.
+    const courierMarker =
+      win.liveMapCourierMarkers.courier_marker_24741.current;
 
-            // Access her initial position.
-            let lat = courierMarker.getPosition().lat();
-            let lng = courierMarker.getPosition().lng();
+    // Access her initial position.
+    let lat = courierMarker.getPosition().lat();
+    let lng = courierMarker.getPosition().lng();
 
-            // Assert her initial position.
-            expect(lat).to.be.equal(41.0360121);
-            expect(lng).to.be.equal(28.9608611);
+    // Assert her initial position.
+    expect(lat).to.be.equal(41.0360121);
+    expect(lng).to.be.equal(28.9608611);
 
-            // Trigger a location update.
-            // This sends a message to the mock socket server.
-            win.liveMapSocket.send(
-                JSON.stringify({
-                    type: 'TRIGGER_LOCATION_UPDATE',
-                    payload: {
-                        type: 'LOCATION',
-                        zoneId: 1,
-                        subZoneId: 9,
-                        courierId: 24741,
-                        coordinate: {
-                            type: 'Point',
-                            coordinates: [30.9599107, 42.0626412],
-                        },
-                        batteryPercentage: 90,
-                        speed: 5,
-                        accuracy: 3,
-                        telemetryUpdatedAt: '2022-04-01T10:44:00.442942',
-                    },
-                }),
-            );
+    // Trigger a location update.
+    // This sends a message to the mock socket server.
+    win.liveMapSocket.send(
+      JSON.stringify({
+        type: "TRIGGER_LOCATION_UPDATE",
+        payload: {
+          type: "LOCATION",
+          zoneId: 1,
+          subZoneId: 9,
+          courierId: 24741,
+          coordinate: {
+            type: "Point",
+            coordinates: [30.9599107, 42.0626412],
+          },
+          batteryPercentage: 90,
+          speed: 5,
+          accuracy: 3,
+          telemetryUpdatedAt: "2022-04-01T10:44:00.442942",
+        },
+      }),
+    );
 
-            // Wait for the socket message to be processed.
-            cy.wait(100).then(() => {
-                // Get the courier's new position.
-                lat = courierMarker.getPosition().lat();
-                lng = courierMarker.getPosition().lng();
+    // Wait for the socket message to be processed.
+    cy.wait(100).then(() => {
+      // Get the courier's new position.
+      lat = courierMarker.getPosition().lat();
+      lng = courierMarker.getPosition().lng();
 
-                // Assert her new position.
-                expect(lat).to.be.equal(42.0626412);
-                expect(lng).to.be.equal(30.9599107);
-            });
-        });
-    },
-);
+      // Assert her new position.
+      expect(lat).to.be.equal(42.0626412);
+      expect(lng).to.be.equal(30.9599107);
+    });
+  });
+});
 ```
 
 ## Issues and Potential Solutions
@@ -177,11 +173,11 @@ Two challenges remain:
 
 - **Accessing Objects through Window:**
 
-    A cleaner approach could involve using `cy.stub`. While there is an open [GitHub](https://github.com/cypress-io/cypress/issues/2492) issue advocating WebSocket support for Cypress, and some methods do exist for this use case, these options appear overly complex.
+  A cleaner approach could involve using `cy.stub`. While there is an open [GitHub](https://github.com/cypress-io/cypress/issues/2492) issue advocating WebSocket support for Cypress, and some methods do exist for this use case, these options appear overly complex.
 
 - **Using Timed Waits:**
 
-    The unpredictable arrival time of triggered socket messages presents a problem. Implementing a socket `onmessage` handler specifically for the test environment could potentially address this issue.
+  The unpredictable arrival time of triggered socket messages presents a problem. Implementing a socket `onmessage` handler specifically for the test environment could potentially address this issue.
 
 ---
 

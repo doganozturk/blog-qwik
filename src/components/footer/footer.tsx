@@ -3,7 +3,7 @@ import { component$, useStylesScoped$ } from "@builder.io/qwik";
 import styles from "./footer.css?inline";
 
 interface LinkItem {
-  linkProps: { href: string; target?: string; rel?: string; };
+  linkProps: { href: string; target?: string; rel?: string };
   text: string;
 }
 

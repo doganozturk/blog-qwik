@@ -9,6 +9,7 @@ export default defineConfig({
     environment: "node",
     coverage: {
       reporter: ["text", "json", "html"],
+      include: ["src/components", "src/util"],
     },
     setupFiles: ["./vitest.setup.tsx"],
     deps: {

@@ -15,9 +15,7 @@ vi.mock("@builder.io/qwik-city", () => {
         { rel: "stylesheet", href: "/test-style.css" },
         { rel: "icon", href: "/favicon.ico" },
       ],
-      styles: [
-        { props: { id: "test-style" }, style: "body { color: red; }" },
-      ],
+      styles: [{ props: { id: "test-style" }, style: "body { color: red; }" }],
     }),
     useLocation: () => ({
       url: { href: "https://test-site.com/test-page" },
@@ -45,7 +43,9 @@ describe("RouterHead", () => {
 
     const canonicalLink = screen.querySelector("link[rel='canonical']");
     expect(canonicalLink).not.toBeNull();
-    expect(canonicalLink?.getAttribute("href")).toBe("https://test-site.com/test-page");
+    expect(canonicalLink?.getAttribute("href")).toBe(
+      "https://test-site.com/test-page",
+    );
   });
 
   test(`[RouterHead Component]: Should render meta tags from document head`, async () => {
@@ -54,15 +54,15 @@ describe("RouterHead", () => {
 
     const metaTags = screen.querySelectorAll("meta");
     expect(metaTags.length).toBe(2);
-    
+
     const descriptionMeta = Array.from(metaTags).find(
-      (meta) => meta.getAttribute("name") === "description"
+      (meta) => meta.getAttribute("name") === "description",
     );
     expect(descriptionMeta).not.toBeNull();
     expect(descriptionMeta?.getAttribute("content")).toBe("Test Description");
 
     const keywordsMeta = Array.from(metaTags).find(
-      (meta) => meta.getAttribute("name") === "keywords"
+      (meta) => meta.getAttribute("name") === "keywords",
     );
     expect(keywordsMeta).not.toBeNull();
     expect(keywordsMeta?.getAttribute("content")).toBe("test, qwik, component");
@@ -75,15 +75,15 @@ describe("RouterHead", () => {
     // We expect 3 links: canonical + 2 from the mock
     const links = screen.querySelectorAll("link");
     expect(links.length).toBe(3);
-    
+
     const stylesheetLink = Array.from(links).find(
-      (link) => link.getAttribute("rel") === "stylesheet"
+      (link) => link.getAttribute("rel") === "stylesheet",
     );
     expect(stylesheetLink).not.toBeNull();
     expect(stylesheetLink?.getAttribute("href")).toBe("/test-style.css");
 
     const iconLink = Array.from(links).find(
-      (link) => link.getAttribute("rel") === "icon"
+      (link) => link.getAttribute("rel") === "icon",
     );
     expect(iconLink).not.toBeNull();
     expect(iconLink?.getAttribute("href")).toBe("/favicon.ico");
@@ -95,7 +95,7 @@ describe("RouterHead", () => {
 
     const styleElements = screen.querySelectorAll("style");
     expect(styleElements.length).toBe(1);
-    
+
     const testStyle = styleElements[0];
     expect(testStyle).not.toBeNull();
     expect(testStyle?.getAttribute("id")).toBe("test-style");

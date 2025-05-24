@@ -24,7 +24,7 @@ describe("PostSummaryListItem", () => {
         permalink={mockData.permalink}
         date={mockData.date}
         lang={mockData.lang}
-      />
+      />,
     );
 
     expect(screen.outerHTML).toContain("post-summary-list-item");
@@ -47,7 +47,7 @@ describe("PostSummaryListItem", () => {
         permalink={mockData.permalink}
         date={mockData.date}
         lang={mockData.lang}
-      />
+      />,
     );
 
     // Check if the title is rendered correctly
@@ -88,12 +88,14 @@ describe("PostSummaryListItem", () => {
         permalink={mockData.permalink}
         date={mockData.date}
         lang={mockData.lang}
-      />
+      />,
     );
 
     const linkElement = screen.querySelector("a");
     expect(linkElement).not.toBeNull();
-    expect(linkElement?.classList.contains("post-summary-list-item")).toBe(true);
+    expect(linkElement?.classList.contains("post-summary-list-item")).toBe(
+      true,
+    );
 
     const titleElement = screen.querySelector("h2");
     expect(titleElement).not.toBeNull();

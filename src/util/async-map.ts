@@ -1,6 +1,6 @@
 export async function asyncMap<T, U>(
   array: T[],
-  callback: (item: T, index: number, array: T[]) => Promise<U>
+  callback: (item: T, index: number, array: T[]) => Promise<U>,
 ): Promise<U[]> {
   const results: U[] = [];
 

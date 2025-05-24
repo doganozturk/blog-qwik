@@ -58,7 +58,9 @@ describe("PostSummaryList", () => {
     const summaries = screen.querySelectorAll(".summary");
     expect(summaries.length).toBe(2);
     expect(summaries[0].textContent).toBe("This is a test post description");
-    expect(summaries[1].textContent).toBe("This is another test post description");
+    expect(summaries[1].textContent).toBe(
+      "This is another test post description",
+    );
   });
 
   test(`[PostSummaryList Component]: Should have correct CSS classes`, async () => {

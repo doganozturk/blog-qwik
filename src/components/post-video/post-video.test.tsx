@@ -14,12 +14,7 @@ describe("PostVideo", () => {
     };
 
     const { screen, render } = await createDOM();
-    await render(
-      <PostVideo
-        id={mockData.id}
-        title={mockData.title}
-      />
-    );
+    await render(<PostVideo id={mockData.id} title={mockData.title} />);
 
     expect(screen.outerHTML).toContain("post-video");
   });
@@ -31,16 +26,13 @@ describe("PostVideo", () => {
     };
 
     const { screen, render } = await createDOM();
-    await render(
-      <PostVideo
-        id={mockData.id}
-        title={mockData.title}
-      />
-    );
+    await render(<PostVideo id={mockData.id} title={mockData.title} />);
 
     const iframeElement = screen.querySelector("iframe");
     expect(iframeElement).not.toBeNull();
-    expect(iframeElement?.getAttribute("src")).toBe(`https://www.youtube.com/embed/${mockData.id}`);
+    expect(iframeElement?.getAttribute("src")).toBe(
+      `https://www.youtube.com/embed/${mockData.id}`,
+    );
   });
 
   test(`[PostVideo Component]: Should set correct title attribute`, async () => {
@@ -50,12 +42,7 @@ describe("PostVideo", () => {
     };
 
     const { screen, render } = await createDOM();
-    await render(
-      <PostVideo
-        id={mockData.id}
-        title={mockData.title}
-      />
-    );
+    await render(<PostVideo id={mockData.id} title={mockData.title} />);
 
     const iframeElement = screen.querySelector("iframe");
     expect(iframeElement).not.toBeNull();
@@ -69,20 +56,19 @@ describe("PostVideo", () => {
     };
 
     const { screen, render } = await createDOM();
-    await render(
-      <PostVideo
-        id={mockData.id}
-        title={mockData.title}
-      />
-    );
+    await render(<PostVideo id={mockData.id} title={mockData.title} />);
 
     const iframeElement = screen.querySelector("iframe");
     expect(iframeElement).not.toBeNull();
-    
+
     const srcdoc = iframeElement?.getAttribute("srcdoc");
     expect(srcdoc).not.toBeNull();
-    expect(srcdoc).toContain(`https://img.youtube.com/vi/${mockData.id}/hqdefault.jpg`);
-    expect(srcdoc).toContain(`https://www.youtube.com/embed/${mockData.id}?autoplay=1`);
+    expect(srcdoc).toContain(
+      `https://img.youtube.com/vi/${mockData.id}/hqdefault.jpg`,
+    );
+    expect(srcdoc).toContain(
+      `https://www.youtube.com/embed/${mockData.id}?autoplay=1`,
+    );
     expect(srcdoc).toContain(`alt='${mockData.title}'`);
   });
 
@@ -93,12 +79,7 @@ describe("PostVideo", () => {
     };
 
     const { screen, render } = await createDOM();
-    await render(
-      <PostVideo
-        id={mockData.id}
-        title={mockData.title}
-      />
-    );
+    await render(<PostVideo id={mockData.id} title={mockData.title} />);
 
     const iframeElement = screen.querySelector("iframe");
     expect(iframeElement).not.toBeNull();
@@ -117,12 +98,7 @@ describe("PostVideo", () => {
     };
 
     const { screen, render } = await createDOM();
-    await render(
-      <PostVideo
-        id={mockData.id}
-        title={mockData.title}
-      />
-    );
+    await render(<PostVideo id={mockData.id} title={mockData.title} />);
 
     const divElement = screen.querySelector("div");
     expect(divElement).not.toBeNull();
