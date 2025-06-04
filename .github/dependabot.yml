@@ -9,11 +9,9 @@ updates:
       - "dependencies"
       - "npm"
     rebase-strategy: "auto"
+    versioning-strategy: increase
     allow:
       - dependency-type: "direct"
-    ignore:
-      - dependency-name: "*"
-        update-types: ["version-update:lockfile-only"]
     commit-message:
       prefix: "chore"
       include: "scope"
