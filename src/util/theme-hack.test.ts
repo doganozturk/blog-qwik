@@ -87,4 +87,17 @@ describe("themeHack", () => {
     expect(window.requestAnimationFrame).toHaveBeenCalled();
     expect(rafCount).toBe(1);
   });
+
+  it("should handle missing container when a theme exists", () => {
+    // Setup
+    document.body.innerHTML = "";
+    localStorageMock.getItem = vi.fn().mockReturnValue("dark");
+
+    // Execute
+    expect(() => new Function(themeHack)()).not.toThrow();
+
+    // Assert
+    expect(window.requestAnimationFrame).toHaveBeenCalled();
+    expect(rafCount).toBe(1);
+  });
 });
