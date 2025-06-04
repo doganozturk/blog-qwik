@@ -11,6 +11,9 @@ updates:
     rebase-strategy: "auto"
     allow:
       - dependency-type: "direct"
+    ignore:
+      - dependency-name: "*"
+        update-types: ["version-update:lockfile-only"]
     commit-message:
       prefix: "chore"
       include: "scope"
