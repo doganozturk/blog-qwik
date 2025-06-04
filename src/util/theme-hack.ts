@@ -4,13 +4,16 @@ export const themeHack = `(function(){
   // Qwik initializes. It prevents flash of unstyled content (FOUC) by applying
   // the theme class from localStorage as early as possible.
   if (typeof window !== 'undefined' && typeof document !== 'undefined') {
-    function ensureTheme(){
-      if(!document.querySelector(".theme-container")){
-        requestAnimationFrame(ensureTheme)
+    function ensureTheme() {
+      const themeContainer = document.querySelector(".theme-container");
+      if (!themeContainer) {
+        requestAnimationFrame(ensureTheme);
+        return;
       }
-      themeToEnsure=localStorage.getItem("theme")||"";
-      if(!themeToEnsure) return;
-      document.querySelector(".theme-container").classList.add(themeToEnsure)
+      const themeToEnsure = localStorage.getItem("theme") || "";
+      if (themeToEnsure) {
+        themeContainer.classList.add(themeToEnsure);
+      }
     }
     requestAnimationFrame(ensureTheme);
   }
