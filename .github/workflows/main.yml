@@ -23,7 +23,7 @@ jobs:
       - name: Install modules
         run: npm ci
       - name: Run tests
-        run: npm test
+        run: npm run test:ci
       - name: Build application
         run: npm run build
       - name: Deploy to S3
