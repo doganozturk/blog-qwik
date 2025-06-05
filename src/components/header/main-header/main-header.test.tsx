@@ -41,7 +41,7 @@ describe("MainHeader", () => {
     }
   });
 
-  test(`[MainHeader Component]: Should have correct CSS classes`, async () => {
+  test("[MainHeader Component]: Should have correct CSS classes", async () => {
     const { screen, render } = await createDOM();
     await render(<MainHeader />);
 
