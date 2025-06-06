@@ -40,7 +40,7 @@
     "@types/node": "^22.10.5",
     "@typescript-eslint/eslint-plugin": "6.14.0",
     "@typescript-eslint/parser": "6.14.0",
-    "@vitest/coverage-v8": "^2.1.8",
+    "@vitest/coverage-v8": "^2.1.9",
     "eslint": "^8.57.0",
     "eslint-plugin-qwik": "1.12.1",
     "jsdom": "^26.0.0",
@@ -49,7 +49,7 @@
     "typescript": "5.3.3",
     "vite": "5.4.19",
     "vite-tsconfig-paths": "^4.2.1",
-    "vitest": "^2.1.8"
+    "vitest": "^2.1.9"
   },
   "dependencies": {
     "date-fns": "^2.29.3"
