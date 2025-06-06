@@ -11,6 +11,7 @@ updates:
     rebase-strategy: "auto"
     allow:
       - dependency-type: "direct"
+    versioning-strategy: increase
     commit-message:
       prefix: "chore"
       include: "scope"
