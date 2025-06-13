@@ -1,24 +1,109 @@
 import { describe, expect, it } from "vitest";
-import { head } from "./layout";
+import type { DocumentHeadProps, DocumentHeadValue } from "@builder.io/qwik-city";
+import Layout, { head } from "./layout";
 
-describe("posts layout head", () => {
+type MetaTag = {
+  name?: string;
+  property?: string;
+  content?: string;
+};
+
+function createMockDocumentHeadProps(title: string, meta: MetaTag[], permalink: string): DocumentHeadProps {
+  return {
+    head: {
+      title,
+      meta,
+      links: [],
+      styles: [],
+      scripts: [],
+      frontmatter: { permalink },
+    },
+    params: {},
+    url: new URL("https://example.com"),
+    isNavigating: false,
+    prevUrl: undefined,
+    withLocale: <T>(fn: () => T): T => fn(),
+    resolveValue: () => undefined,
+  };
+}
+
+function callDocumentHead(headFunction: typeof head, props: DocumentHeadProps): DocumentHeadValue {
+  if (typeof headFunction === 'function') {
+    return headFunction(props);
+  }
+  return headFunction;
+}
+
+describe("posts layout", () => {
+  it("exports default component", () => {
+    expect(Layout).toBeDefined();
+    expect(typeof Layout).toBe("function");
+  });
+
   it("generates meta tags", () => {
-    const result = head({
-      head: {
-        title: "My Post",
-        meta: [{ name: "description", content: "awesome" }],
-        frontmatter: { permalink: "/my-post" },
-      },
-    } as any);
+    const mockProps = createMockDocumentHeadProps(
+      "My Post",
+      [{ name: "description", content: "awesome" }],
+      "/my-post"
+    );
 
-    const meta = result.meta;
-    const find = (attr: string, value: string) =>
-      meta.find((m: any) => m[attr] === value);
+    const result = callDocumentHead(head, mockProps);
+    const meta = result.meta || [];
+    
+    const find = (attr: keyof MetaTag, value: string) =>
+      meta.find((m: MetaTag) => m[attr] === value);
 
-    expect(find("name", "twitter:title").content).toBe("My Post");
-    expect(find("property", "og:url").content).toBe(
+    expect(find("name", "twitter:title")?.content).toBe("My Post");
+    expect(find("property", "og:url")?.content).toBe(
       "https://doganozturk.dev/my-post",
     );
-    expect(find("name", "twitter:image").content).toContain("avatar.jpg");
+    expect(find("name", "twitter:image")?.content).toContain("avatar.jpg");
+  });
+
+  it("generates all required social media meta tags", () => {
+    const mockProps = createMockDocumentHeadProps(
+      "Test Post",
+      [{ name: "description", content: "Test description" }],
+      "/test"
+    );
+
+    const result = callDocumentHead(head, mockProps);
+    const meta = result.meta || [];
+    
+    const hasTag = (attr: keyof MetaTag, value: string) =>
+      meta.some((m: MetaTag) => m[attr] === value);
+
+    expect(hasTag("name", "twitter:card")).toBe(true);
+    expect(hasTag("name", "twitter:site")).toBe(true);
+    expect(hasTag("property", "og:type")).toBe(true);
+    expect(hasTag("property", "og:site_name")).toBe(true);
+  });
+
+  it("preserves original head metadata", () => {
+    const originalMeta: MetaTag[] = [
+      { name: "description", content: "Test description" },
+      { name: "keywords", content: "test, blog" },
+    ];
+
+    const mockProps = createMockDocumentHeadProps("Test Post", originalMeta, "/test");
+
+    const result = callDocumentHead(head, mockProps);
+
+    expect(result.title).toBe("Test Post");
+    expect(result.meta).toContain(originalMeta[0]);
+    expect(result.meta).toContain(originalMeta[1]);
+  });
+
+  it("handles missing description gracefully", () => {
+    const mockProps = createMockDocumentHeadProps("Test Post", [], "/test");
+
+    const result = callDocumentHead(head, mockProps);
+    const meta = result.meta || [];
+    
+    const twitterDesc = meta.find((m: MetaTag) => m.name === "twitter:description");
+    const ogDesc = meta.find((m: MetaTag) => m.property === "og:description");
+    
+    expect(twitterDesc?.content).toBeUndefined();
+    expect(ogDesc?.content).toBeUndefined();
   });
 });
