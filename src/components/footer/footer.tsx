@@ -38,14 +38,6 @@ export const links: LinkItem[] = [
     },
     text: "linkedin",
   },
-  {
-    linkProps: {
-      href: "https://www.notion.so/Do-an-zt-rk-6adacf6b91174b35bc9ce204f479b83b",
-      target: "_blank",
-      rel: "noopener",
-    },
-    text: "cv",
-  },
 ];
 
 export const Footer = component$(() => {
