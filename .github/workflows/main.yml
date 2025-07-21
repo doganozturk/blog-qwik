@@ -27,6 +27,13 @@ jobs:
       - name: Build application
         run: npm run build
       - name: Deploy to S3
-        run: aws s3 sync ./dist/ s3://doganozturk.dev
+        run: |
+          aws s3 sync ./dist/ s3://doganozturk.dev --delete
+          echo "S3 sync completed"
       - name: Create CloudFront invalidation
-        run: aws cloudfront create-invalidation --distribution-id ${{ secrets.DISTRIBUTION_ID }} --paths "/*"
+        run: |
+          INVALIDATION_ID=$(aws cloudfront create-invalidation --distribution-id ${{ secrets.DISTRIBUTION_ID }} --paths "/*" --query 'Invalidation.Id' --output text)
+          echo "Created CloudFront invalidation with ID: $INVALIDATION_ID"
+          echo "Waiting for invalidation to complete..."
+          aws cloudfront wait invalidation-completed --distribution-id ${{ secrets.DISTRIBUTION_ID }} --id $INVALIDATION_ID
+          echo "CloudFront invalidation completed successfully"
