@@ -16,11 +16,11 @@ export const links: LinkItem[] = [
   },
   {
     linkProps: {
-      href: "https://twitter.com/dodothebird",
+      href: "https://x.com/dodothebird",
       target: "_blank",
       rel: "noopener",
     },
-    text: "twitter",
+    text: "x",
   },
   {
     linkProps: {
