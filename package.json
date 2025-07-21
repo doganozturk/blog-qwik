@@ -14,10 +14,11 @@
   "type": "module",
   "private": true,
   "scripts": {
-    "build": "qwik build",
+    "build": "qwik build && npm run build.static",
     "build.client": "vite build",
     "build.preview": "vite build --ssr src/entry.preview.tsx",
     "build.server": "vite build --ssr src/entry.ssr.tsx",
+    "build.static": "vite build --config adapters/static/vite.config.ts",
     "build.types": "tsc --incremental --noEmit",
     "deploy": "echo 'Run \"npm run qwik add\" to install a server adaptor'",
     "dev": "vite --mode ssr",
