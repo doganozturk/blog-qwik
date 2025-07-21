@@ -34,6 +34,4 @@ jobs:
         run: |
           INVALIDATION_ID=$(aws cloudfront create-invalidation --distribution-id ${{ secrets.DISTRIBUTION_ID }} --paths "/*" --query 'Invalidation.Id' --output text)
           echo "Created CloudFront invalidation with ID: $INVALIDATION_ID"
-          echo "Waiting for invalidation to complete..."
-          aws cloudfront wait invalidation-completed --distribution-id ${{ secrets.DISTRIBUTION_ID }} --id $INVALIDATION_ID
-          echo "CloudFront invalidation completed successfully"
+          echo "CloudFront invalidation has been initiated. It typically takes 5-10 minutes to complete."
