@@ -28,7 +28,7 @@ jobs:
         run: npm run build
       - name: Deploy to S3
         run: |
-          aws s3 sync ./dist/ s3://doganozturk.dev --delete
+          aws s3 sync ./dist/ s3://doganozturk.dev
           echo "S3 sync completed"
       - name: Create CloudFront invalidation
         run: |
