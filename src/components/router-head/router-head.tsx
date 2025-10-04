@@ -22,13 +22,13 @@ export const RouterHead = component$(() => {
         <link key={`link-${index}`} {...l} />
       ))}
 
-      {head.styles.map((s, index) => (
-        <style
-          key={`style-${index}`}
-          {...s.props}
-          dangerouslySetInnerHTML={s.style}
-        />
-      ))}
+      {head.styles.map((s, index) => {
+        const styleProps = { ...(s.props ?? {}) };
+        if (!('dangerouslySetInnerHTML' in styleProps)) {
+          styleProps.dangerouslySetInnerHTML = s.style;
+        }
+        return <style key={`style-${index}`} {...styleProps} />;
+      })}
     </>
   );
 });

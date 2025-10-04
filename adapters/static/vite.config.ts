@@ -13,6 +13,7 @@ export default extendConfig(baseConfig, () => {
     plugins: [
       staticAdapter({
         origin: "https://doganozturk.dev",
+        maxWorkers: 1,
       }),
     ],
   };
