@@ -15,7 +15,16 @@ vi.mock("@builder.io/qwik-city", () => {
         { rel: "stylesheet", href: "/test-style.css" },
         { rel: "icon", href: "/favicon.ico" },
       ],
-      styles: [{ props: { id: "test-style" }, style: "body { color: red; }" }],
+      styles: [
+        { props: { id: "test-style" }, style: "body { color: red; }" },
+        {
+          props: {
+            id: "inline-style",
+            dangerouslySetInnerHTML: "p { color: blue; }",
+          },
+          style: "should not override",
+        },
+      ],
     }),
     useLocation: () => ({
       url: { href: "https://test-site.com/test-page" },
@@ -94,11 +103,18 @@ describe("RouterHead", () => {
     await render(<RouterHead />);
 
     const styleElements = screen.querySelectorAll("style");
-    expect(styleElements.length).toBe(1);
+    expect(styleElements.length).toBe(2);
 
-    const testStyle = styleElements[0];
-    expect(testStyle).not.toBeNull();
-    expect(testStyle?.getAttribute("id")).toBe("test-style");
-    expect(testStyle?.innerHTML).toBe("body { color: red; }");
+    const scopedStyle = Array.from(styleElements).find(
+      (style) => style.getAttribute("id") === "test-style",
+    );
+    expect(scopedStyle).not.toBeNull();
+    expect(scopedStyle?.innerHTML).toBe("body { color: red; }");
+
+    const inlineStyle = Array.from(styleElements).find(
+      (style) => style.getAttribute("id") === "inline-style",
+    );
+    expect(inlineStyle).not.toBeNull();
+    expect(inlineStyle?.innerHTML).toBe("p { color: blue; }");
   });
 });

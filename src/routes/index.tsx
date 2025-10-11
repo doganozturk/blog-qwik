@@ -5,11 +5,16 @@ import { PostSummaryList } from "~/components/post-summary-list/post-summary-lis
 import { PostSummary } from "~/components/post-summary-list/post-summary-list-item/post-summary-list-item";
 import { asyncMap, Locale } from "~/util";
 
-export const getPosts = async (): Promise<PostSummary[]> => {
-  const modules = import.meta.glob("/src/routes/**/**/index.mdx");
+type PostModuleLoader = () => Promise<DocumentHeadProps>;
+type PostModuleMap = Record<string, PostModuleLoader>;
 
-  const posts = await asyncMap(Object.keys(modules), async (path) => {
-    const data = (await modules[path]()) as DocumentHeadProps;
+export const loadPosts = async (
+  modules: PostModuleMap,
+): Promise<PostSummary[]> => {
+  const paths = Object.keys(modules);
+
+  const posts = await asyncMap(paths, async (path) => {
+    const data = await modules[path]();
 
     return {
       title: data.head.title || "",
@@ -29,6 +34,13 @@ export const getPosts = async (): Promise<PostSummary[]> => {
 
       return dateB - dateA;
     });
+};
+
+export const getPosts = async (): Promise<PostSummary[]> => {
+  const modules = import.meta.glob(
+    "/src/routes/**/**/index.mdx",
+  ) as PostModuleMap;
+  return loadPosts(modules);
 };
 
 export default component$(() => {

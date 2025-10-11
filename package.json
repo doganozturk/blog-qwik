@@ -31,7 +31,17 @@
     "test": "vitest",
     "test:ci": "vitest run",
     "test:coverage": "vitest run --coverage",
-    "qwik": "qwik"
+    "qwik": "qwik",
+    "prepare": "husky"
+  },
+  "lint-staged": {
+    "*.{ts,tsx}": [
+      "eslint --fix",
+      "prettier --write"
+    ],
+    "*.{json,md,css}": [
+      "prettier --write"
+    ]
   },
   "devDependencies": {
     "@builder.io/qwik": "1.12.1",
@@ -44,7 +54,9 @@
     "@vitest/coverage-v8": "^2.1.9",
     "eslint": "^8.57.0",
     "eslint-plugin-qwik": "1.12.1",
+    "husky": "^9.1.7",
     "jsdom": "^26.0.0",
+    "lint-staged": "^16.2.4",
     "node-fetch": "3.3.2",
     "prettier": "3.1.0",
     "typescript": "5.3.3",
