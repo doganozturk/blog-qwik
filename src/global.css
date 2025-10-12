@@ -19,6 +19,8 @@ a:hover {
   display: flex;
   justify-content: center;
   overflow: auto;
+  min-height: 100vh;
+  width: 100%;
   color: var(--text-color);
   background-color: var(--bg-color);
   font-family: var(--font-family);
@@ -42,6 +44,12 @@ a:hover {
     --text-color: var(--text-color-light);
     --title-color: var(--title-color-light);
     --misc-color: var(--misc-color-light);
+  }
+}
+
+@supports (min-height: 100dvh) {
+  .theme-container {
+    min-height: 100dvh;
   }
 }
 @media (prefers-color-scheme: dark) {
