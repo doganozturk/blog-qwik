@@ -1,19 +1,24 @@
 import { component$, useContext, useStylesScoped$ } from "@builder.io/qwik";
 import { ThemeContext, ThemeType } from "~/routes/layout";
+import { applyThemeMeta } from "~/util";
+import type { ThemeMetaKey } from "~/util";
 
 import styles from "./theme-switcher.css?inline";
 
 export const ThemeSwitcher = component$(() => {
   useStylesScoped$(styles);
 
-  const theme = useContext<{ value: string }>(ThemeContext);
+  const theme = useContext(ThemeContext);
 
   return (
     <div
       class="theme-switcher"
       onClick$={() => {
-        theme.value =
+        const nextTheme =
           theme.value === ThemeType.Light ? ThemeType.Dark : ThemeType.Light;
+
+        theme.value = nextTheme;
+        applyThemeMeta(nextTheme as ThemeMetaKey);
       }}
     >
       {theme.value === ThemeType.Dark && (

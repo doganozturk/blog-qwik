@@ -1,15 +1,22 @@
 import { describe, expect, it, vi } from "vitest";
 import { createDOM } from "@builder.io/qwik/testing";
 import Layout, { LS_THEME, ThemeType, ThemeContext } from "./layout";
+import {
+  APPLE_STATUS_BAR_META_ID,
+  THEME_COLOR_META_ID,
+  THEME_META,
+  applyThemeMeta,
+} from "~/util";
+import type { ThemeMetaKey } from "~/util";
 
 const mockGetColorScheme = vi.fn();
-vi.mock("~/util", () => ({
-  ColorScheme: {
-    Dark: "dark",
-    Light: "light",
-  },
-  getColorScheme: () => mockGetColorScheme(),
-}));
+vi.mock("~/util", async () => {
+  const actual = await vi.importActual<typeof import("~/util")>("~/util");
+  return {
+    ...actual,
+    getColorScheme: () => mockGetColorScheme(),
+  };
+});
 
 describe("layout", () => {
   it("should export theme constants", () => {
@@ -27,7 +34,7 @@ describe("layout", () => {
       getItem: vi.fn(),
       setItem: vi.fn(),
     };
-    
+
     Object.defineProperty(global, "localStorage", {
       value: mockStorage,
       writable: true,
@@ -46,7 +53,7 @@ describe("layout", () => {
 
     const themeContainer = screen.querySelector(".theme-container");
     const container = screen.querySelector(".container");
-    
+
     expect(themeContainer).toBeTruthy();
     expect(container).toBeTruthy();
   });
@@ -81,7 +88,7 @@ describe("layout", () => {
       getItem: vi.fn().mockReturnValue(ThemeType.Dark),
       setItem: vi.fn(),
     };
-    
+
     Object.defineProperty(global, "localStorage", {
       value: mockStorage,
       writable: true,
@@ -100,7 +107,7 @@ describe("layout", () => {
       getItem: vi.fn().mockReturnValue(null),
       setItem: vi.fn(),
     };
-    
+
     Object.defineProperty(global, "localStorage", {
       value: mockStorage,
       writable: true,
@@ -113,14 +120,70 @@ describe("layout", () => {
     expect(themeContainer).toBeTruthy();
     expect(themeContainer?.className).toContain("theme-container");
   });
+
+  describe("theme meta tags", () => {
+    afterEach(() => {
+      mockGetColorScheme.mockReset();
+    });
+
+    it("applies dark theme meta", async () => {
+      const { screen, render } = await createDOM();
+      const doc = screen.ownerDocument;
+
+      const themeMetaTag = doc.createElement("meta");
+      themeMetaTag.id = THEME_COLOR_META_ID;
+      themeMetaTag.name = "theme-color";
+      doc.head.appendChild(themeMetaTag);
+
+      const appleMetaTag = doc.createElement("meta");
+      appleMetaTag.id = APPLE_STATUS_BAR_META_ID;
+      appleMetaTag.name = "apple-mobile-web-app-status-bar-style";
+      doc.head.appendChild(appleMetaTag);
+
+      await render(<Layout />);
+
+      applyThemeMeta(ThemeType.Dark as ThemeMetaKey, doc);
+
+      expect(themeMetaTag.content).toBe(THEME_META.dark.themeColor);
+      expect(appleMetaTag.content).toBe(THEME_META.dark.appleStatusBarStyle);
+
+      themeMetaTag.remove();
+      appleMetaTag.remove();
+    });
+
+    it("applies light theme meta", async () => {
+      const { screen, render } = await createDOM();
+      const doc = screen.ownerDocument;
+
+      const themeMetaTag = doc.createElement("meta");
+      themeMetaTag.id = THEME_COLOR_META_ID;
+      themeMetaTag.name = "theme-color";
+      doc.head.appendChild(themeMetaTag);
+
+      const appleMetaTag = doc.createElement("meta");
+      appleMetaTag.id = APPLE_STATUS_BAR_META_ID;
+      appleMetaTag.name = "apple-mobile-web-app-status-bar-style";
+      doc.head.appendChild(appleMetaTag);
+
+      await render(<Layout />);
+
+      applyThemeMeta(ThemeType.Light as ThemeMetaKey, doc);
+
+      expect(themeMetaTag.content).toBe(THEME_META.light.themeColor);
+      expect(appleMetaTag.content).toBe(THEME_META.light.appleStatusBarStyle);
+
+      themeMetaTag.remove();
+      appleMetaTag.remove();
+    });
+  });
 });
 
 describe("layout SSR vs client-side behavior", () => {
   it("handles server-side rendering gracefully", async () => {
     const originalIsServer = vi.fn().mockReturnValue(true);
-    
+
     vi.mock("@builder.io/qwik/build", () => ({
-      isServer: originalIsServer()
+      isServer: originalIsServer(),
     }));
 
     const { screen, render } = await createDOM();
@@ -135,7 +198,7 @@ describe("layout SSR vs client-side behavior", () => {
       getItem: vi.fn().mockReturnValue(ThemeType.Light),
       setItem: vi.fn(),
     };
-    
+
     Object.defineProperty(global, "localStorage", {
       value: mockStorage,
       writable: true,
@@ -153,7 +216,7 @@ describe("layout SSR vs client-side behavior", () => {
       getItem: vi.fn().mockReturnValue(null),
       setItem: vi.fn(),
     };
-    
+
     Object.defineProperty(global, "localStorage", {
       value: mockStorage,
       writable: true,
