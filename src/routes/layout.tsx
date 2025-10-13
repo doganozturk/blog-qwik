@@ -10,7 +10,8 @@ import {
 } from "@builder.io/qwik";
 import { isServer } from "@builder.io/qwik/build";
 import { Footer } from "~/components/footer/footer";
-import { ColorScheme, getColorScheme } from "~/util";
+import { ColorScheme, applyThemeMeta, getColorScheme } from "~/util";
+import type { ThemeMetaKey } from "~/util";
 
 export const LS_THEME = "theme";
 
@@ -19,32 +20,50 @@ export enum ThemeType {
   Dark = "dark",
 }
 
-export const ThemeContext = createContextId<{ value: string }>("theme-context");
+export const ThemeContext = createContextId<{ value: ThemeMetaKey | "" }>(
+  "theme-context",
+);
+
+const isValidTheme = (
+  value: string | null | undefined,
+): value is ThemeMetaKey =>
+  value === ThemeType.Light || value === ThemeType.Dark;
 
 export default component$(() => {
-  const theme = useSignal<string>("");
+  const theme = useSignal<ThemeMetaKey | "">("");
   useContextProvider(ThemeContext, theme);
 
   // Save theme to localStorage when it changes
   useTask$(({ track }) => {
     const currentTheme = track(() => theme.value);
 
-    if (isServer || !currentTheme) {
+    if (isServer || !isValidTheme(currentTheme)) {
       return;
     }
 
     localStorage.setItem(LS_THEME, currentTheme);
+    applyThemeMeta(currentTheme);
   });
 
   // Initialize theme from localStorage or system preference
   useOnDocument(
     "DOMContentLoaded",
     $(() => {
-      theme.value =
-        localStorage.getItem(LS_THEME) ||
-        (getColorScheme() === ColorScheme.Dark
+      const storedTheme = localStorage.getItem(LS_THEME);
+
+      if (isValidTheme(storedTheme)) {
+        theme.value = storedTheme;
+        applyThemeMeta(storedTheme);
+        return;
+      }
+
+      const fallbackTheme: ThemeMetaKey =
+        getColorScheme() === ColorScheme.Dark
           ? ThemeType.Dark
-          : ThemeType.Light);
+          : ThemeType.Light;
+
+      theme.value = fallbackTheme;
+      applyThemeMeta(fallbackTheme);
     }),
   );
 
