@@ -2,9 +2,32 @@
   box-sizing: border-box;
 }
 
-html,
-body {
+html {
   height: 100%;
+  /* Better mobile Safari support */
+  height: -webkit-fill-available;
+}
+
+body {
+  min-height: 100%;
+  min-height: -webkit-fill-available;
+  margin: 0;
+  padding: 0;
+  background-color: var(--bg-color-light);
+}
+
+@media (prefers-color-scheme: dark) {
+  body {
+    background-color: var(--bg-color-dark);
+  }
+}
+
+body.light {
+  background-color: var(--bg-color-light);
+}
+
+body.dark {
+  background-color: var(--bg-color-dark);
 }
 
 a {
@@ -25,6 +48,11 @@ a:hover {
   background-color: var(--bg-color);
   font-family: var(--font-family);
   font-weight: var(--font-weight-light);
+  /* Safe area padding for devices with notches */
+  padding-top: env(safe-area-inset-top);
+  padding-bottom: env(safe-area-inset-bottom);
+  padding-left: env(safe-area-inset-left);
+  padding-right: env(safe-area-inset-right);
 }
 .theme-container.light {
   --bg-color: var(--bg-color-light);
