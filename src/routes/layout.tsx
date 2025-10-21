@@ -5,8 +5,7 @@ import {
   useContextProvider,
   useSignal,
   createContextId,
-  useOnDocument,
-  $,
+  useVisibleTask$,
 } from "@builder.io/qwik";
 import { isServer } from "@builder.io/qwik/build";
 import { Footer } from "~/components/footer/footer";
@@ -30,10 +29,27 @@ const isValidTheme = (
   value === ThemeType.Light || value === ThemeType.Dark;
 
 export default component$(() => {
-  const initialTheme: ThemeMetaKey =
-    getColorScheme() === ColorScheme.Dark ? ThemeType.Dark : ThemeType.Light;
-  const theme = useSignal<ThemeMetaKey | "">(initialTheme);
+  // Always initialize with Light for consistent SSR/client hydration
+  const theme = useSignal<ThemeMetaKey | "">(ThemeType.Light);
   useContextProvider(ThemeContext, theme);
+
+  // Initialize theme immediately on client before first paint
+  // eslint-disable-next-line qwik/no-use-visible-task
+  useVisibleTask$(() => {
+    const storedTheme = localStorage.getItem(LS_THEME);
+
+    if (isValidTheme(storedTheme)) {
+      theme.value = storedTheme;
+      applyThemeMeta(storedTheme);
+      return;
+    }
+
+    const fallbackTheme: ThemeMetaKey =
+      getColorScheme() === ColorScheme.Dark ? ThemeType.Dark : ThemeType.Light;
+
+    theme.value = fallbackTheme;
+    applyThemeMeta(fallbackTheme);
+  });
 
   // Save theme to localStorage when it changes
   useTask$(({ track }) => {
@@ -46,28 +62,6 @@ export default component$(() => {
     localStorage.setItem(LS_THEME, currentTheme);
     applyThemeMeta(currentTheme);
   });
-
-  // Initialize theme from localStorage or system preference
-  useOnDocument(
-    "DOMContentLoaded",
-    $(() => {
-      const storedTheme = localStorage.getItem(LS_THEME);
-
-      if (isValidTheme(storedTheme)) {
-        theme.value = storedTheme;
-        applyThemeMeta(storedTheme);
-        return;
-      }
-
-      const fallbackTheme: ThemeMetaKey =
-        getColorScheme() === ColorScheme.Dark
-          ? ThemeType.Dark
-          : ThemeType.Light;
-
-      theme.value = fallbackTheme;
-      applyThemeMeta(fallbackTheme);
-    }),
-  );
 
   return (
     <div class={`theme-container ${theme.value}`}>
