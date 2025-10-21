@@ -37,6 +37,7 @@ export const themeHack = `(function(){
       const themeToEnsure = localStorage.getItem("theme") || "";
       if (themeToEnsure) {
         themeContainer.classList.add(themeToEnsure);
+        document.body.classList.add(themeToEnsure);
         applyMeta(themeToEnsure);
       }
     }
