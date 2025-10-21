@@ -6,3 +6,11 @@
   font-size: var(--font-size-lg);
   cursor: pointer;
 }
+
+.switch {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+  user-select: none;
+}
