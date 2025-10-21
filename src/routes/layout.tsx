@@ -30,25 +30,9 @@ const isValidTheme = (
   value === ThemeType.Light || value === ThemeType.Dark;
 
 export default component$(() => {
-  // Initialize theme from localStorage or system preference
-  const getInitialTheme = (): ThemeMetaKey => {
-    if (isServer) {
-      return getColorScheme() === ColorScheme.Dark
-        ? ThemeType.Dark
-        : ThemeType.Light;
-    }
-
-    const storedTheme = localStorage.getItem(LS_THEME);
-    if (isValidTheme(storedTheme)) {
-      return storedTheme;
-    }
-
-    return getColorScheme() === ColorScheme.Dark
-      ? ThemeType.Dark
-      : ThemeType.Light;
-  };
-
-  const theme = useSignal<ThemeMetaKey | "">(getInitialTheme());
+  const initialTheme: ThemeMetaKey =
+    getColorScheme() === ColorScheme.Dark ? ThemeType.Dark : ThemeType.Light;
+  const theme = useSignal<ThemeMetaKey | "">(initialTheme);
   useContextProvider(ThemeContext, theme);
 
   // Save theme to localStorage when it changes
@@ -63,13 +47,25 @@ export default component$(() => {
     applyThemeMeta(currentTheme);
   });
 
-  // Apply theme meta tags on initial load
+  // Initialize theme from localStorage or system preference
   useOnDocument(
     "DOMContentLoaded",
     $(() => {
-      if (isValidTheme(theme.value)) {
-        applyThemeMeta(theme.value);
+      const storedTheme = localStorage.getItem(LS_THEME);
+
+      if (isValidTheme(storedTheme)) {
+        theme.value = storedTheme;
+        applyThemeMeta(storedTheme);
+        return;
       }
+
+      const fallbackTheme: ThemeMetaKey =
+        getColorScheme() === ColorScheme.Dark
+          ? ThemeType.Dark
+          : ThemeType.Light;
+
+      theme.value = fallbackTheme;
+      applyThemeMeta(fallbackTheme);
     }),
   );
 
