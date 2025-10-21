@@ -8,18 +8,28 @@
 
 .links {
   display: flex;
-  gap: 10px;
+  gap: 16px;
+  align-items: center;
 }
 
 .link {
-  color: var(--misc-color);
-  font-size: var(--font-size-sm);
+  display: flex;
+  align-items: center;
 }
 
 .link a {
-  padding: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--misc-color);
+  transition: opacity 0.2s ease;
 }
 
-.link:first-child a {
-  padding-left: 0;
+.link a svg {
+  width: 20px;
+  height: 20px;
+}
+
+.link a:hover {
+  opacity: 0.8;
 }

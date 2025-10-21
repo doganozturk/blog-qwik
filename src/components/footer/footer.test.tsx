@@ -16,19 +16,26 @@ describe("Footer", () => {
   test(`[Footer Component]: Should have correctly structured links`, async () => {
     for (const link of links) {
       expect(link).toHaveProperty("linkProps");
-      expect(link).toHaveProperty("text");
+      expect(link).toHaveProperty("icon");
+      expect(link).toHaveProperty("label");
       expect(link.linkProps).toHaveProperty("href");
-      expect(typeof link.text).toBe("string");
+      expect(typeof link.label).toBe("string");
+      expect(typeof link.icon).toBe("function");
     }
   });
 
-  test(`[Footer Component]: Should render all links`, async () => {
+  test(`[Footer Component]: Should render all links with icons`, async () => {
     const { screen, render } = await createDOM();
     await render(<Footer />);
 
-    for (const link of links) {
-      expect(screen.outerHTML).toContain(link.text);
-    }
+    const linkElements = Array.from(screen.querySelectorAll("a"));
+    expect(linkElements.length).toEqual(links.length);
+
+    // Check that each link contains an SVG icon
+    linkElements.forEach((element) => {
+      const svg = element.querySelector("svg");
+      expect(svg).toBeTruthy();
+    });
   });
 
   test(`[Footer Component]: Should have correct link structure in DOM`, async () => {
@@ -40,7 +47,7 @@ describe("Footer", () => {
 
     linkElements.forEach((element, index) => {
       expect(element.getAttribute("href")).toEqual(links[index].linkProps.href);
-      expect(element.textContent).toContain(links[index].text);
+      expect(element.getAttribute("aria-label")).toEqual(links[index].label);
     });
   });
 });
