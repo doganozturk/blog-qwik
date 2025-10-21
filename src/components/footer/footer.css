@@ -21,8 +21,8 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  color: var(--misc-color);
-  transition: opacity 0.2s ease;
+  color: var(--title-color);
+  transition: color 0.2s ease;
 }
 
 .link a svg {
@@ -31,5 +31,5 @@
 }
 
 .link a:hover {
-  opacity: 0.8;
+  color: var(--misc-color);
 }
