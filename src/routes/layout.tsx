@@ -30,7 +30,9 @@ const isValidTheme = (
   value === ThemeType.Light || value === ThemeType.Dark;
 
 export default component$(() => {
-  const theme = useSignal<ThemeMetaKey | "">("");
+  const initialTheme: ThemeMetaKey =
+    getColorScheme() === ColorScheme.Dark ? ThemeType.Dark : ThemeType.Light;
+  const theme = useSignal<ThemeMetaKey | "">(initialTheme);
   useContextProvider(ThemeContext, theme);
 
   // Save theme to localStorage when it changes
