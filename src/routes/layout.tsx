@@ -5,8 +5,7 @@ import {
   useContextProvider,
   useSignal,
   createContextId,
-  useOnDocument,
-  $,
+  useVisibleTask$,
 } from "@builder.io/qwik";
 import { isServer } from "@builder.io/qwik/build";
 import { Footer } from "~/components/footer/footer";
@@ -30,28 +29,21 @@ const isValidTheme = (
   value === ThemeType.Light || value === ThemeType.Dark;
 
 export default component$(() => {
-  // Initialize theme from localStorage or system preference
-  const getInitialTheme = (): ThemeMetaKey => {
-    if (isServer) {
-      return getColorScheme() === ColorScheme.Dark
-        ? ThemeType.Dark
-        : ThemeType.Light;
-    }
-
-    const storedTheme = localStorage.getItem(LS_THEME);
-    if (isValidTheme(storedTheme)) {
-      return storedTheme;
-    }
-
-    return getColorScheme() === ColorScheme.Dark
-      ? ThemeType.Dark
-      : ThemeType.Light;
-  };
-
-  const theme = useSignal<ThemeMetaKey | "">(getInitialTheme());
+  const initialTheme: ThemeMetaKey =
+    getColorScheme() === ColorScheme.Dark ? ThemeType.Dark : ThemeType.Light;
+  const theme = useSignal<ThemeMetaKey | "">(initialTheme);
   useContextProvider(ThemeContext, theme);
 
-  // Save theme to localStorage when it changes
+  // Initialize theme from localStorage immediately on client (before visible)
+  // eslint-disable-next-line qwik/no-use-visible-task
+  useVisibleTask$(() => {
+    const storedTheme = localStorage.getItem(LS_THEME);
+    if (isValidTheme(storedTheme)) {
+      theme.value = storedTheme;
+    }
+  });
+
+  // Save theme to localStorage and apply meta tags when it changes
   useTask$(({ track }) => {
     const currentTheme = track(() => theme.value);
 
@@ -62,16 +54,6 @@ export default component$(() => {
     localStorage.setItem(LS_THEME, currentTheme);
     applyThemeMeta(currentTheme);
   });
-
-  // Apply theme meta tags on initial load
-  useOnDocument(
-    "DOMContentLoaded",
-    $(() => {
-      if (isValidTheme(theme.value)) {
-        applyThemeMeta(theme.value);
-      }
-    }),
-  );
 
   return (
     <div class={`theme-container ${theme.value}`}>
