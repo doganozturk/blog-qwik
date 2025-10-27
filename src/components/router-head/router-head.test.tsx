@@ -2,7 +2,6 @@ import { test, expect, describe, vi } from "vitest";
 import { RouterHead } from "./router-head";
 import { createDOM } from "../../../vitest.setup";
 
-// Mock the Qwik City hooks
 vi.mock("@builder.io/qwik-city", () => {
   return {
     useDocumentHead: () => ({
@@ -81,7 +80,6 @@ describe("RouterHead", () => {
     const { screen, render } = await createDOM();
     await render(<RouterHead />);
 
-    // We expect 3 links: canonical + 2 from the mock
     const links = screen.querySelectorAll("link");
     expect(links.length).toBe(3);
 

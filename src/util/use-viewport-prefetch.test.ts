@@ -6,7 +6,6 @@ import { prefetchDocument } from "./use-viewport-prefetch";
 
 describe("prefetchDocument", () => {
   beforeEach(() => {
-    // Clear the document head before each test
     document.head.innerHTML = "";
   });
 
@@ -29,7 +28,7 @@ describe("prefetchDocument", () => {
     const url = "/test-page";
 
     prefetchDocument(url);
-    prefetchDocument(url); // Call again with same URL
+    prefetchDocument(url);
 
     const links = document.querySelectorAll(
       `link[rel="prefetch"][href="${url}"]`,
@@ -80,17 +79,14 @@ describe("prefetchDocument", () => {
 
 describe("prefetchDocument with IntersectionObserver", () => {
   beforeEach(() => {
-    // Clear the document head before each test
     document.head.innerHTML = "";
   });
 
   it("should work with IntersectionObserver callback", () => {
     const url = "/test-page-observer";
 
-    // Directly call prefetchDocument (simulating what happens when IntersectionObserver triggers)
     prefetchDocument(url);
 
-    // Check if prefetch link was created
     const link = document.querySelector('link[rel="prefetch"]');
     expect(link).not.toBeNull();
     expect(link?.getAttribute("href")).toBe(url);
@@ -99,15 +95,12 @@ describe("prefetchDocument with IntersectionObserver", () => {
 
 describe("useViewportPrefetch edge cases", () => {
   it("prefetchDocument should handle SSR environment gracefully", () => {
-    // Mock SSR environment where document is undefined
     const originalDocument = global.document;
     // @ts-ignore - intentionally setting to undefined for SSR test
     delete global.document;
 
-    // Should not throw an error
     expect(() => prefetchDocument("/test")).not.toThrow();
 
-    // Restore document
     global.document = originalDocument;
   });
 

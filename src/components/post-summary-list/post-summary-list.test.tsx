@@ -42,19 +42,16 @@ describe("PostSummaryList", () => {
     expect(sectionElement).not.toBeNull();
     expect(sectionElement?.children.length).toBe(2);
 
-    // Check if the titles are rendered correctly
     const titles = screen.querySelectorAll(".title");
     expect(titles.length).toBe(2);
     expect(titles[0].textContent).toBe("Test Post 1");
     expect(titles[1].textContent).toBe("Test Post 2");
 
-    // Check if the permalinks are set correctly
     const links = screen.querySelectorAll("a.post-summary-list-item");
     expect(links.length).toBe(2);
     expect(links[0].getAttribute("href")).toBe("/test-post-1");
     expect(links[1].getAttribute("href")).toBe("/test-post-2");
 
-    // Check if the descriptions are rendered correctly
     const summaries = screen.querySelectorAll(".summary");
     expect(summaries.length).toBe(2);
     expect(summaries[0].textContent).toBe("This is a test post description");

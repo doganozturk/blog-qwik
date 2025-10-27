@@ -32,7 +32,6 @@ describe("Header", () => {
   });
 
   test(`[Header Component]: Should have correct aria-label based on type`, async () => {
-    // Test with Main type
     const { screen: screenMain, render: renderMain } = await createDOM();
     await renderMain(
       <Header type={HeaderType.Main}>
@@ -44,7 +43,6 @@ describe("Header", () => {
     expect(anchorMain).not.toBeNull();
     expect(anchorMain?.getAttribute("aria-label")).toBe("");
 
-    // Test with Post type
     const { screen: screenPost, render: renderPost } = await createDOM();
     await renderPost(
       <Header type={HeaderType.Post}>

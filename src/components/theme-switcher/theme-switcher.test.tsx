@@ -18,36 +18,30 @@ describe("ThemeSwitcher", () => {
     const { screen, render } = await createDOM();
     await render(<ThemeSwitcher />);
 
-    // Default theme is light in vitest.setup.tsx
     const switchElement = screen.querySelector(".switch");
     expect(switchElement).not.toBeNull();
     expect(switchElement?.classList.contains("switch-dark")).toBe(true);
-    expect(screen.outerHTML).toContain("🌚"); // Moon emoji for light theme
+    expect(screen.outerHTML).toContain("🌚");
   });
 
   test(`[ThemeSwitcher Component]: Should toggle theme when clicked`, async () => {
     const { screen, render, userEvent } = await createDOM();
     await render(<ThemeSwitcher />);
 
-    // Default theme is light
-    expect(screen.outerHTML).toContain("🌚"); // Moon emoji for light theme
+    expect(screen.outerHTML).toContain("🌚");
 
-    // Click to toggle theme
     const themeSwitcher = screen.querySelector(".theme-switcher");
     expect(themeSwitcher).not.toBeNull();
     await userEvent(themeSwitcher!, "click");
 
-    // Theme should now be dark
-    expect(screen.outerHTML).toContain("🌞"); // Sun emoji for dark theme
+    expect(screen.outerHTML).toContain("🌞");
     const switchElement = screen.querySelector(".switch");
     expect(switchElement).not.toBeNull();
     expect(switchElement?.classList.contains("switch-light")).toBe(true);
 
-    // Click again to toggle back to light
     await userEvent(themeSwitcher!, "click");
 
-    // Theme should now be light again
-    expect(screen.outerHTML).toContain("🌚"); // Moon emoji for light theme
+    expect(screen.outerHTML).toContain("🌚");
     const switchElementAfterToggle = screen.querySelector(".switch");
     expect(switchElementAfterToggle).not.toBeNull();
     expect(switchElementAfterToggle?.classList.contains("switch-dark")).toBe(

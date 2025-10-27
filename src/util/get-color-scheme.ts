@@ -15,16 +15,13 @@ export const getColorScheme = (): ColorScheme => {
     return ColorScheme.NoPreference;
   }
 
-  // Check for dark mode preference
   if (window.matchMedia("(prefers-color-scheme: dark)").matches) {
     return ColorScheme.Dark;
   }
 
-  // Check for light mode preference
   if (window.matchMedia("(prefers-color-scheme: light)").matches) {
     return ColorScheme.Light;
   }
 
-  // No preference
   return ColorScheme.NoPreference;
 };
