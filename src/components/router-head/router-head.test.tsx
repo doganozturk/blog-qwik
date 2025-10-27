@@ -2,7 +2,6 @@ import { test, expect, describe, vi } from "vitest";
 import { RouterHead } from "./router-head";
 import { createDOM } from "../../../vitest.setup";
 
-// Mock the Qwik City hooks - will be overridden in individual tests
 const defaultMockHead = {
   title: "Test Title",
   meta: [
@@ -141,7 +140,6 @@ describe("RouterHead", () => {
     expect(testStyle).not.toBeNull();
     expect(testStyle?.innerHTML).toBe("div { margin: 0; }");
 
-    // Reset mock
     mockHeadValue = defaultMockHead;
   });
 });

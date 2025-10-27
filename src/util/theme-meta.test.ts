@@ -51,13 +51,11 @@ describe("getThemeMeta", () => {
 
 describe("applyThemeMeta", () => {
   beforeEach(() => {
-    // Clear the document head before each test
     document.head.innerHTML = "";
     document.body.className = "";
   });
 
   it("should apply dark theme meta to document", () => {
-    // Create meta tags
     const themeColorMeta = document.createElement("meta");
     themeColorMeta.id = THEME_COLOR_META_ID;
     themeColorMeta.name = "theme-color";
@@ -79,7 +77,6 @@ describe("applyThemeMeta", () => {
   });
 
   it("should apply light theme meta to document", () => {
-    // Create meta tags
     const themeColorMeta = document.createElement("meta");
     themeColorMeta.id = THEME_COLOR_META_ID;
     themeColorMeta.name = "theme-color";
@@ -101,7 +98,6 @@ describe("applyThemeMeta", () => {
   });
 
   it("should switch from light to dark theme", () => {
-    // Create meta tags
     const themeColorMeta = document.createElement("meta");
     themeColorMeta.id = THEME_COLOR_META_ID;
     document.head.appendChild(themeColorMeta);
@@ -110,11 +106,9 @@ describe("applyThemeMeta", () => {
     appleStatusBarMeta.id = APPLE_STATUS_BAR_META_ID;
     document.head.appendChild(appleStatusBarMeta);
 
-    // Apply light theme first
     applyThemeMeta("light");
     expect(document.body.classList.contains("light")).toBe(true);
 
-    // Switch to dark theme
     applyThemeMeta("dark");
     expect(document.body.classList.contains("dark")).toBe(true);
     expect(document.body.classList.contains("light")).toBe(false);
@@ -140,7 +134,6 @@ describe("applyThemeMeta", () => {
   });
 
   it("should handle missing meta tags gracefully", () => {
-    // No meta tags created
     expect(() => applyThemeMeta("dark")).not.toThrow();
   });
 
@@ -150,12 +143,11 @@ describe("applyThemeMeta", () => {
 
   it("should handle undefined document in SSR environment", () => {
     const originalDocument = global.document;
-    // @ts-ignore - intentionally setting to undefined for SSR test
+    // @ts-ignore
     delete global.document;
 
     expect(() => applyThemeMeta("dark")).not.toThrow();
 
-    // Restore document
     global.document = originalDocument;
   });
 });
