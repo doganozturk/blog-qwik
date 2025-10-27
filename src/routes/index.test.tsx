@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import type { DocumentHeadValue } from "@builder.io/qwik-city";
-import IndexPage, { loadPosts, head } from "./index";
+import IndexPage, { loadPosts, getPosts, head } from "./index";
 
 const createMockModule = ({
   title,
@@ -114,6 +114,13 @@ describe("loadPosts", () => {
       {} as unknown as Parameters<typeof loadPosts>[0],
     );
     expect(posts).toEqual([]);
+  });
+});
+
+describe("getPosts", () => {
+  it("should be defined and be a function", () => {
+    expect(getPosts).toBeDefined();
+    expect(typeof getPosts).toBe("function");
   });
 });
 

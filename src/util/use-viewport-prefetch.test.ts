@@ -96,7 +96,7 @@ describe("prefetchDocument with IntersectionObserver", () => {
 describe("useViewportPrefetch edge cases", () => {
   it("prefetchDocument should handle SSR environment gracefully", () => {
     const originalDocument = global.document;
-    // @ts-ignore - intentionally setting to undefined for SSR test
+    // @ts-ignore
     delete global.document;
 
     expect(() => prefetchDocument("/test")).not.toThrow();
@@ -149,5 +149,23 @@ describe("useViewportPrefetch edge cases", () => {
     const link = document.querySelector('link[rel="prefetch"]');
     expect(link).not.toBeNull();
     expect(link?.getAttribute("href")).toBe(url);
+  });
+
+  it("should handle when IntersectionObserver is not available", () => {
+    const originalIntersectionObserver = global.IntersectionObserver;
+    // @ts-ignore
+    delete global.IntersectionObserver;
+
+    expect(() => prefetchDocument("/test")).not.toThrow();
+
+    const url = "/test-no-observer";
+    document.head.innerHTML = "";
+
+    prefetchDocument(url);
+
+    const link = document.querySelector('link[rel="prefetch"]');
+    expect(link).not.toBeNull();
+
+    global.IntersectionObserver = originalIntersectionObserver;
   });
 });

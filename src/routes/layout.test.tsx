@@ -230,4 +230,24 @@ describe("layout SSR vs client-side behavior", () => {
     const themeContainer = screen.querySelector(".theme-container");
     expect(themeContainer).toBeTruthy();
   });
+
+  it("initializes with light theme when system prefers light", async () => {
+    const mockStorage = {
+      getItem: vi.fn().mockReturnValue(null),
+      setItem: vi.fn(),
+    };
+
+    Object.defineProperty(global, "localStorage", {
+      value: mockStorage,
+      writable: true,
+    });
+
+    mockGetColorScheme.mockReturnValue("light");
+
+    const { screen, render } = await createDOM();
+    await render(<Layout />);
+
+    const themeContainer = screen.querySelector(".theme-container");
+    expect(themeContainer).toBeTruthy();
+  });
 });

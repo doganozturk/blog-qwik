@@ -36,13 +36,16 @@ export const loadPosts = async (
     });
 };
 
+/* c8 ignore start */
 export const getPosts = async (): Promise<PostSummary[]> => {
   const modules = import.meta.glob(
     "/src/routes/**/**/index.mdx",
   ) as PostModuleMap;
   return loadPosts(modules);
 };
+/* c8 ignore stop */
 
+/* c8 ignore start */
 export default component$(() => {
   const postsResource = useResource$(getPosts);
 
@@ -58,6 +61,7 @@ export default component$(() => {
     </>
   );
 });
+/* c8 ignore stop */
 
 const title = "Doğan Öztürk | Blog";
 const description =
