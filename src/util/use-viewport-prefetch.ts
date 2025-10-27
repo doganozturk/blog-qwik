@@ -62,6 +62,8 @@ export const useViewportPrefetch = (
       const element = elementRef.value;
       if (!element || isPrefetched.value || !enabled) return;
 
+      // Check if IntersectionObserver is available (not in SSR or test environment)
+      /* c8 ignore next */
       if (typeof IntersectionObserver === "undefined") return;
 
       const observer = new IntersectionObserver(

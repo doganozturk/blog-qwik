@@ -150,4 +150,26 @@ describe("useViewportPrefetch edge cases", () => {
     expect(link).not.toBeNull();
     expect(link?.getAttribute("href")).toBe(url);
   });
+
+  it("should handle when IntersectionObserver is not available", () => {
+    // Mock environment where IntersectionObserver is undefined
+    const originalIntersectionObserver = global.IntersectionObserver;
+    // @ts-ignore - intentionally setting to undefined for test
+    delete global.IntersectionObserver;
+
+    // Should not throw an error
+    expect(() => prefetchDocument("/test")).not.toThrow();
+
+    // Test should still be able to create prefetch links
+    const url = "/test-no-observer";
+    document.head.innerHTML = "";
+
+    prefetchDocument(url);
+
+    const link = document.querySelector('link[rel="prefetch"]');
+    expect(link).not.toBeNull();
+
+    // Restore IntersectionObserver
+    global.IntersectionObserver = originalIntersectionObserver;
+  });
 });

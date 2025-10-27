@@ -2,29 +2,34 @@ import { test, expect, describe, vi } from "vitest";
 import { RouterHead } from "./router-head";
 import { createDOM } from "../../../vitest.setup";
 
+// Mock the Qwik City hooks - will be overridden in individual tests
+const defaultMockHead = {
+  title: "Test Title",
+  meta: [
+    { name: "description", content: "Test Description" },
+    { name: "keywords", content: "test, qwik, component" },
+  ],
+  links: [
+    { rel: "stylesheet", href: "/test-style.css" },
+    { rel: "icon", href: "/favicon.ico" },
+  ],
+  styles: [
+    { props: { id: "test-style" }, style: "body { color: red; }" },
+    {
+      props: {
+        id: "inline-style",
+        dangerouslySetInnerHTML: "p { color: blue; }",
+      },
+      style: "should not override",
+    },
+  ],
+};
+
+let mockHeadValue = defaultMockHead;
+
 vi.mock("@builder.io/qwik-city", () => {
   return {
-    useDocumentHead: () => ({
-      title: "Test Title",
-      meta: [
-        { name: "description", content: "Test Description" },
-        { name: "keywords", content: "test, qwik, component" },
-      ],
-      links: [
-        { rel: "stylesheet", href: "/test-style.css" },
-        { rel: "icon", href: "/favicon.ico" },
-      ],
-      styles: [
-        { props: { id: "test-style" }, style: "body { color: red; }" },
-        {
-          props: {
-            id: "inline-style",
-            dangerouslySetInnerHTML: "p { color: blue; }",
-          },
-          style: "should not override",
-        },
-      ],
-    }),
+    useDocumentHead: () => mockHeadValue,
     useLocation: () => ({
       url: { href: "https://test-site.com/test-page" },
     }),
@@ -114,5 +119,29 @@ describe("RouterHead", () => {
     );
     expect(inlineStyle).not.toBeNull();
     expect(inlineStyle?.innerHTML).toBe("p { color: blue; }");
+  });
+
+  test(`[RouterHead Component]: Should handle styles without dangerouslySetInnerHTML`, async () => {
+    mockHeadValue = {
+      title: "Test",
+      meta: [],
+      links: [],
+      styles: [{ props: { id: "test-no-html" }, style: "div { margin: 0; }" }],
+    };
+
+    const { screen, render } = await createDOM();
+    await render(<RouterHead />);
+
+    const styleElements = screen.querySelectorAll("style");
+    expect(styleElements.length).toBeGreaterThan(0);
+
+    const testStyle = Array.from(styleElements).find(
+      (style) => style.getAttribute("id") === "test-no-html",
+    );
+    expect(testStyle).not.toBeNull();
+    expect(testStyle?.innerHTML).toBe("div { margin: 0; }");
+
+    // Reset mock
+    mockHeadValue = defaultMockHead;
   });
 });

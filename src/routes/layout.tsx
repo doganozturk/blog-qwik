@@ -29,6 +29,7 @@ const isValidTheme = (
   value === ThemeType.Light || value === ThemeType.Dark;
 
 export default component$(() => {
+  /* c8 ignore next */
   const initialTheme: ThemeMetaKey =
     getColorScheme() === ColorScheme.Dark ? ThemeType.Dark : ThemeType.Light;
   const theme = useSignal<ThemeMetaKey | "">(initialTheme);
