@@ -62,14 +62,12 @@ export const useViewportPrefetch = (
       const element = elementRef.value;
       if (!element || isPrefetched.value || !enabled) return;
 
-      // Check if IntersectionObserver is available (not in SSR or test environment)
       if (typeof IntersectionObserver === "undefined") return;
 
       const observer = new IntersectionObserver(
         (entries) => {
           entries.forEach((entry) => {
             if (entry.isIntersecting && !isPrefetched.value) {
-              // Prefetch the document
               prefetchDocument(url);
 
               isPrefetched.value = true;
@@ -100,10 +98,8 @@ export const useViewportPrefetch = (
  * @param url - The URL to prefetch
  */
 export const prefetchDocument = (url: string): void => {
-  // Check if document is available (not in SSR)
   if (typeof document === "undefined") return;
 
-  // Check if the URL is already prefetched
   const existingLink = document.querySelector(
     `link[rel="prefetch"][href="${url}"]`,
   );

@@ -34,7 +34,6 @@ export default component$(() => {
   const theme = useSignal<ThemeMetaKey | "">(initialTheme);
   useContextProvider(ThemeContext, theme);
 
-  // Initialize theme from localStorage immediately on client (before visible)
   // eslint-disable-next-line qwik/no-use-visible-task
   useVisibleTask$(() => {
     const storedTheme = localStorage.getItem(LS_THEME);
@@ -43,7 +42,6 @@ export default component$(() => {
     }
   });
 
-  // Save theme to localStorage and apply meta tags when it changes
   useTask$(({ track }) => {
     const currentTheme = track(() => theme.value);
 

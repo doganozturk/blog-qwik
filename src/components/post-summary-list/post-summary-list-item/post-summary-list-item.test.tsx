@@ -4,12 +4,9 @@ import { createDOM } from "../../../../vitest.setup";
 
 describe("PostSummaryListItem", () => {
   beforeEach(() => {
-    // Mock IntersectionObserver for all tests
     global.IntersectionObserver = class IntersectionObserver {
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      constructor(_callback: IntersectionObserverCallback) {
-        // Callback is required for IntersectionObserver but not used in these tests
-      }
+      constructor(_callback: IntersectionObserverCallback) {}
       observe = vi.fn();
       disconnect = vi.fn();
       unobserve = vi.fn();
@@ -67,22 +64,18 @@ describe("PostSummaryListItem", () => {
       />,
     );
 
-    // Check if the title is rendered correctly
     const titleElement = screen.querySelector(".title");
     expect(titleElement).not.toBeNull();
     expect(titleElement?.textContent).toBe(mockData.title);
 
-    // Check if the description is rendered correctly
     const summaryElement = screen.querySelector(".summary");
     expect(summaryElement).not.toBeNull();
     expect(summaryElement?.textContent).toBe(mockData.description);
 
-    // Check if the permalink is set correctly
     const linkElement = screen.querySelector("a.post-summary-list-item");
     expect(linkElement).not.toBeNull();
     expect(linkElement?.getAttribute("href")).toBe(mockData.permalink);
 
-    // Check if the date is rendered (we can't check the exact formatted value without mocking the formatDistance function)
     const dateElement = screen.querySelector(".date");
     expect(dateElement).not.toBeNull();
     expect(dateElement?.textContent).not.toBe("");
@@ -147,12 +140,9 @@ describe("PostSummaryListItem", () => {
       />,
     );
 
-    // Get the rendered link element
     const linkElement = screen.querySelector("a.post-summary-list-item");
     expect(linkElement).not.toBeNull();
 
-    // Verify IntersectionObserver was set up (the hook initializes it)
-    // Note: Detailed prefetch behavior is tested in the hook's unit tests
     expect(global.IntersectionObserver).toBeDefined();
   });
 });

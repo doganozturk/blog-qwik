@@ -43,7 +43,6 @@ export const applyThemeMeta = (theme: ThemeMetaKey, doc?: Document | null) => {
     appleStatusBar.content = appleStatusBarStyle;
   }
 
-  // Apply theme class to body element to ensure background color
   if (targetDocument.body) {
     targetDocument.body.classList.remove("light", "dark");
     targetDocument.body.classList.add(theme);

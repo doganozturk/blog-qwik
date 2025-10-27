@@ -31,7 +31,6 @@ describe("Footer", () => {
     const linkElements = Array.from(screen.querySelectorAll("a"));
     expect(linkElements.length).toEqual(links.length);
 
-    // Check that each link contains an SVG icon
     linkElements.forEach((element) => {
       const svg = element.querySelector("svg");
       expect(svg).toBeTruthy();

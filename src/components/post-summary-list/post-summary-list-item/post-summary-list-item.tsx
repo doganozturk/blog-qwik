@@ -15,7 +15,6 @@ export const PostSummaryListItem = component$(
   ({ title, description, permalink, date }: PostSummary) => {
     useStylesScoped$(styles);
 
-    // Use the viewport prefetch hook for automatic prefetching
     const elementRef = useViewportPrefetch(permalink, {
       rootMargin: "50px",
     });
