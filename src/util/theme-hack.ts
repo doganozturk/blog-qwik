@@ -38,6 +38,7 @@ export const themeHack = `(function(){
       if (themeToEnsure) {
         themeContainer.classList.add(themeToEnsure);
         document.body.classList.add(themeToEnsure);
+        document.documentElement.setAttribute("data-theme", themeToEnsure);
         applyMeta(themeToEnsure);
       }
     }

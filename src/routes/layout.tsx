@@ -30,8 +30,17 @@ const isValidTheme = (
 
 export default component$(() => {
   /* c8 ignore next */
-  const initialTheme: ThemeMetaKey =
-    getColorScheme() === ColorScheme.Dark ? ThemeType.Dark : ThemeType.Light;
+  const getInitialTheme = (): ThemeMetaKey => {
+    if (!isServer) {
+      const dataTheme = document.documentElement.getAttribute("data-theme");
+      if (isValidTheme(dataTheme)) {
+        return dataTheme;
+      }
+    }
+    return getColorScheme() === ColorScheme.Dark ? ThemeType.Dark : ThemeType.Light;
+  };
+
+  const initialTheme = getInitialTheme();
   const theme = useSignal<ThemeMetaKey | "">(initialTheme);
   useContextProvider(ThemeContext, theme);
 
