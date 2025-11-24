@@ -29,19 +29,8 @@ const isValidTheme = (
   value === ThemeType.Light || value === ThemeType.Dark;
 
 export default component$(() => {
-  /* c8 ignore next */
-  const getInitialTheme = (): ThemeMetaKey => {
-    if (!isServer) {
-      const dataTheme = document.documentElement.getAttribute("data-theme");
-      if (isValidTheme(dataTheme)) {
-        return dataTheme;
-      }
-    }
-    return getColorScheme() === ColorScheme.Dark ? ThemeType.Dark : ThemeType.Light;
-  };
-
-  const initialTheme = getInitialTheme();
-  const theme = useSignal<ThemeMetaKey | "">(initialTheme);
+  // Start with empty theme - will be set on client to avoid flash
+  const theme = useSignal<ThemeMetaKey | "">("");
   useContextProvider(ThemeContext, theme);
 
   // eslint-disable-next-line qwik/no-use-visible-task
@@ -49,6 +38,11 @@ export default component$(() => {
     const storedTheme = localStorage.getItem(LS_THEME);
     if (isValidTheme(storedTheme)) {
       theme.value = storedTheme;
+    } else {
+      // Fall back to system preference if no stored theme
+      /* c8 ignore next */
+      theme.value =
+        getColorScheme() === ColorScheme.Dark ? ThemeType.Dark : ThemeType.Light;
     }
   });
 

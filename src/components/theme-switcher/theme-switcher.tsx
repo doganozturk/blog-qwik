@@ -27,6 +27,7 @@ export const ThemeSwitcher = component$(() => {
       {theme.value === ThemeType.Light && (
         <span class="switch switch-dark">🌚</span>
       )}
+      {!theme.value && <span class="switch switch-loading">&nbsp;</span>}
     </div>
   );
 });

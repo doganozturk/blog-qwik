@@ -28,18 +28,23 @@ export const themeHack = `(function(){
       }
     }
 
+    var storedTheme = localStorage.getItem("theme") || "";
+
+    // Apply meta tags immediately if we have a stored theme
+    if (storedTheme) {
+      applyMeta(storedTheme);
+    }
+
+    // Wait for DOM elements to apply classes
     function ensureTheme() {
       const themeContainer = document.querySelector(".theme-container");
       if (!themeContainer) {
         requestAnimationFrame(ensureTheme);
         return;
       }
-      const themeToEnsure = localStorage.getItem("theme") || "";
-      if (themeToEnsure) {
-        themeContainer.classList.add(themeToEnsure);
-        document.body.classList.add(themeToEnsure);
-        document.documentElement.setAttribute("data-theme", themeToEnsure);
-        applyMeta(themeToEnsure);
+      if (storedTheme) {
+        themeContainer.classList.add(storedTheme);
+        document.body.classList.add(storedTheme);
       }
     }
     requestAnimationFrame(ensureTheme);
