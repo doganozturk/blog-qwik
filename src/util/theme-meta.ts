@@ -3,11 +3,11 @@ export const APPLE_STATUS_BAR_META_ID = "meta-apple-status-bar-style";
 
 export const THEME_META = {
   light: {
-    themeColor: "#ecf0f1",
+    themeColor: "#faf8f5",
     appleStatusBarStyle: "default" as const,
   },
   dark: {
-    themeColor: "#1a2334",
+    themeColor: "#0c0a09",
     appleStatusBarStyle: "black" as const,
   },
 } as const;

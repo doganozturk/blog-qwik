@@ -1,23 +1,52 @@
+/* ═══════════════════════════════════════════════════════════════════════════
+   MAIN HEADER — Homepage header with avatar and title
+   ═══════════════════════════════════════════════════════════════════════════ */
+
 .title {
-  align-self: flex-start;
-  margin-top: var(--title-mt);
-  color: var(--title-color);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
 }
 
 .name {
-  margin-left: -2px;
-  font-size: var(--font-size-xl);
+  font-family: var(--font-display);
+  font-size: var(--text-3xl);
   font-weight: var(--font-weight-normal);
+  line-height: var(--leading-tight);
+  letter-spacing: var(--tracking-tight);
+  color: var(--text-color);
 }
 
 .info {
-  margin-top: 10px;
-  font-weight: var(--font-weight-light);
+  font-size: var(--text-sm);
+  color: var(--text-secondary);
+  letter-spacing: var(--tracking-wide);
+  text-transform: uppercase;
 }
 
 .avatar {
   width: var(--avatar-size);
   height: var(--avatar-size);
-  margin-right: 20px;
-  border-radius: 50%;
+  border-radius: var(--radius-full);
+  border: 3px solid var(--border-color);
+  transition:
+    border-color var(--transition-base),
+    transform var(--transition-base),
+    box-shadow var(--transition-base);
+}
+
+.avatar:hover {
+  border-color: var(--color-accent);
+  transform: scale(1.02);
+  box-shadow: 0 0 0 4px var(--accent-subtle);
+}
+
+@media (min-width: 768px) {
+  .name {
+    font-size: var(--text-4xl);
+  }
+  
+  .info {
+    font-size: var(--text-sm);
+  }
 }

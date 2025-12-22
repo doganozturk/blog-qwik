@@ -7,8 +7,8 @@ export const themeHack = `(function(){
     var THEME_COLOR_META_ID = 'meta-theme-color';
     var APPLE_STATUS_BAR_META_ID = 'meta-apple-status-bar-style';
     var themeMeta = {
-      light: { themeColor: '#ecf0f1', appleStatusBarStyle: 'default' },
-      dark: { themeColor: '#1a2334', appleStatusBarStyle: 'black' },
+      light: { themeColor: '#faf8f5', appleStatusBarStyle: 'default' },
+      dark: { themeColor: '#0c0a09', appleStatusBarStyle: 'black' },
     };
 
     function applyMeta(theme) {

@@ -1,88 +1,216 @@
+/* ═══════════════════════════════════════════════════════════════════════════
+   POST PAGE — Article typography and content styling
+   ═══════════════════════════════════════════════════════════════════════════ */
+
 .post {
-  margin-top: 60px;
-  font-family: var(--font-family);
-  line-height: 1.4;
+  margin-top: var(--space-12);
+  font-family: var(--font-body);
+  line-height: var(--leading-relaxed);
+  animation: fadeInUp 0.6s cubic-bezier(0.4, 0, 0.2, 1) both;
 }
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   HEADINGS
+   ───────────────────────────────────────────────────────────────────────────── */
+
 .post h1 {
-  color: var(--title-color);
-  font-size: var(--font-size-md);
-  font-weight: var(--font-weight-light);
+  font-family: var(--font-display);
+  font-size: var(--text-3xl);
+  font-weight: var(--font-weight-normal);
+  line-height: var(--leading-tight);
+  letter-spacing: var(--tracking-tight);
+  color: var(--text-color);
 }
+
 .post h1 + p {
-  margin-top: 10px;
-  font-size: var(--font-size-sm);
-  color: var(--misc-color);
+  margin-top: var(--space-3);
+  font-size: var(--text-xs);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-accent);
+  letter-spacing: var(--tracking-wider);
+  text-transform: uppercase;
 }
+
 .post h2 {
-  margin-top: 40px;
-  color: var(--title-color);
-  font-size: var(--font-size-lg);
-  font-weight: var(--font-weight-light);
+  margin-top: var(--space-16);
+  font-family: var(--font-display);
+  font-size: var(--text-2xl);
+  font-weight: var(--font-weight-normal);
+  line-height: var(--leading-snug);
+  letter-spacing: var(--tracking-tight);
+  color: var(--text-color);
 }
+
+.post h3 {
+  margin-top: var(--space-10);
+  font-family: var(--font-display);
+  font-size: var(--text-xl);
+  font-weight: var(--font-weight-normal);
+  line-height: var(--leading-snug);
+  color: var(--text-color);
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   PARAGRAPHS & TEXT
+   ───────────────────────────────────────────────────────────────────────────── */
+
 .post p {
-  margin-top: 20px;
+  margin-top: var(--space-6);
+  font-size: var(--text-base);
+  color: var(--text-secondary);
 }
+
 .post hr + p {
-  margin-top: 40px;
+  margin-top: var(--space-10);
 }
+
 .post a {
-  color: var(--misc-color);
+  color: var(--color-accent);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  text-decoration-thickness: 1px;
+  transition:
+    color var(--transition-fast),
+    text-decoration-color var(--transition-fast);
 }
+
+.post a:hover {
+  color: var(--color-accent-hover);
+  text-decoration-color: transparent;
+}
+
+.post strong {
+  font-weight: var(--font-weight-medium);
+  color: var(--text-color);
+}
+
+.post em {
+  font-style: italic;
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   LISTS
+   ───────────────────────────────────────────────────────────────────────────── */
+
 .post ul,
 .post ol {
-  margin-top: 20px;
-  padding-left: 20px;
-  list-style: disc;
+  margin-top: var(--space-6);
+  padding-left: var(--space-6);
+  color: var(--text-secondary);
 }
+
+.post ul {
+  list-style: none;
+}
+
+.post ul li::before {
+  content: "—";
+  position: absolute;
+  left: 0;
+  color: var(--color-accent);
+}
+
 .post li {
-  margin-top: 10px;
+  position: relative;
+  margin-top: var(--space-3);
+  padding-left: var(--space-4);
+  font-size: var(--text-base);
 }
+
 .post li pre {
-  margin-left: -30px;
+  margin-left: calc(-1 * var(--space-10));
 }
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   CODE BLOCKS
+   ───────────────────────────────────────────────────────────────────────────── */
+
 .post pre {
-  margin: 20px -10px 0 -10px;
+  margin: var(--space-8) calc(-1 * var(--container-padding)) 0;
+  padding: var(--space-5) var(--container-padding);
+  background-color: var(--code-bg);
+  overflow-x: auto;
+  border-top: 1px solid var(--border-color);
+  border-bottom: 1px solid var(--border-color);
 }
+
 .post pre code {
-  font-family: var(--font-family-code);
-  font-size: var(--font-size-code);
+  font-family: var(--font-code);
+  font-size: var(--text-sm);
+  line-height: var(--leading-relaxed);
+  color: var(--color-code-text);
 }
-.post p code {
-  padding: 0 4px;
-  font-family: var(--font-family-code);
-  font-size: var(--font-size-code);
-  color: var(--block-text);
-  background-color: var(--block-bg);
-  border-radius: 4px;
+
+/* Inline code */
+.post p code,
+.post li code {
+  padding: var(--space-1) var(--space-2);
+  font-family: var(--font-code);
+  font-size: 0.9em;
+  color: var(--color-accent);
+  background-color: var(--accent-subtle);
+  border-radius: var(--radius-sm);
 }
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   BLOCKQUOTES
+   ───────────────────────────────────────────────────────────────────────────── */
+
 .post blockquote {
-  margin-top: 20px;
-  padding-left: 30px;
+  margin-top: var(--space-8);
+  padding-left: var(--space-6);
   font-style: italic;
+  color: var(--text-secondary);
+  border-left: 3px solid var(--color-accent);
 }
+
+.post blockquote p {
+  margin-top: 0;
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   HORIZONTAL RULES
+   ───────────────────────────────────────────────────────────────────────────── */
+
 .post hr {
-  margin-top: 40px;
-  height: 2px;
-  background-color: var(--text-color);
+  margin-top: var(--space-12);
+  height: 1px;
+  background-color: var(--border-color);
+  border: none;
 }
-.post p em {
-  font-style: italic;
-}
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   IMAGES
+   ───────────────────────────────────────────────────────────────────────────── */
+
 .post img {
   max-width: 100%;
   height: auto;
-  margin-top: 20px;
-}
-.post strong {
-  font-weight: 500;
+  margin-top: var(--space-8);
+  border-radius: var(--radius-md);
 }
 
+/* ─────────────────────────────────────────────────────────────────────────────
+   RESPONSIVE
+   ───────────────────────────────────────────────────────────────────────────── */
+
 @media (min-width: 768px) {
-  .post pre {
-    margin: 20px 0 0 0;
-    border-radius: 4px;
+  .post h1 {
+    font-size: var(--text-4xl);
   }
+  
+  .post h2 {
+    font-size: var(--text-3xl);
+  }
+  
+  .post pre {
+    margin: var(--space-8) 0 0 0;
+    padding: var(--space-6);
+    border-radius: var(--radius-md);
+    border: 1px solid var(--border-color);
+  }
+  
   .post li pre {
-    margin-left: -20px;
+    margin-left: calc(-1 * var(--space-6));
   }
 }

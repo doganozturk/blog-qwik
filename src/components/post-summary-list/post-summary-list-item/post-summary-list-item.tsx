@@ -21,7 +21,10 @@ export const PostSummaryListItem = component$(
 
     return (
       <a href={permalink} class="post-summary-list-item" ref={elementRef}>
-        <h2 class="title">{title}</h2>
+        <h2 class="title">
+          {title}
+          <span class="arrow" aria-hidden="true">→</span>
+        </h2>
         <p class="date">{formatDistance(date)}</p>
         <p class="summary">{description}</p>
       </a>

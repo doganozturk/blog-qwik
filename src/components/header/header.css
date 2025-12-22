@@ -1,21 +1,36 @@
-.header {
-  --avatar-size: 100px;
-  --title-mt: 15px;
-  --header-main-display: block;
+/* ═══════════════════════════════════════════════════════════════════════════
+   HEADER — Base component with theme switcher
+   ═══════════════════════════════════════════════════════════════════════════ */
 
-  display: grid;
-  grid-auto-flow: column;
+.header {
+  --avatar-size: 80px;
+  --title-mt: 0;
+  --header-main-display: flex;
+  --header-gap: var(--space-5);
+
+  display: flex;
   justify-content: space-between;
-  padding: 20px 0 10px 0;
+  align-items: flex-start;
+  padding: var(--space-8) 0 var(--space-6) 0;
+  animation: fadeIn 0.5s cubic-bezier(0.4, 0, 0.2, 1) both;
 }
 
 .header-main {
   display: var(--header-main-display);
+  align-items: center;
+  gap: var(--header-gap);
+  transition: opacity var(--transition-base);
+}
+
+.header-main:hover {
+  opacity: 1;
+  color: inherit;
 }
 
 @media (min-width: 768px) {
   .header {
-    --title-mt: 5px;
-    --header-main-display: flex;
+    --avatar-size: 100px;
+    --header-gap: var(--space-6);
+    padding: var(--space-12) 0 var(--space-8) 0;
   }
 }

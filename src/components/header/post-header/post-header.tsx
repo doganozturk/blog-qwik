@@ -8,7 +8,10 @@ export const PostHeader = component$(() => {
 
   return (
     <Header type={HeaderType.Post}>
-      <span>doganozturk.dev</span>
+      <span class="back-link">
+        <span class="back-arrow" aria-hidden="true">←</span>
+        doganozturk.dev
+      </span>
     </Header>
   );
 });

@@ -1,14 +1,21 @@
+/* ═══════════════════════════════════════════════════════════════════════════
+   FOOTER — Social links and copyright
+   ═══════════════════════════════════════════════════════════════════════════ */
+
 .footer {
   display: flex;
   justify-content: space-between;
+  align-items: center;
   margin-top: auto;
-  margin-bottom: 10px;
-  padding-top: 70px;
+  padding: var(--space-12) 0 var(--space-8) 0;
+  border-top: 1px solid var(--border-subtle);
+  animation: fadeIn 0.6s cubic-bezier(0.4, 0, 0.2, 1) both;
+  animation-delay: 0.3s;
 }
 
 .links {
   display: flex;
-  gap: 16px;
+  gap: var(--space-5);
   align-items: center;
 }
 
@@ -21,8 +28,14 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  color: var(--title-color);
-  transition: color 0.2s ease;
+  width: 40px;
+  height: 40px;
+  color: var(--text-muted);
+  border-radius: var(--radius-full);
+  transition:
+    color var(--transition-fast),
+    background-color var(--transition-fast),
+    transform var(--transition-fast);
 }
 
 .link a svg {
@@ -31,5 +44,18 @@
 }
 
 .link a:hover {
-  color: var(--misc-color);
+  color: var(--color-accent);
+  background-color: var(--accent-subtle);
+  transform: translateY(-2px);
+}
+
+.link a:active {
+  transform: translateY(0);
+}
+
+/* Copyright text */
+.copyright {
+  font-size: var(--text-xs);
+  color: var(--text-muted);
+  letter-spacing: var(--tracking-wide);
 }
