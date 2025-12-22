@@ -105,7 +105,6 @@ a:focus-visible {
   --text-secondary: var(--color-text-secondary-light);
   --text-muted: var(--color-text-muted-light);
   --border-color: var(--color-border-light);
-  --border-subtle: var(--color-border-subtle-light);
   --code-bg: var(--color-code-bg-light);
   --accent-subtle: var(--color-accent-subtle);
 }
@@ -118,7 +117,6 @@ a:focus-visible {
   --text-secondary: var(--color-text-secondary-dark);
   --text-muted: var(--color-text-muted-dark);
   --border-color: var(--color-border-dark);
-  --border-subtle: var(--color-border-subtle-dark);
   --code-bg: var(--color-code-bg-dark);
   --accent-subtle: var(--color-accent-subtle-dark);
 }

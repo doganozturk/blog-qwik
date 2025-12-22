@@ -6,7 +6,7 @@
   display: block;
   position: relative;
   padding: var(--space-6) 0;
-  border-bottom: 1px solid var(--border-subtle);
+  border-bottom: 1px solid var(--border-color);
   transition:
     border-color var(--transition-base),
     background-color var(--transition-base);
