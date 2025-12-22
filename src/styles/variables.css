@@ -8,13 +8,13 @@
      COLOR PALETTE
      ───────────────────────────────────────────────────────────────────────────── */
   
-  /* Light Theme — Warm paper tones */
-  --color-bg-light: #faf8f5;
-  --color-bg-elevated-light: #ffffff;
-  --color-text-light: #1c1917;
-  --color-text-secondary-light: #57534e;
-  --color-text-muted-light: #a8a29e;
-  --color-border-light: #e7e5e4;
+  /* Light Theme — Crisp & Modern */
+  --color-bg-light: #ffffff;
+  --color-bg-elevated-light: #f9fafb;
+  --color-text-light: #111827;
+  --color-text-secondary-light: #4b5563;
+  --color-text-muted-light: #9ca3af;
+  --color-border-light: #e5e7eb;
   
   /* Dark Theme — Deep ink-black */
   --color-bg-dark: #0c0a09;
@@ -24,11 +24,11 @@
   --color-text-muted-dark: #57534e;
   --color-border-dark: #292524;
   
-  /* Accent — Burnt orange (consistent across themes) */
-  --color-accent: #ea580c;
-  --color-accent-hover: #c2410c;
-  --color-accent-subtle: #fed7aa;
-  --color-accent-subtle-dark: #431407;
+  /* Accent — Vibrant Orange */
+  --color-accent: #ff4d00;
+  --color-accent-hover: #e64500;
+  --color-accent-subtle: #fff0eb;
+  --color-accent-subtle-dark: #2d0f00;
 
   /* Code Block Colors */
   --color-code-bg-light: #1e1e1e;
@@ -95,7 +95,11 @@
   
   --max-width: 680px;
   --max-width-wide: 900px;
-  --container-padding: var(--space-6);
+  --container-padding: var(--space-4);
+
+  @media (min-width: 768px) {
+    --container-padding: var(--space-6);
+  }
   
   /* ─────────────────────────────────────────────────────────────────────────────
      EFFECTS

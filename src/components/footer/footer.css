@@ -34,7 +34,6 @@
   border-radius: var(--radius-full);
   transition:
     color var(--transition-fast),
-    background-color var(--transition-fast),
     transform var(--transition-fast);
 }
 
@@ -45,7 +44,6 @@
 
 .link a:hover {
   color: var(--color-accent);
-  background-color: var(--accent-subtle);
   transform: translateY(-2px);
 }
 

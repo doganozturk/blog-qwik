@@ -6,6 +6,7 @@
   display: flex;
   flex-direction: column;
   gap: var(--space-2);
+  min-width: 0;
 }
 
 .name {
@@ -20,8 +21,9 @@
 .info {
   font-size: var(--text-sm);
   color: var(--text-secondary);
-  letter-spacing: var(--tracking-wide);
+  letter-spacing: var(--tracking-normal);
   text-transform: uppercase;
+  line-height: var(--leading-snug);
 }
 
 .avatar {
@@ -48,5 +50,6 @@
   
   .info {
     font-size: var(--text-sm);
+    letter-spacing: var(--tracking-wide);
   }
 }

@@ -7,9 +7,6 @@
   position: relative;
   padding: var(--space-6) 0;
   border-bottom: 1px solid var(--border-color);
-  transition:
-    border-color var(--transition-base),
-    background-color var(--transition-base);
 }
 
 .post-summary-list-item:first-of-type {
@@ -18,10 +15,6 @@
 
 .post-summary-list-item:last-of-type {
   border-bottom: none;
-}
-
-.post-summary-list-item:hover {
-  border-color: var(--border-color);
 }
 
 .post-summary-list-item:hover .title {
@@ -36,9 +29,9 @@
 /* Title */
 .title {
   font-family: var(--font-display);
-  font-size: var(--text-xl);
+  font-size: var(--text-2xl);
   font-weight: var(--font-weight-normal);
-  line-height: var(--leading-snug);
+  line-height: var(--leading-tight);
   letter-spacing: var(--tracking-tight);
   color: var(--text-color);
   transition: color var(--transition-fast);
@@ -60,7 +53,7 @@
 /* Date */
 .date {
   margin-top: var(--space-3);
-  font-size: var(--text-xs);
+  font-size: var(--text-sm);
   font-weight: var(--font-weight-medium);
   color: var(--color-accent);
   letter-spacing: var(--tracking-wider);
@@ -70,7 +63,7 @@
 /* Summary */
 .summary {
   margin-top: var(--space-4);
-  font-size: var(--text-sm);
+  font-size: var(--text-base);
   line-height: var(--leading-relaxed);
   color: var(--text-secondary);
 }
@@ -96,10 +89,6 @@
   }
   
   .title {
-    font-size: var(--text-2xl);
-  }
-  
-  .summary {
-    font-size: var(--text-base);
+    font-size: var(--text-3xl);
   }
 }
