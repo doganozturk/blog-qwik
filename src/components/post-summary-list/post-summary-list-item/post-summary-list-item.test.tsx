@@ -66,7 +66,7 @@ describe("PostSummaryListItem", () => {
 
     const titleElement = screen.querySelector(".title");
     expect(titleElement).not.toBeNull();
-    expect(titleElement?.textContent).toBe(mockData.title);
+    expect(titleElement?.textContent).toBe(mockData.title + "→");
 
     const summaryElement = screen.querySelector(".summary");
     expect(summaryElement).not.toBeNull();

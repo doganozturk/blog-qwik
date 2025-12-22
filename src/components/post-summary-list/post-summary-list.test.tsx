@@ -44,8 +44,8 @@ describe("PostSummaryList", () => {
 
     const titles = screen.querySelectorAll(".title");
     expect(titles.length).toBe(2);
-    expect(titles[0].textContent).toBe("Test Post 1");
-    expect(titles[1].textContent).toBe("Test Post 2");
+    expect(titles[0].textContent).toBe("Test Post 1→");
+    expect(titles[1].textContent).toBe("Test Post 2→");
 
     const links = screen.querySelectorAll("a.post-summary-list-item");
     expect(links.length).toBe(2);

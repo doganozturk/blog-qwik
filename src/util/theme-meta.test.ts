@@ -22,12 +22,12 @@ describe("theme-meta constants", () => {
 
   it("should have light and dark theme configurations", () => {
     expect(THEME_META.light).toEqual({
-      themeColor: "#ecf0f1",
+      themeColor: "#faf8f5",
       appleStatusBarStyle: "default",
     });
 
     expect(THEME_META.dark).toEqual({
-      themeColor: "#1a2334",
+      themeColor: "#0c0a09",
       appleStatusBarStyle: "black",
     });
   });
