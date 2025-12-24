@@ -1,0 +1,48 @@
+---
+title: "Of Sharks, Network Cables, and the End of Coding"
+description: "A deep dive into the shift from manual engineering to agentic workflows in 2025, exploring how AI agents have reshaped the craft and what remains when the code itself becomes secondary."
+permalink: "/of-sharks-network-cables-and-the-end-of-coding/"
+date: "2025-12-24"
+lang: "en"
+---
+
+import { formatDistance } from "~/util";
+
+export const title = "Of Sharks, Network Cables, and the End of Coding";
+export const date = "2025-12-24";
+
+# {title}
+
+<p>{formatDistance(date)}</p>
+
+It hasn't been that long, but my memories of the "old way" are already blurring. I remember the early days of GPT-3.5 and 4, using them as glorified autocomplete. 3.5 was lackluster, but I recall GPT-4 being a revelation. I remember urging my colleagues to switch, arguing that 3.5 was a relic by comparison. At the time, I didn't realize I was witnessing the beginning of the end. I didn't yet know that coding was changing forever.
+
+A global hype began to brew. As someone long-versed in the Singularity mythos and Ray Kurzweil's predictions, I recognized the narrative. I saw where the tracks were leading.
+
+People are like that; things take time to become modern religions, myths, and beliefs. The Singularity is one of them. I'm sure there are people out there who believe that once AGI and ASI arrive, every human struggle will simply evaporate. Having watched this space since my university days, I view the formation of this new faith with mild amusement. But I won't dwell on myths here; I want to talk about the work.
+
+I don't know exactly where the shift started, but Raycast was a part of it for me. I remember trying Claude 3.5 Sonnet and being absolutely blown away. It could edit files without the "lazy" hallucinations that plagued earlier models. I'd feed it a complex TypeScript file and receive a perfectly refactored version, with every untouched logic block preserved. My workflow changed completely. I finished many projects this way. At that stage, engineering and micro-coding still existed. I wasn't doing the manual labor, but the plans were mostly mine. I'd spend nights pushing for high unit test coverage, letting Claude handle the implementation while I held the mental map of the entire system in my head. Looking back, I realize I was still in the flow then; I had a mental map of the project as if I had written it by hand.
+
+I never warmed to Cursor. Despite its popularity and the impressive speed of their team, I've never felt at home in VS Code or its forks. I've been a JetBrains loyalist for over half a decade, even as they began to lag behind the "AI-first" IDE curve. For a while, my method was primitive: copy-pasting files into Raycast. But it kept me close to the logic.
+
+The turning point was the Windsurf plugin for JetBrains. It bridged the gap. I no longer needed the manual back-and-forth; I simply told the agent what to achieve, such as creating files or moving folders, and it executed. I remember using GPT-4.1 for simple tasks, which is what people use Composer-1 for nowadays. I also remember using DeepSeek v3 for that same purpose. Models were finally learning to follow instructions, and agents were becoming tangible reality.
+
+During that period, Gemini 2.5 Pro became my "eye in the sky" within Raycast. I was in the middle of a huge workload, dealing with complex projects consisting of multiple repositories I had no knowledge of. Gemini was great for that because of its massive context window. I could drop an entire ecosystem into Gemini, receive detailed and mostly correct analyses, and get the work done. I would plan with Gemini 2.5 Pro on Raycast and implement on JetBrains with the Windsurf plugin. It felt like the future.
+
+Then came Claude Code. That was the point of no return. It wasn't just a coding assistant; it was a full computer-use agent. A community started forming around it. It felt like a primitive tool that you could use as a UNIX command, but you could also use it to build entire projects in a completely agentic way. As I grew comfortable with it, I completely lost myself in that workflow.
+
+But there was a cost: the mental map began to fade. As models improved, I could simply delegate everything to them. Using Opus 4.1 in plan mode and implementing with Sonnet 4 on Claude Code was a great experience, though perhaps it was almost too seamless. My workflow evolved: make a plan, refine it, and use other models on Raycast to challenge the idea. When I was sure the plan was solid, I implemented it with Claude Code.
+
+Even with multiple agentic code reviews, you lose the small details on large codebases. Those details are still important because we still operate on code. Coding as we know it may be leaving our lives soon, but we still need to communicate concepts. Not everyone uses AI tools like this; I often find myself looking at others and thinking, "Just ask the AI, man." Work is changing, and we are just pretending for now. The real change will be much more severe at some point.
+
+I also started using Codex. GPT-5, 5.1, and 5.2 are great for deep thought and analysis. Opus simply couldn't make plans of that caliber at the time. So, I subscribe to the Max Plan on Claude and the Pro plan on ChatGPT. This allows me to use Codex to my heart's content while also using the Pro interface for its amazing search capabilities. Instead of using Raycast to challenge ideas on different models, the workflow became simpler: use Claude Code for implementation and Codex GPT-5* High for planning. If the task is simple, Opus gets it done. For serious work, I make an initial plan with Opus but always make multiple passes with Codex to make it as perfect as possible.
+
+I've also been following Eric Provencher on X for some time. He created Repo Prompt, a tool I've recently started using properly. Eric is a unique person in the field and a great programmer. I think great programmers are people who manage to make concepts and ideas work through code, making them concrete. I see Repo Prompt as exactly that.
+
+So, where are we today? **Opus 4.5 with Claude Code is AGI.** You can now use computers just by talking to them. Many software engineers still don't get it, but they will soon. The craft and knowledge we accumulated over the years are mostly not needed anymore. I no longer memorize terminal flags, Git commands, or Docker configurations. I just tell Claude to do it. I still watch the process to ensure it works as expected, but I'm not sure if that is even necessary anymore. I also use Claude Code as an orchestrator through Repo Prompt's MCP. Now Claude asks GPT-5* High for a detailed analysis of its plan by using Repo Prompt's tools.
+
+Frontend work still seems to be hard. I can't make designs work through Figma exactly the way I want them. I think the visual understanding of these models is still limited. I recently tried Gemini 3 Flash for that; it gets the work done, but I need to work on it more. I feel like as we get closer to real-world abstractions, things start to get messy. However, the logic and orchestration of the UI are a different story. I recently used the Chrome MCP with Claude Code to completely automate e2e testing. I told Claude to compile the services, set the environment variables, navigate the UI, and check the results. Claude even implemented an evaluation framework for the flow.
+
+Coding as we know it will be mostly gone next year. I'm not sure how I feel about that, but I see myself as an early adopter who hasn't written code by hand for a long time. However, we still operate on code, and understanding it in detail is still necessary. In 2026, we will be migrating to a different workflow where we provide an input and expect an output. We will check performance and bugs, but if it works, it works. Code will be less of a concern. I don't think I will like this because I like the nerdy parts of the job. I think I will be working on something different in two years. Now that I am not limited to my past experience, I can write a whole project in a few days in a language I don't even know. These things are no longer barriers.
+
+Life is real, and AI won't solve everything. I don't subscribe to that belief, but people will remain captivated by the spectacle. There's a meme about sharks biting undersea network cables: complexity persists in certain layers. I'll likely be there, where the wires meet the salt water, keeping things running. The machines may think, but the shark still bites.
