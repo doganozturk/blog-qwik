@@ -55,7 +55,10 @@ export default component$(() => {
         <link rel="manifest" href="/manifest.json" />
 
         <meta charSet="utf-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+        <meta
+          name="viewport"
+          content="width=device-width, initial-scale=1.0, viewport-fit=cover"
+        />
         <meta
           id={THEME_COLOR_META_ID}
           name="theme-color"
@@ -77,6 +80,8 @@ export default component$(() => {
       <body lang="tr">
         <script dangerouslySetInnerHTML={themeHack} />
         <RouterOutlet />
+        {/* TODO: Remove ServiceWorkerRegister after Feb 2025 - kept temporarily to
+            unregister old service workers for returning users. See Qwik 1.14 migration. */}
         <ServiceWorkerRegister />
       </body>
     </QwikCityProvider>
